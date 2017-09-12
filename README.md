@@ -1,6 +1,7 @@
 The Treblemakers
 our e-commerce team
 *This document describes our team social contract for this project*
+
 Reference Establishing Norms
 Roles
 Taskmaster
