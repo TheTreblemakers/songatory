@@ -9,7 +9,7 @@ const Album = db.define('album', {
     type: Sequelize.TEXT
   },
   price: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER // in cents! divide by 100 as appropriate
   },
   year: {
     type: Sequelize.INTEGER
