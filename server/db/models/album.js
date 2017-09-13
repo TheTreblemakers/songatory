@@ -11,6 +11,12 @@ const Album = db.define('album', {
   price: {
     type: Sequelize.INTEGER // in cents! divide by 100 as appropriate
   },
+  displayPrice: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return (this.getDataValue('price') / 100);
+    }
+  },
   year: {
     type: Sequelize.INTEGER,
     validate: {
