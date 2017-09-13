@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Albums, Artists, Navbar } from '../components';
+import { Albums, Artists, Navbar, Footer } from '../components';
 import { Container } from 'semantic-ui-react';
 import { logout } from '../store';
 import { Route, Switch } from 'react-router-dom';
@@ -16,16 +16,26 @@ import { Route, Switch } from 'react-router-dom';
 const Main = (props) => {
   const { children, handleClick, isLoggedIn } = props;
 
+  const styles = {
+    body: {
+      display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column',
+    },
+    container: { marginTop: '7em', flex: '1' },
+  };
+
   return (
-    <div>
+    <div style={styles.body}>
       <Navbar />
-      <Container style={{ marginTop: '7em' }}>
+      <Container style={styles.container}>
         {
           // Routes Go Here!
         }
         <Route path="/albums" component={Albums} />
         <Route path="/artists" component={Artists} />
       </Container>
+      <Footer />
     </div>
   );
 };
