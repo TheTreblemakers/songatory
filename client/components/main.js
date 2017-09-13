@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-// import Navbar from '../components/Navbar';
 import { Albums, Navbar } from '../components';
 import { Container } from 'semantic-ui-react';
 import { logout } from '../store';
