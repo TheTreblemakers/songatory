@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import { Container, List, Segment } from 'semantic-ui-react';
 import history from '../history';
 
 const Footer = (props) => {
@@ -31,6 +31,4 @@ const mapState = (state) => {};
 
 const mapDispatch = (dispatch) => {};
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Footer));
