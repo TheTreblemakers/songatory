@@ -4,32 +4,25 @@ import { withRouter, Link } from 'react-router-dom';
 import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react';
 import history from '../history';
 
-class Footer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <Segment inverted vertical>
-        <Container textAlign="center">
-          <List horizontal inverted divided link>
-            <List.Item as="a" href="#">
-              Contact Us
-            </List.Item>
-            <List.Item as="a" href="#">
-              Terms and Conditions
-            </List.Item>
-            <List.Item as="a" href="#">
-              Privacy Policy
-            </List.Item>
-          </List>
-        </Container>
-      </Segment>
-    );
-  }
-}
+const Footer = (props) => {
+  return (
+    <Segment inverted vertical>
+      <Container textAlign="center">
+        <List horizontal inverted divided link>
+          <List.Item as="a" href="#">
+            Contact Us
+          </List.Item>
+          <List.Item as="a" href="#">
+            Terms and Conditions
+          </List.Item>
+          <List.Item as="a" href="#">
+            Privacy Policy
+          </List.Item>
+        </List>
+      </Container>
+    </Segment>
+  );
+};
 
 /**
  * CONTAINER
