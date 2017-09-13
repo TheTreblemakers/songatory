@@ -21,4 +21,3 @@ router.get('/', (req, res, next) => {
 router.get('/:id/', (req, res, next) => {
   res.json(req.song);
 });
-
