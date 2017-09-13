@@ -34,7 +34,7 @@ class Navbar extends Component {
     let activeItem;
     return (
       <div>
-        <Menu inverted fixed="top">
+        <Menu inverted fixed="top" stackable>
           <Menu.Menu>
             <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
               songatory
