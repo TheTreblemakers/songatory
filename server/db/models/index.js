@@ -1,14 +1,14 @@
-const User = require('./user')
-const Artist = require('./artist')
-const Album = require('./album')
-const Order = require('./order')
-const Review = require('./review')
-const Song = require('./song')
+const User = require('./user');
+const Artist = require('./artist');
+const Album = require('./album');
+const Order = require('./order');
+const Review = require('./review');
+const Song = require('./song');
 
 User.hasMany(Order);
 User.hasMany(Review);
 
-Artist.belongsToMany(Album, {through: 'artist_album'});
+Artist.belongsToMany(Album, { through: 'artist_album' });
 
 Album.hasMany(Song);
 Album.hasMany(Review);
@@ -23,4 +23,4 @@ module.exports = {
   Order,
   Review,
   Song
-}
+};
