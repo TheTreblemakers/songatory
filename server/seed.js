@@ -1,0 +1,222 @@
+const db = require('./db');
+const { User, Album, Artist, Review, Song } = require('./db/models');
+
+let orderNumber = 123456789;
+// let date = new Date();
+
+const defaultAlbumArtistPics = [
+  'http://www.chronicle.com/blogs/buildings/files/2011/09/Perdue-Hall.jpg',
+  'http://www.masoncontractors.org/images/projects/mclennan-community-college-dennis-f-michaelis-academic-building/mclennan-community-college-dennis-f-michaelis-academic-building-1.jpg',
+  'https://www.e-architect.co.uk/images/jpgs/new_york/brooklyn_college_westquad_vinoly0107.jpg',
+  'https://www.stchas.edu/images/buildings/ssb-bldg-940.jpg',
+  'http://ie-services.com/wp-content/uploads/2014/12/AC_SACNursing.jpg',
+  'https://www.ucollege.edu/files/users/webadmin/images/CampusPhotos/Ortner%20Center%20exterior.jpg'
+];
+
+const users = [
+  {
+    name: 'Joe Ortiz',
+    email: 'joe@gmail.com',
+    isAdmin: true,
+    currentOrder: orderNumber,
+    password: 'joe',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'George Johnson',
+    email: 'george@gmail.com',
+    currentOrder: orderNumber + 1,
+    password: 'george',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'Chris Superman',
+    email: 'chris@gmail.com',
+    currentOrder: orderNumber + 2,
+    password: 'chris',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'James Jefferson',
+    email: 'james@gmail.com',
+    currentOrder: orderNumber + 3,
+    password: 'james',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'Anita Watt',
+    email: 'anita@gmail.com',
+    currentOrder: orderNumber + 4,
+    password: 'anita',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'Sarah Sarahson',
+    email: 'sarah@gmail.com',
+    currentOrder: orderNumber + 5,
+    password: 'sarah',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'Joann Hansen',
+    email: 'joann@gmail.com',
+    currentOrder: orderNumber + 6,
+    password: 'joann',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+  {
+    name: 'Stef Smith',
+    email: 'stef@gmail.com',
+    currentOrder: orderNumber + 7,
+    password: 'stef',
+    salt: 'abcdefghijk',
+    googleId: 'lmnop'
+  },
+];
+
+const albums = [
+  {
+    name: 'Illinois',
+    description: 'great album much wow 5 stars',
+    price: 1234,
+    year: 1997,
+    image: defaultAlbumArtistPics[0]
+  },
+  {
+    name: 'Texas',
+    description: 'great album much wow 5 stars',
+    price: 1234,
+    year: 1997,
+    image: defaultAlbumArtistPics[1]
+  },
+  {
+    name: 'Florida',
+    description: 'great album much wow 5 stars',
+    price: 1234,
+    year: 1997,
+    image: defaultAlbumArtistPics[2]
+  },
+  {
+    name: 'California',
+    description: 'great album much wow 5 stars',
+    price: 1234,
+    year: 1997,
+    image: defaultAlbumArtistPics[3]
+  }
+];
+
+const artists = [
+  {
+    name: 'Illinois Tech',
+    bio: 'great album much wow 5 stars',
+    image: defaultAlbumArtistPics[4]
+  },
+  {
+    name: 'Texas State',
+    bio: 'great album much wow 5 stars',
+    image: defaultAlbumArtistPics[5]
+  },
+  {
+    name: 'University of Florida',
+    bio: 'great album much wow 5 stars',
+    image: defaultAlbumArtistPics[0]
+  },
+  {
+    name: 'California State',
+    bio: 'great album much wow 5 stars',
+    image: defaultAlbumArtistPics[1]
+  }
+];
+
+const reviews = [
+  {
+    score: 1,
+    content: 'great album much wow 5 stars, seriously great album much wow 5 stars',
+  },
+  {
+    score: 2,
+    content: 'great album much wow 5 stars, seriously great album much wow 5 stars',
+  },
+  {
+    score: 3,
+    content: 'great album much wow 5 stars, seriously great album much wow 5 stars',
+  },
+  {
+    score: 4,
+    content: 'great album much wow 5 stars, seriously great album much wow 5 stars',
+  }
+];
+
+const songs = [
+  {
+    name: 'Illinois',
+    trackNumber: 1,
+    price: 1234,
+  },
+  {
+    name: 'Texas',
+    trackNumber: 12,
+    price: 1234,
+  },
+  {
+    name: 'Florida',
+    trackNumber: 15,
+    price: 1234,
+  },
+  {
+    name: 'California',
+    trackNumber: 9,
+    price: 1234,
+  }
+];
+
+const seed = () =>
+  Promise.all(users.map(user =>
+    User.create(user))
+  )
+    .then(() =>
+      Promise.all(artists.map(artist =>
+        Artist.create(artist))
+      )
+    )
+    .then(() =>
+      Promise.all(albums.map(album =>
+        Album.create(album))
+      )
+    )
+    .then(() =>
+      Promise.all(songs.map(song =>
+        Song.create(song))
+      )
+    )
+    .then(() =>
+      Promise.all(reviews.map(review =>
+        Review.create(review))
+      )
+    );
+
+const seedDb = () => {
+  console.log('syncing db---');
+  db.sync({ force: true })
+    .then(() => {
+      console.log('seeding db');
+      return seed();
+    })
+    .catch(err => {
+      console.log('seeding error');
+      console.log(err.stack);
+    })
+    .then(() => {
+      db.close();
+      return null;
+    });
+};
+
+seedDb();
