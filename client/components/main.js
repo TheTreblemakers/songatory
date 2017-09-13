@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Albums, Navbar } from '../components';
+import { Albums, Artists, Navbar } from '../components';
 import { Container } from 'semantic-ui-react';
 import { logout } from '../store';
 import { Route, Switch } from 'react-router-dom';
@@ -24,6 +24,7 @@ const Main = (props) => {
           // Routes Go Here!
         }
         <Route path="/albums" component={Albums} />
+        <Route path="/artists" component={Artists} />
       </Container>
     </div>
   );
