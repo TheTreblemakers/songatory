@@ -16,16 +16,19 @@ import { Route, Switch } from 'react-router-dom';
 const Main = (props) => {
   const { children, handleClick, isLoggedIn } = props;
 
-  const style = {
-    display: 'flex',
-    minHeight: '100vh',
-    flexDirection: 'column',
+  const styles = {
+    body: {
+      display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column',
+    },
+    container: { marginTop: '7em', flex: '1' },
   };
 
   return (
-    <div style={style}>
+    <div style={styles.body}>
       <Navbar />
-      <Container style={{ marginTop: '7em', flex: '1' }}>
+      <Container style={styles.container}>
         {
           // Routes Go Here!
         }

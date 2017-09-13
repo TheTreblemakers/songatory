@@ -14,8 +14,6 @@ class Footer extends Component {
     return (
       <Segment inverted vertical>
         <Container textAlign="center">
-          <Divider inverted section />
-          <Image centered size="mini" src="/logo.png" />
           <List horizontal inverted divided link>
             <List.Item as="a" href="#">
               Contact Us
