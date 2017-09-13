@@ -162,17 +162,22 @@ const songs = [
   },
   {
     name: 'Texas',
-    trackNumber: 12,
+    trackNumber: 2,
     price: 1234,
   },
   {
     name: 'Florida',
-    trackNumber: 15,
+    trackNumber: 1,
     price: 1234,
   },
   {
     name: 'California',
-    trackNumber: 9,
+    trackNumber: 1,
+    price: 1234,
+  },
+  {
+    name: 'Love',
+    trackNumber: 1,
     price: 1234,
   }
 ];
@@ -182,6 +187,7 @@ const seed = () => {
   let seedAlbums;
   let seedSongs;
   let seedReviews;
+  let seedArtists;
   return Promise.all(users.map(user =>
     User.create(user))
   )
@@ -191,11 +197,12 @@ const seed = () => {
         Artist.create(artist))
       );
     })
-    .then(() =>
-      Promise.all(albums.map(album =>
+    .then((createdArtists) => {
+      seedArtists = createdArtists;
+      return Promise.all(albums.map(album =>
         Album.create(album))
-      )
-    )
+      );
+    })
     .then((createdAlbums) => {
       seedAlbums = createdAlbums;
       return Promise.all(songs.map(song =>
@@ -222,6 +229,16 @@ const seed = () => {
           return seedAlbums[index % seedAlbums.length].addReview(review);
         }
       }))
+    )
+    .then(() =>
+      Promise.all(seedSongs.map((song, index) =>
+        seedAlbums[index % seedAlbums.length].addSong(song)
+      ))
+    )
+    .then(() =>
+      Promise.all(seedAlbums.map((album, index) =>
+        seedArtists[index % seedArtists.length].addAlbum(album)
+      ))
     );
 };
 
