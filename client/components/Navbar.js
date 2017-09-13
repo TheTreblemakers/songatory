@@ -2,40 +2,58 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Image,
+  List,
+  Menu,
+  Segment,
+  Visibility,
+  Search,
+  Input,
+  Breadcrumb,
+  Icon,
+} from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: 'home',
+    };
+  }
+
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+  };
 
   render() {
+    let activeItem;
     return (
       <div>
-        <Menu fixed="top" inverted>
-          <Container>
-            <Menu.Item as="a" header>
-              <Image size="mini" src="/logo.png" style={{ marginRight: '1.5em' }} />
+        <Menu inverted fixed="top">
+          <Menu.Menu>
+            <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
               songatory
             </Menu.Item>
-            <Menu.Item as="a">Home</Menu.Item>
-            <Dropdown item simple text="Dropdown">
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Header>Header Item</Dropdown.Header>
-                <Dropdown.Item>
-                  <i className="dropdown icon" />
-                  <span className="text">Submenu</span>
-                  <Dropdown.Menu>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Container>
+            <Menu.Item>
+              <Input icon="search" placeholder="Search..." />
+            </Menu.Item>
+          </Menu.Menu>
+          <Menu.Item name="Artists" active={activeItem === 'Artists'} onClick={this.handleItemClick} />
+          <Menu.Item name="Albums" active={activeItem === 'Albums'} onClick={this.handleItemClick} />
+          <Menu.Item name="Songs" active={activeItem === 'Songs'} onClick={this.handleItemClick} />
+
+          <Menu.Item position="right">
+            <Icon link name="cart" size="large" />
+          </Menu.Item>
+          <Menu.Item name="Login" onClick={this.handleItemClick} />
+          <Menu.Item name="Sign Up" onClick={this.handleItemClick} />
         </Menu>
       </div>
     );
