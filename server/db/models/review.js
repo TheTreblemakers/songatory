@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Review = db.define('review', {
   score: {
@@ -16,9 +16,9 @@ const Review = db.define('review', {
       len: [50, 1000]
     }
   }
-})
+});
 
-module.exports = Review
+module.exports = Review;
 
 /**
  * instanceMethods

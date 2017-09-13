@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Song = db.define('song', {
   name: {
@@ -26,9 +26,9 @@ const Song = db.define('song', {
       return (this.getDataValue('price') / 100);
     }
   }
-})
+});
 
-module.exports = Song
+module.exports = Song;
 
 /**
  * instanceMethods

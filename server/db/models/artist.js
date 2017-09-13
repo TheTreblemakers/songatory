@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Artist = db.define('artist', {
   name: {
@@ -12,9 +12,9 @@ const Artist = db.define('artist', {
     type: Sequelize.STRING,
     // defaultValue: /*** insert default image ***/
   }
-})
+});
 
-module.exports = Artist
+module.exports = Artist;
 
 /**
  * instanceMethods
