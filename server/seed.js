@@ -177,30 +177,53 @@ const songs = [
   }
 ];
 
-const seed = () =>
-  Promise.all(users.map(user =>
+const seed = () => {
+  let seedUsers;
+  let seedAlbums;
+  let seedSongs;
+  let seedReviews;
+  return Promise.all(users.map(user =>
     User.create(user))
   )
-    .then(() =>
-      Promise.all(artists.map(artist =>
+    .then((createdUsers) => {
+      seedUsers = createdUsers;
+      return Promise.all(artists.map(artist =>
         Artist.create(artist))
-      )
-    )
+      );
+    })
     .then(() =>
       Promise.all(albums.map(album =>
         Album.create(album))
       )
     )
-    .then(() =>
-      Promise.all(songs.map(song =>
+    .then((createdAlbums) => {
+      seedAlbums = createdAlbums;
+      return Promise.all(songs.map(song =>
         Song.create(song))
-      )
-    )
-    .then(() =>
-      Promise.all(reviews.map(review =>
+      );
+    })
+    .then((createdSongs) => {
+      seedSongs = createdSongs;
+      return Promise.all(reviews.map(review =>
         Review.create(review))
-      )
+      );
+    })
+    .then((createdReviews) => {
+      seedReviews = createdReviews;
+      return Promise.all(createdReviews.map((review, index) =>
+        seedUsers[index % seedUsers.length].addReview(review)
+      ));
+    })
+    .then(() =>
+      Promise.all(seedReviews.map((review, index) => {
+        if (index % 2 === 0) {
+          return seedSongs[index % seedSongs.length].addReview(review);
+        } else {
+          return seedAlbums[index % seedAlbums.length].addReview(review);
+        }
+      }))
     );
+};
 
 const seedDb = () => {
   console.log('syncing db---');
