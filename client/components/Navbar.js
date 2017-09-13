@@ -2,34 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Image,
-  List,
-  Menu,
-  Segment,
-  Visibility,
-  Search,
-  Input,
-  Breadcrumb,
-  Icon,
-} from 'semantic-ui-react';
+import history from '../history';
+import { Container, Menu, Input, Icon } from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'home',
+      url: '/',
+      activeItem: 'Home',
     };
   }
 
+  links = [
+    { url: '/artists', name: 'Artists' },
+    { url: '/albums', name: 'Albums' },
+    { url: '/songs', name: 'Songs' },
+  ];
+
   handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name });
+    const link = this.links.find((link) => {
+      return link.name === name;
+    });
+    this.setState({ activeItem: link.name, url: link.url }, () => {
+      history.push(this.state.url);
+    });
   };
 
   render() {
@@ -45,10 +43,13 @@ class Navbar extends Component {
               <Input icon="search" placeholder="Search..." />
             </Menu.Item>
           </Menu.Menu>
-          <Menu.Item name="Artists" active={activeItem === 'Artists'} onClick={this.handleItemClick} />
-          <Menu.Item name="Albums" active={activeItem === 'Albums'} onClick={this.handleItemClick} />
-          <Menu.Item name="Songs" active={activeItem === 'Songs'} onClick={this.handleItemClick} />
-
+          {this.links.map((link) => {
+            return (
+              <Menu.Item key={link.name} name={link.name} onClick={this.handleItemClick}>
+                {link.name}
+              </Menu.Item>
+            );
+          })}
           <Menu.Item position="right">
             <Icon link name="cart" size="large" />
           </Menu.Item>

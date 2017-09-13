@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-// import Navbar from '../components';
-import Navbar from './Navbar';
+// import Navbar from '../components/Navbar';
+import { Albums, Navbar } from '../components';
 import { Container } from 'semantic-ui-react';
 import { logout } from '../store';
+import { Route, Switch } from 'react-router-dom';
 
 /**
  * COMPONENT
@@ -20,26 +21,10 @@ const Main = (props) => {
     <div>
       <Navbar />
       <Container style={{ marginTop: '7em' }}>
-        <h1>songatory</h1>
-        <nav>
-          {isLoggedIn ? (
-            <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
-            </div>
-          ) : (
-            <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-          )}
-        </nav>
-        <hr />
-        {children}
+        {
+          // Routes Go Here!
+        }
+        <Route path="/albums" component={Albums} />
       </Container>
     </div>
   );
