@@ -32,10 +32,8 @@ export const fetchAlbums = () =>
  */
 export default function (state = allAlbums, action) {
   switch (action.type) {
-    case GET_USER:
-      return action.user;
-    case REMOVE_USER:
-      return defaultUser;
+    case GET_ALBUMS:
+      return action.albums;
     default:
       return state;
   }
