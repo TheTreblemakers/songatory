@@ -12,35 +12,28 @@ class Albums extends Component {
   }
 
   render() {
+    const {albums} = this.props;
+    console.log('albums', albums);
     return (
       <div>
-        <h2>All Artists</h2>
+        <h2>All Albums</h2>
         <Grid columns={3} divided>
           <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
-                <Label>
-                  Artist 1
-                </Label>
-            </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
-                 <Label>
-                  Artist 2
-                </Label>
-            </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
-                 <Label>
-                  Artist 3
-                </Label>
-            </Button>
-            </Grid.Column>
+            {
+              albums.map(album => {
+                return <Grid.Column key = {album.id}>
+                  <Button>
+                    <Image src= {album.image} />
+                    <Label>
+                      {album.name}
+                    </Label>
+                  </Button>
+                   <Label>
+                      {album.displayPrice}
+                    </Label>
+                </Grid.Column>
+              })
+            }
           </Grid.Row>
         </Grid>
          <Breadcrumb size='small'>
@@ -58,10 +51,21 @@ class Albums extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {
+    albums: state.albums
+  }
+};
 
 const mapDispatch = (dispatch) => {};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Albums));
+export default withRouter(connect(mapState, null)(Albums));
+
+/**
+ * PROP TYPES
+ */
+Albums.propTypes = {
+  albums: PropTypes.array.isRequired
+};

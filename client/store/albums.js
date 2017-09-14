@@ -9,7 +9,7 @@ const GET_ALBUMS = 'GET_ALBUMS';
 /**
  * INITIAL STATE
  */
-const allAlbums = {};
+const allAlbums = [];
 
 /**
  * ACTION CREATORS
