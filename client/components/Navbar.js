@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import history from '../history';
+import { SearchBar } from '../components';
 import { Container, Menu, Input, Icon } from 'semantic-ui-react';
 import { logout } from '../store';
 
@@ -49,8 +50,8 @@ class Navbar extends Component {
         <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
           <Menu.Menu>
             <Menu.Item style={this.styles.title}>songatory</Menu.Item>
-            <Menu.Item style={this.styles.search}>
-              <Input icon="search" placeholder="Search..." fluid />
+            <Menu.Item>
+              <SearchBar />
             </Menu.Item>
           </Menu.Menu>
           {this.links.map((link) => {
