@@ -12,36 +12,26 @@ const Landing = (props) => {
       background: `url(${background}) no-repeat center center fixed`,
       backgroundSize: 'cover',
       marginTop: 0,
-    },
-    dimmer: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      height: '100%',
-      width: '100%',
-      backgroundColor: 'rgba(0,0,0,.45)',
+      boxShadow: '0 0 0 1000px rgba(0,0,0,0.45) inset',
     },
     subtitle: {
       fontSize: '1em',
       fontWeight: 'normal',
     },
     title: {
-      marginTop: '4em',
+      marginTop: '7em',
       fontSize: '4em',
       fontWeight: 'normal',
       fontFamily: 'Oleo Script',
+      textAlign: 'center',
     },
   };
 
   return (
     <Container style={styles.splash} fluid>
-      <div style={styles.dimmer}>
-        <Container text textAlign="center">
-          <Header inverted style={styles.title}>
-            songatory
-          </Header>
-        </Container>
-      </div>
+      <Header inverted style={styles.title}>
+        songatory
+      </Header>
     </Container>
   );
 };
