@@ -3,28 +3,31 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { auth } from '../store';
 import { withRouter, Link } from 'react-router-dom';
+import Splash from './Splash';
 import { Card, Form, Message } from 'semantic-ui-react';
 
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props;
 
   return (
-    <Card style={{ marginTop: '7em' }} centered raised>
-      <Card.Content>
-        <Card.Header textAlign="center">
-          <h2>{displayName}</h2>
-        </Card.Header>
-        <Form onSubmit={handleSubmit} name={name}>
-          <Form.Input label="Email" name="email" type="email" />
-          <Form.Input label="Password" name="password" type="password" />
-          <Form.Button fluid>Submit</Form.Button>
-          {error && error.response && <Message negative> {error.response.data} </Message>}
-        </Form>
-      </Card.Content>
-      <Card.Content extra textAlign="center">
-        <a href="/auth/google">{displayName} with Google</a>
-      </Card.Content>
-    </Card>
+    <Splash>
+      <Card centered raised>
+        <Card.Content>
+          <Card.Header textAlign="center">
+            <h2>{displayName}</h2>
+          </Card.Header>
+          <Form onSubmit={handleSubmit} name={name}>
+            <Form.Input label="Email" name="email" type="email" />
+            <Form.Input label="Password" name="password" type="password" />
+            <Form.Button fluid>Submit</Form.Button>
+            {error && error.response && <Message negative> {error.response.data} </Message>}
+          </Form>
+        </Card.Content>
+        <Card.Content extra textAlign="center">
+          <a href="/auth/google">{displayName} with Google</a>
+        </Card.Content>
+      </Card>
+    </Splash>
   );
 };
 
