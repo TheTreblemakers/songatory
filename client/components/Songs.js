@@ -9,7 +9,9 @@ import { fetchSongs } from '../store/songs';
 class Songs extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+
+    };
     this.styles = {
       container: {
         padding: `2em`,
@@ -49,32 +51,7 @@ class Songs extends Component {
               ))
             }
           </Table.Body>
-          {/* <Table.Body>
-            <Table.Row>
-              <Table.Cell> Don't Let Me Down</Table.Cell>
-              <Table.Cell> The Beatles</Table.Cell>
-              <Table.Cell>Imagine: John Lennon</Table.Cell>
-              <Table.Cell>$0.99</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell> Don't Let Me Down</Table.Cell>
-              <Table.Cell> The Beatles</Table.Cell>
-              <Table.Cell>Imagine: John Lennon</Table.Cell>
-              <Table.Cell>$0.99</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell> Don't Let Me Down</Table.Cell>
-              <Table.Cell> The Beatles</Table.Cell>
-              <Table.Cell>Imagine: John Lennon</Table.Cell>
-              <Table.Cell>$0.99</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell> Don't Let Me Down</Table.Cell>
-              <Table.Cell> The Beatles</Table.Cell>
-              <Table.Cell>Imagine: John Lennon</Table.Cell>
-              <Table.Cell>$0.99</Table.Cell>
-            </Table.Row>
-          </Table.Body> */}
+
         </Table>
         <Breadcrumb>
           <Breadcrumb.Section active>1</Breadcrumb.Section>
