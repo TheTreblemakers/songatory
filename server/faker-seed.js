@@ -1,10 +1,12 @@
 const db = require('./db');
 const _ = require('lodash');
 const faker = require('faker');
+const crypto = require('crypto');
 const { User, Album, Artist, Review, Song } = require('./db/models');
 
 let orderNumber = 123456789;
 // let date = new Date();
+faker.seed(12345);
 
 const defaultAlbumArtistPics = [
   'http://www.chronicle.com/blogs/buildings/files/2011/09/Perdue-Hall.jpg',
@@ -15,50 +17,46 @@ const defaultAlbumArtistPics = [
   'https://www.ucollege.edu/files/users/webadmin/images/CampusPhotos/Ortner%20Center%20exterior.jpg',
 ];
 
-const users = [
-  {
-    name: 'Joe Ortiz',
-    email: 'joe@gmail.com',
-    isAdmin: true,
-    currentOrder: orderNumber,
-    password: 'joe',
-    salt: 'abcdefghijk',
-    googleId: 'lmnop',
-  },
-];
+const num_users = 100;
+const num_albums = 100;
+const num_artists = 100;
+const num_reviews = 100;
+const num_songs = 100;
 
-const albums = [
-  {
-    name: 'Illinois',
-    description: 'great album much wow 5 stars',
-    price: 1234,
-    year: 1997,
-    image: defaultAlbumArtistPics[0],
-  },
-];
+let users = _.times(num_users, () => ({
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  isAdmin: Math.random() < 0.05 ? true : false,
+  currentOrder: faker.random.number(),
+  password: faker.internet.password(),
+  salt: crypto.randomBytes(16).toString('base64'),
+  googleId: faker.internet.userName(),
+}));
 
-const artists = [
-  {
-    name: 'Illinois Tech',
-    bio: 'Illinois Tech is an avant-garde, modern artist for all your modern needs jackson pollack etc.',
-    image: defaultAlbumArtistPics[4],
-  },
-];
+let albums = _.times(num_albums, () => ({
+  name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
+  description: faker.lorem.paragraph(),
+  price: faker.random.number({ min: 500, max: 1000 }),
+  year: faker.date.past(100).getFullYear(),
+  image: faker.internet.url(),
+}));
 
-const reviews = [
-  {
-    score: 1,
-    content: 'great album much wow 5 stars, seriously great album much wow 5 stars',
-  },
-];
+let artists = _.times(num_albums, () => ({
+  name: (faker.hacker.noun() + ' ' + faker.company.bsBuzz()).replace(/\b\w/g, (l) => l.toUpperCase()),
+  bio: faker.lorem.paragraphs(),
+  image: defaultAlbumArtistPics[4],
+}));
 
-const songs = [
-  {
-    name: 'Illinois',
-    trackNumber: 1,
-    price: 1234,
-  },
-];
+let reviews = _.times(num_albums, () => ({
+  score: faker.random.number({ min: 0, max: 5 }),
+  content: faker.lorem.paragraph(),
+}));
+
+let songs = _.times(num_albums, () => ({
+  name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
+  trackNumber: faker.random.number({ min: 1, max: 20 }),
+  price: faker.random.number({ min: 25, max: 99 }),
+}));
 
 const seed = () => {
   let seedUsers;
