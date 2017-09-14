@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Grid, Image, Button, Label, Breadcrumb } from 'semantic-ui-react';
+import { Container, Grid, Image, Button, Label, Breadcrumb } from 'semantic-ui-react';
 //import history from '../history';
 
 class Artists extends Component {
@@ -13,44 +13,38 @@ class Artists extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h2>All Artists</h2>
         <Grid columns={3} divided>
           <Grid.Row>
             <Grid.Column>
               <Button>
-                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
-                <Label>
-                  Artist 1
-                </Label>
-            </Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 1</Label>
+              </Button>
             </Grid.Column>
             <Grid.Column>
               <Button>
-                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
-                 <Label>
-                  Artist 2
-                </Label>
-            </Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 2</Label>
+              </Button>
             </Grid.Column>
             <Grid.Column>
               <Button>
-                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
-                 <Label>
-                  Artist 3
-                </Label>
-            </Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 3</Label>
+              </Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-         <Breadcrumb size='small'>
+        <Breadcrumb size="small">
           <Breadcrumb.Section active>1</Breadcrumb.Section>
-          <Breadcrumb.Divider icon='right chevron' />
+          <Breadcrumb.Divider icon="right chevron" />
           <Breadcrumb.Section link>2</Breadcrumb.Section>
-          <Breadcrumb.Divider icon='right chevron' />
+          <Breadcrumb.Divider icon="right chevron" />
           <Breadcrumb.Section link>3</Breadcrumb.Section>
         </Breadcrumb>
-      </div>
+      </Container>
     );
   }
 }
@@ -58,8 +52,7 @@ class Artists extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
-};
+const mapState = (state) => {};
 
 const mapDispatch = (dispatch) => {};
 

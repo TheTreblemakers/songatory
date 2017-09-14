@@ -13,13 +13,25 @@ class Navbar extends Component {
       url: '/',
       activeItem: 'Home',
     };
+    this.links = [
+      { url: '/', name: 'Home' },
+      { url: '/artists', name: 'Artists' },
+      { url: '/albums', name: 'Albums' },
+      { url: '/songs', name: 'Songs' },
+    ];
+    this.styles = {
+      navbar: {
+        minHeight: `4em`,
+      },
+      search: {
+        width: `400px`,
+      },
+      title: {
+        fontSize: '1.2em',
+        fontFamily: 'Oleo Script',
+      },
+    };
   }
-
-  links = [
-    { url: '/artists', name: 'Artists' },
-    { url: '/albums', name: 'Albums' },
-    { url: '/songs', name: 'Songs' },
-  ];
 
   handleItemClick = (e, { name }) => {
     const link = this.links.find((link) => {
@@ -34,13 +46,11 @@ class Navbar extends Component {
     let activeItem;
     return (
       <div>
-        <Menu inverted fixed="top" stackable>
+        <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
           <Menu.Menu>
-            <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
-              songatory
-            </Menu.Item>
-            <Menu.Item>
-              <Input icon="search" placeholder="Search..." />
+            <Menu.Item style={this.styles.title}>songatory</Menu.Item>
+            <Menu.Item style={this.styles.search}>
+              <Input icon="search" placeholder="Search..." fluid />
             </Menu.Item>
           </Menu.Menu>
           {this.links.map((link) => {

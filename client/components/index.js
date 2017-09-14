@@ -9,4 +9,5 @@ export { default as Navbar } from './Navbar';
 export { default as Footer } from './Footer';
 export { default as Albums } from './Albums';
 export { default as Artists } from './Artists';
+export { default as Landing } from './Landing';
 export { Login, Signup } from './AuthForm';
