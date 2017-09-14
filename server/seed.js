@@ -115,22 +115,22 @@ const albums = [
 const artists = [
   {
     name: 'Illinois Tech',
-    bio: 'great album much wow 5 stars',
+    bio: 'Illinois Tech is an avant-garde, modern artist for all your modern needs jackson pollack etc.',
     image: defaultAlbumArtistPics[4]
   },
   {
     name: 'Texas State',
-    bio: 'great album much wow 5 stars',
+    bio: 'good ole country band from down yonder',
     image: defaultAlbumArtistPics[5]
   },
   {
     name: 'University of Florida',
-    bio: 'great album much wow 5 stars',
+    bio: 'this bluesy panhandle band will rock the joint with their funky tunes',
     image: defaultAlbumArtistPics[0]
   },
   {
     name: 'California State',
-    bio: 'great album much wow 5 stars',
+    bio: 'In true california style, this relaxed ambient music is perfect for the beach or relaxing after a fun party with friends',
     image: defaultAlbumArtistPics[1]
   }
 ];
