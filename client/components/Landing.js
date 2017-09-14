@@ -10,9 +10,8 @@ const Landing = (props) => {
       top: 0,
       bottom: 0,
       background: `url(${background}) no-repeat center center fixed`,
-      // background: `blue no-repeat center center fixed`,
       backgroundSize: 'cover',
-      marginTop: '0',
+      marginTop: 0,
     },
     dimmer: {
       position: 'absolute',
