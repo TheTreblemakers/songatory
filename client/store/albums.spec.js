@@ -10,7 +10,8 @@ const mockAxios = new MockAdapter(axios);
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
 
-const fakeAlbums = [
+describe('Albums Reducer Test', () => {
+   const fakeAlbums = [
         {
             displayPrice: 12.34,
             id: 1,
@@ -46,42 +47,43 @@ const fakeAlbums = [
         }
     ];
 
-describe('thunk creators', () => {
-  let store;
-  const initialState = {albums: []};
+    describe('thunk creators', () => {
+    let store;
+    const initialState = {albums: []};
 
-  beforeEach(() => {
-    store = mockStore(initialState);
-  });
-
-  afterEach(() => {
-    store.clearActions();
-  });
-
-  describe('fetchAlbums', () => {
-    xit('dispatches the GET ALBUMS action', () => {
-      mockAxios.onGet('/api/albums').reply(200, {}).onAny().reply(500);
-      return store.dispatch(fetchAlbums())
-        .then(() => {
-          const actions = store.getActions();
-          //expect(actions[0]).toEqual(getAlbums());
-          //console.log(actions);
-          expect(actions[0].type).to.be.equal('GET_ALBUMS');
-          //expect(actions[0].albums).to.be.deep.equal(fakeAlbums);
-        });
-      });
+    beforeEach(() => {
+        store = mockStore(initialState);
     });
-  });
 
-describe('action creators', () => {
+    afterEach(() => {
+        store.clearActions();
+    });
 
-            describe('getAlbums', () => {
-                it('returns expected action description', () => {
-                    const actionDescriptor = getAlbums(fakeAlbums);
-                    expect(actionDescriptor).to.be.deep.equal({
-                        type: 'GET_ALBUMS',
-                        albums: fakeAlbums
-                    });
+    describe('fetchAlbums', () => {
+            xit('dispatches the GET ALBUMS action', () => {
+            mockAxios.onGet('/api/albums').reply(200, fakeAlbums);
+            return store.dispatch(fetchAlbums())
+                .then(() => {
+                const actions = store.getActions();
+                //expect(actions[0]).toEqual(getAlbums());
+                //console.log(actions);
+                expect(actions[0].type).to.be.equal('GET_ALBUMS');
+                //expect(actions[0].albums).to.be.deep.equal(fakeAlbums);
                 });
             });
         });
+    });
+
+    describe('action creators', () => {
+
+        describe('getAlbums', () => {
+            it('returns expected action description', () => {
+                const actionDescriptor = getAlbums(fakeAlbums);
+                expect(actionDescriptor).to.be.deep.equal({
+                    type: 'GET_ALBUMS',
+                    albums: fakeAlbums
+                });
+            });
+        });
+    });
+});
