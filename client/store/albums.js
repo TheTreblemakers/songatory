@@ -14,7 +14,7 @@ const allAlbums = [];
 /**
  * ACTION CREATORS
  */
-const getAlbums = albums => ({type: GET_ALBUMS, albums});
+export const getAlbums = albums => ({type: GET_ALBUMS, albums});
 
 
 /**
