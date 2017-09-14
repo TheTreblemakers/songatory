@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Container, Grid, Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 
 const Landing = (props) => {
   const background = 'splash.jpg';
