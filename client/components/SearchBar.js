@@ -4,7 +4,7 @@ import _ from 'lodash';
 import faker from 'faker';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Search, Container, Menu, Input, Icon } from 'semantic-ui-react';
+import { Search } from 'semantic-ui-react';
 
 const source = _.times(5, () => ({
   title: faker.company.companyName(),
