@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { auth } from '../store';
 import { withRouter, Link } from 'react-router-dom';
-import Splash from './Splash';
+import { Splash } from '../components';
 import { Card, Form, Message } from 'semantic-ui-react';
 
 const AuthForm = (props) => {
