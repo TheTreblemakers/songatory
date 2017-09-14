@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Table, Breadcrumb } from 'semantic-ui-react';
+import { Container, Table, Breadcrumb } from 'semantic-ui-react';
 import history from '../history';
 
 class Songs extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.styles = {
+      container: {
+        padding: `2em`,
+      },
+    };
   }
 
   render() {
     return (
-      <div>
+      <Container style={this.styles.container}>
         <h2>All Songs</h2>
         <Table striped>
           <Table.Header>
@@ -59,7 +64,7 @@ class Songs extends Component {
           <Breadcrumb.Divider />
           <Breadcrumb.Section link>3</Breadcrumb.Section>
         </Breadcrumb>
-      </div>
+      </Container>
     );
   }
 }
