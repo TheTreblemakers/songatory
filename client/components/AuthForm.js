@@ -1,42 +1,36 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {auth} from '../store';
+import { auth } from '../store';
+import { withRouter, Link } from 'react-router-dom';
+import { Splash } from '../components';
+import { Card, Form, Message } from 'semantic-ui-react';
 
-/**
- * COMPONENT
- */
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email"><small>Email</small></label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password"><small>Password</small></label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
+    <Splash>
+      <Card centered raised>
+        <Card.Content>
+          <Card.Header textAlign="center">
+            <h2>{displayName}</h2>
+          </Card.Header>
+          <Form onSubmit={handleSubmit} name={name}>
+            <Form.Input label="Email" name="email" type="email" />
+            <Form.Input label="Password" name="password" type="password" />
+            <Form.Button fluid>Submit</Form.Button>
+            {error && error.response && <Message negative> {error.response.data} </Message>}
+          </Form>
+        </Card.Content>
+        <Card.Content extra textAlign="center">
+          <a href="/auth/google">{displayName} with Google</a>
+        </Card.Content>
+      </Card>
+    </Splash>
   );
 };
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = (state) => {
   return {
     name: 'login',
@@ -56,6 +50,7 @@ const mapSignup = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit (evt) {
+      // console.log(evt.target);
       evt.preventDefault();
       const formName = evt.target.name;
       const email = evt.target.email.value;
@@ -65,8 +60,8 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm);
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
+export const Login = withRouter(connect(mapLogin, mapDispatch)(AuthForm));
+export const Signup = withRouter(connect(mapSignup, mapDispatch)(AuthForm));
 
 /**
  * PROP TYPES
