@@ -41,9 +41,6 @@ const Landing = (props) => {
           <Header inverted style={styles.title}>
             songatory
           </Header>
-          <Header inverted style={styles.subtitle}>
-            css punching you in the face :D
-          </Header>
         </Container>
       </div>
     </Container>
