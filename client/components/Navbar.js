@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import history from '../history';
-import { Container, Menu, Input, Icon } from 'semantic-ui-react';
+import { Menu, Input, Icon } from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
@@ -40,33 +40,31 @@ class Navbar extends Component {
     this.setState({ activeItem: link.name, url: link.url }, () => {
       history.push(this.state.url);
     });
-  };
+  }
 
   render() {
     let activeItem;
     return (
-      <div>
-        <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
-          <Menu.Menu>
-            <Menu.Item style={this.styles.title}>songatory</Menu.Item>
-            <Menu.Item style={this.styles.search}>
-              <Input icon="search" placeholder="Search..." fluid />
-            </Menu.Item>
-          </Menu.Menu>
-          {this.links.map((link) => {
-            return (
-              <Menu.Item key={link.name} name={link.name} onClick={this.handleItemClick}>
-                {link.name}
-              </Menu.Item>
-            );
-          })}
-          <Menu.Item position="right">
-            <Icon link name="cart" size="large" />
+      <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
+        <Menu.Menu>
+          <Menu.Item style={this.styles.title}>songatory</Menu.Item>
+          <Menu.Item style={this.styles.search}>
+            <Input icon="search" placeholder="Search..." fluid />
           </Menu.Item>
-          <Menu.Item name="Login" onClick={this.handleItemClick} />
-          <Menu.Item name="Sign Up" onClick={this.handleItemClick} />
-        </Menu>
-      </div>
+        </Menu.Menu>
+        {this.links.map((link) => {
+          return (
+            <Menu.Item key={link.name} name={link.name} onClick={this.handleItemClick}>
+              {link.name}
+            </Menu.Item>
+          );
+        })}
+        <Menu.Item position="right">
+          <Icon link name="cart" size="large" />
+        </Menu.Item>
+        <Menu.Item name="Login" onClick={this.handleItemClick} />
+        <Menu.Item name="Sign Up" onClick={this.handleItemClick} />
+      </Menu>
     );
   }
 }
