@@ -9,13 +9,58 @@ class Artists extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.styles = {
+      container: {
+        padding: `2em`,
+      },
+    };
   }
 
   render() {
     return (
-      <Container>
+      <Container style={this.styles.container}>
         <h2>All Artists</h2>
         <Grid columns={3} divided>
+          <Grid.Row>
+            <Grid.Column>
+              <Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 1</Label>
+              </Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 2</Label>
+              </Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 3</Label>
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 1</Label>
+              </Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 2</Label>
+              </Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button>
+                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
+                <Label>Artist 3</Label>
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
           <Grid.Row>
             <Grid.Column>
               <Button>

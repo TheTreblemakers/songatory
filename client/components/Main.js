@@ -25,7 +25,6 @@ const Main = (props) => {
     containerFull: {
       marginTop: '4em',
       flex: '1',
-      background: 'teal',
     },
   };
 
