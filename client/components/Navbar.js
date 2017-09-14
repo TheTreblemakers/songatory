@@ -72,9 +72,13 @@ class Navbar extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {}
+};
 
-const mapDispatch = (dispatch) => {};
+const mapDispatch = (dispatch) => {
+  return {}
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes

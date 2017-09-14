@@ -239,6 +239,11 @@ const seed = () => {
       Promise.all(seedAlbums.map((album, index) =>
         seedArtists[index % seedArtists.length].addAlbum(album)
       ))
+    )
+    .then(() =>
+      Promise.all(seedSongs.map((song, index) =>
+        seedArtists[index % seedArtists.length].addSong(song)
+      ))
     );
 };
 

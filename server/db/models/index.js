@@ -9,8 +9,11 @@ User.hasMany(Order);
 User.hasMany(Review);
 
 Artist.belongsToMany(Album, { through: 'artist_album' });
+Artist.hasMany(Song);
+Song.belongsTo(Artist);
 
 Album.hasMany(Song);
+Song.belongsTo(Album);
 Album.hasMany(Review);
 
 Song.hasMany(Review);
