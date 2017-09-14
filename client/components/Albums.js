@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import { Grid, Image, Button, Label, Breadcrumb } from 'semantic-ui-react';
 import history from '../history';
 
 class Albums extends Component {
@@ -11,7 +12,46 @@ class Albums extends Component {
   }
 
   render() {
-    return <div>All albums here!</div>;
+    return (
+      <div>
+        <h2>All Artists</h2>
+        <Grid columns={3} divided>
+          <Grid.Row>
+            <Grid.Column>
+              <Button>
+                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
+                <Label>
+                  Artist 1
+                </Label>
+            </Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button>
+                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
+                 <Label>
+                  Artist 2
+                </Label>
+            </Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button>
+                <Image src='http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg' />
+                 <Label>
+                  Artist 3
+                </Label>
+            </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+         <Breadcrumb size='small'>
+          <Breadcrumb.Section active>1</Breadcrumb.Section>
+          <Breadcrumb.Divider icon='right chevron' />
+          <Breadcrumb.Section link>2</Breadcrumb.Section>
+          <Breadcrumb.Divider icon='right chevron' />
+          <Breadcrumb.Section link>3</Breadcrumb.Section>
+        </Breadcrumb>
+      </div>
+    );
   }
 }
 
