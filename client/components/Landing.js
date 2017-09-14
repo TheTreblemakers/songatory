@@ -6,7 +6,10 @@ const Landing = (props) => {
   const background = 'splash.jpg';
   const styles = {
     splash: {
+      display: 'flex',
       position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
       top: 0,
       bottom: 0,
       background: `url(${background}) no-repeat center center fixed`,
@@ -19,11 +22,9 @@ const Landing = (props) => {
       fontWeight: 'normal',
     },
     title: {
-      marginTop: '7em',
       fontSize: '4em',
       fontWeight: 'normal',
       fontFamily: 'Oleo Script',
-      textAlign: 'center',
     },
   };
 
