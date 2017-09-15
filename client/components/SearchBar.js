@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import faker from 'faker';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Search } from 'semantic-ui-react';
-
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
-}));
 
 class SearchBar extends Component {
   constructor(props) {
@@ -40,14 +32,18 @@ class SearchBar extends Component {
     this.setState({ isLoading: true, value });
 
     setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent();
+      if (this.state.value.length < 1) {
+        return this.resetComponent();
+      }
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
-      const isMatch = (result) => re.test(result.title);
+      const isMatch = (result) => {
+        return re.test(result.title);
+      };
 
       this.setState({
         isLoading: false,
-        results: _.filter(source, isMatch),
+        results: _.filter(this.props.artists, isMatch),
       });
     }, 0);
   };
@@ -73,10 +69,15 @@ class SearchBar extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {
+    artists: state.artists,
+    albums: state.albums,
+  };
+};
 
 const mapDispatch = (dispatch) => {};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(SearchBar));
+export default withRouter(connect(mapState, null)(SearchBar));

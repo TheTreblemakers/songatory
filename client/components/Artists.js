@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Icon, Item, Button, Label, Breadcrumb } from 'semantic-ui-react';
+import { Container, Image, Card, Icon, Breadcrumb } from 'semantic-ui-react';
 
 class Artists extends Component {
   constructor(props) {
@@ -12,38 +12,37 @@ class Artists extends Component {
       container: {
         padding: `2em`,
       },
+      card: {},
     };
   }
 
   render() {
-    console.log(this.props);
     const { artists } = this.props;
-    const imgUrl = `http://via.placeholder.com/150x150`;
+    const styles = this.styles;
+    const imgUrl = 'http://via.placeholder.com/300x300';
     return (
-      <Container style={this.styles.container}>
+      <Container style={styles.container}>
         <h2>All Artists</h2>
-        <Item.Group divided>
-          {artists.map((artist, index) => {
-            if (index > 10) return;
+        <Card.Group itemsPerRow={4}>
+          {artists.map((artist, idx) => {
+            if (idx > 16) return;
+            const artistUrl = `/artist/${artist.id}`;
             return (
-              <Item key={artist.id}>
-                <Item.Image src={artist.image} />
-                <Item.Content>
-                  <Item.Header as="a">{artist.name}</Item.Header>
-                  <Item.Description>{artist.bio}</Item.Description>
-                  <Item.Extra>
-                    <Button primary floated="right">
-                      Details
-                      <Icon name="right chevron" />
-                    </Button>
-                    <Label>category#001</Label>
-                    <Label>category#002</Label>
-                  </Item.Extra>
-                </Item.Content>
-              </Item>
+              <Card key={artist.id} raised>
+                <Image src={imgUrl} as={Link} to={artistUrl} />
+                <Card.Content>
+                  <Card.Header>{artist.name}</Card.Header>
+                  <Card.Meta>Artist Blurb Goes Here</Card.Meta>
+                  <Card.Description>{artist.bio.split('.')[0]}</Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <Icon name="right chevron" />
+                  <Link to={artistUrl}>See More</Link>
+                </Card.Content>
+              </Card>
             );
           })}
-        </Item.Group>
+        </Card.Group>
         <Breadcrumb size="small">
           <Breadcrumb.Section active>1</Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />

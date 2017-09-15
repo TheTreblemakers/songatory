@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Song} = require('../db/models');
+const { Song } = require('../db/models');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
