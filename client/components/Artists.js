@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Image, Card, Icon, Breadcrumb } from 'semantic-ui-react';
+import { ArtistCard } from '../components';
+import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
 class Artists extends Component {
   constructor(props) {
@@ -19,30 +20,17 @@ class Artists extends Component {
   render() {
     const { artists } = this.props;
     const styles = this.styles;
-    const imgUrl = 'http://via.placeholder.com/300x300';
+    console.log(artists);
     return (
       <Container style={styles.container}>
         <h2>All Artists</h2>
         <Card.Group itemsPerRow={4}>
           {artists.map((artist, idx) => {
             if (idx > 16) return;
-            const artistUrl = `/artist/${artist.id}`;
-            return (
-              <Card key={artist.id} raised>
-                <Image src={imgUrl} as={Link} to={artistUrl} />
-                <Card.Content>
-                  <Card.Header>{artist.name}</Card.Header>
-                  <Card.Meta>Artist Blurb Goes Here</Card.Meta>
-                  <Card.Description>{artist.bio.split('.')[0]}</Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <Icon name="right chevron" />
-                  <Link to={artistUrl}>See More</Link>
-                </Card.Content>
-              </Card>
-            );
+            return <ArtistCard key={artist.id} artist={artist} />;
           })}
         </Card.Group>
+        <Divider />
         <Breadcrumb size="small">
           <Breadcrumb.Section active>1</Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />
