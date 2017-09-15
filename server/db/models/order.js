@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 const Album = require('./album');
+const Song = require('./song');
 
 const Order = db.define('order', {
   date: {
@@ -18,7 +19,7 @@ const Order = db.define('order', {
   }
 }, {
   defaultScope: {
-    include: [ Album ]
+    include: [ Album, Song ]
   },
   hooks: {
     beforeValidate: order => {
