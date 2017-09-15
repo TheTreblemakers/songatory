@@ -240,11 +240,6 @@ const seed = () => {
         seedArtists[index % seedArtists.length].addAlbum(album)
       ))
     );
-    // .then(() =>
-    //   Promise.all(seedSongs.map((song, index) =>
-    //     seedArtists[index % seedArtists.length].addSong(song)
-    //   ))
-    // );
 };
 
 const seedDb = () => {
