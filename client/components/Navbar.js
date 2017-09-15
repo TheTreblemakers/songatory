@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import history from '../history';
+import { withRouter, Link } from 'react-router-dom';
 import { Menu, Input, Icon } from 'semantic-ui-react';
 import { logout } from '../store';
 
@@ -18,8 +17,6 @@ class Navbar extends Component {
       { url: '/artists', name: 'Artists' },
       { url: '/albums', name: 'Albums' },
       { url: '/songs', name: 'Songs' },
-      { url: '/login', name: 'Login' },
-      { url: '/signup', name: 'Sign Up' },
     ];
     this.styles = {
       navbar: {
@@ -35,15 +32,6 @@ class Navbar extends Component {
     };
   }
 
-  handleItemClick = (e, { name }) => {
-    const link = this.links.find((link) => {
-      return link.name === name;
-    });
-    this.setState({ activeItem: link.name, url: link.url }, () => {
-      history.push(this.state.url);
-    });
-  }
-
   render() {
     let activeItem;
     return (
@@ -56,7 +44,7 @@ class Navbar extends Component {
         </Menu.Menu>
         {this.links.map((link) => {
           return (
-            <Menu.Item key={link.name} name={link.name} onClick={this.handleItemClick}>
+            <Menu.Item key={link.name} name={link.name} as={Link} to={link.url}>
               {link.name}
             </Menu.Item>
           );
@@ -64,8 +52,8 @@ class Navbar extends Component {
         <Menu.Item position="right">
           <Icon link name="cart" size="large" />
         </Menu.Item>
-        <Menu.Item name="Login" onClick={this.handleItemClick} />
-        <Menu.Item name="Sign Up" onClick={this.handleItemClick} />
+        <Menu.Item name="Login" as={Link} to={`/login`} />
+        <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
       </Menu>
     );
   }
