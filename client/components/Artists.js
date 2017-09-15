@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Container, Grid, Image, Button, Label, Breadcrumb } from 'semantic-ui-react';
-//import history from '../history';
+import history from '../history';
 
 class Artists extends Component {
   constructor(props) {
