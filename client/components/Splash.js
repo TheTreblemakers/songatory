@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react';
 const Splash = (props) => {
   const { children } = props;
 
-  const background = 'splash.jpg';
+  const background = 'splash3.jpg';
   const styles = {
     splash: {
       display: 'flex',
@@ -23,7 +23,7 @@ const Splash = (props) => {
 
   return (
     <Container style={styles.splash} fluid>
-      { children }
+      {children}
     </Container>
   );
 };
