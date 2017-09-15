@@ -60,22 +60,3 @@ export default withRouter(connect(mapState, null)(Albums));
 Albums.propTypes = {
   albums: PropTypes.array.isRequired
 };
-
-{/*
-{
-              albums.map(album => {
-                return <Item key={album.id}>
-                  <Item.Image size='medium' src={album.image} />
-
-                  <Item.Content>
-                    <Item.Header>{album.name}</Item.Header>
-                    <Item.Meta>
-                      <span className='price'>{album.displayPrice}</span>
-                    </Item.Meta>
-                    <Item.Description>{album.description}</Item.Description>
-                    <Button primary>Purchase Album</Button>
-                  </Item.Content>
-                </Item>
-              })
-            }
-*/}

@@ -18,7 +18,7 @@ const Album = (props) => {
                 <span className='price'>{album.displayPrice}</span>
               </Item.Meta>
               <Item.Description>{album.description}</Item.Description>
-              <Button primary>Purchase Album</Button>
+              <Button primary>Add To Cart</Button>
             </Item.Content>
           </Item>
         })
