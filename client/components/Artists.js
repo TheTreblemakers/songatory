@@ -27,7 +27,7 @@ class Artists extends Component {
             if (index > 10) return;
             return (
               <Item key={artist.id}>
-                <Item.Image src={imgUrl} />
+                <Item.Image src={artist.image} />
                 <Item.Content>
                   <Item.Header as="a">{artist.name}</Item.Header>
                   <Item.Description>{artist.bio}</Item.Description>
