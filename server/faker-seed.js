@@ -8,20 +8,15 @@ let orderNumber = 123456789;
 // let date = new Date();
 faker.seed(12345);
 
-const defaultAlbumArtistPics = [
-  'http://www.chronicle.com/blogs/buildings/files/2011/09/Perdue-Hall.jpg',
-  'http://www.masoncontractors.org/images/projects/mclennan-community-college-dennis-f-michaelis-academic-building/mclennan-community-college-dennis-f-michaelis-academic-building-1.jpg',
-  'https://www.e-architect.co.uk/images/jpgs/new_york/brooklyn_college_westquad_vinoly0107.jpg',
-  'https://www.stchas.edu/images/buildings/ssb-bldg-940.jpg',
-  'http://ie-services.com/wp-content/uploads/2014/12/AC_SACNursing.jpg',
-  'https://www.ucollege.edu/files/users/webadmin/images/CampusPhotos/Ortner%20Center%20exterior.jpg',
-];
-
 const num_users = 100;
 const num_albums = 100;
 const num_artists = 100;
 const num_reviews = 100;
 const num_songs = 100;
+
+// const artistImgUrl = 'http://via.placeholder.com/200x200';
+const artistImgUrl = 'buble.jpg';
+const albumImgUrl = 'http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg';
 
 let users = _.times(num_users, () => ({
   name: faker.name.findName(),
@@ -38,13 +33,13 @@ let albums = _.times(num_albums, () => ({
   description: faker.lorem.paragraph(),
   price: faker.random.number({ min: 500, max: 1000 }),
   year: faker.date.past(100).getFullYear(),
-  image: faker.internet.url(),
+  image: albumImgUrl,
 }));
 
 let artists = _.times(num_albums, () => ({
   name: (faker.hacker.noun() + ' ' + faker.company.bsBuzz()).replace(/\b\w/g, (l) => l.toUpperCase()),
   bio: faker.lorem.paragraphs(),
-  image: defaultAlbumArtistPics[4],
+  image: artistImgUrl,
 }));
 
 let reviews = _.times(num_albums, () => ({
