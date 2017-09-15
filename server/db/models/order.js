@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const Album = require('./album');
 
 const Order = db.define('order', {
   date: {
@@ -16,6 +17,9 @@ const Order = db.define('order', {
     type: Sequelize.STRING
   }
 }, {
+  defaultScope: {
+    include: [ Album ]
+  },
   hooks: {
     beforeValidate: order => {
       return Order.findOne({ where: { userId: order.userId, fulfilled: false } })
