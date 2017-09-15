@@ -5,7 +5,7 @@ import { Image, Card, Icon } from 'semantic-ui-react';
 const AlbumCard = (props) => {
   const album = props.album;
   const imgUrl = 'http://via.placeholder.com/300x300';
-  const albumUrl = `/album/${album.id}`;
+  const albumUrl = `/albums/${album.id}`;
   return (
     <Card key={props.key} raised>
       <Image src={imgUrl} as={Link} to={albumUrl} />
