@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const Album = require('./album');
 
 const Song = db.define('song', {
   name: {
@@ -25,6 +26,10 @@ const Song = db.define('song', {
     get() {
       return (this.getDataValue('price') / 100);
     }
+  }
+}, {
+  defaultScope: {
+    include: [ Album ]
   }
 });
 

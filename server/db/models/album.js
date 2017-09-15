@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const Artist = require('./artist');
 
 const Album = db.define('album', {
   name: {
@@ -31,6 +32,10 @@ const Album = db.define('album', {
   image: {
     type: Sequelize.STRING,
     // defaultValue: /*** insert default image ***/
+  }
+}, {
+  defaultScope: {
+    include: [ Artist ]
   }
 });
 
