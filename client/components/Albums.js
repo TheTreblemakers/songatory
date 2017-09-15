@@ -51,7 +51,9 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {};
+const mapDispatch = (dispatch) => {
+  return {}
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
