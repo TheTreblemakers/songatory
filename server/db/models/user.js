@@ -18,9 +18,6 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  currentOrder: {
-    type: Sequelize.BIGINT
-  },
   password: {
     type: Sequelize.STRING
   },
