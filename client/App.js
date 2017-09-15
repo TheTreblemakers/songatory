@@ -40,8 +40,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me());
-      //.then(() => dispatch(fetchCart()));
+      dispatch(me())
+      .then(() => dispatch(fetchCart()));
       dispatch(fetchAlbums());
     },
   };
