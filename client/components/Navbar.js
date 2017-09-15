@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-import { withRouter } from 'react-router-dom';
-import history from '../history';
-import { SearchBar } from '../components';
-import { Container, Menu, Input, Icon } from 'semantic-ui-react';
-=======
 import { withRouter, Link } from 'react-router-dom';
 import { Menu, Input, Icon } from 'semantic-ui-react';
->>>>>>> 3a991575e66499d3e05afc8bed46da0f29c6377b
 import { logout } from '../store';
 
 class Navbar extends Component {
@@ -39,18 +32,6 @@ class Navbar extends Component {
     };
   }
 
-<<<<<<< HEAD
-  handleItemClick = (e, { name }) => {
-    const link = this.links.find((link) => {
-      return link.name === name;
-    });
-    this.setState({ activeItem: link.name, url: link.url }, () => {
-      history.push(this.state.url);
-    });
-  };
-
-=======
->>>>>>> 3a991575e66499d3e05afc8bed46da0f29c6377b
   render() {
     let activeItem;
     return (
