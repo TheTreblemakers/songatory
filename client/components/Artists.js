@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Grid, Image, Button, Label, Breadcrumb } from 'semantic-ui-react';
-import history from '../history';
+import { ArtistCard } from '../components';
+import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
 class Artists extends Component {
   constructor(props) {
@@ -13,75 +13,24 @@ class Artists extends Component {
       container: {
         padding: `2em`,
       },
+      card: {},
     };
   }
 
   render() {
+    const { artists } = this.props;
+    const styles = this.styles;
+    console.log(artists);
     return (
-      <Container style={this.styles.container}>
+      <Container style={styles.container}>
         <h2>All Artists</h2>
-        <Grid columns={3} divided>
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 1</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 2</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 3</Label>
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 1</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 2</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 3</Label>
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 1</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 2</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 3</Label>
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Card.Group itemsPerRow={4}>
+          {artists.map((artist, idx) => {
+            if (idx > 16) return;
+            return <ArtistCard key={artist.id} artist={artist} />;
+          })}
+        </Card.Group>
+        <Divider />
         <Breadcrumb size="small">
           <Breadcrumb.Section active>1</Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />
@@ -97,10 +46,14 @@ class Artists extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {
+    artists: state.artists,
+  };
+};
 
 const mapDispatch = (dispatch) => {};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(null, null)(Artists));
+export default withRouter(connect(mapState, null)(Artists));

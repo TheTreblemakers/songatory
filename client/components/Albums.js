@@ -2,36 +2,39 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Image, Button, Label, Item, Breadcrumb } from 'semantic-ui-react';
-import Album from  './Album';
-import history from '../history';
+import { AlbumCard } from '../components';
+import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
 class Albums extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-     this.styles = {
+    this.styles = {
       container: {
         padding: `2em`,
       },
+      card: {},
     };
   }
 
   render() {
-    const {albums} = this.props;
-
+    const { albums } = this.props;
+    const styles = this.styles;
     return (
-      <Container style={this.styles.container}>
+      <Container style={styles.container}>
         <h2>All Albums</h2>
-          <Item.Group>
-            <Album albums={albums} />
-          </Item.Group>
-
-         <Breadcrumb size='small'>
+        <Card.Group itemsPerRow={4}>
+          {albums.map((album, idx) => {
+            if (idx > 16) return;
+            return <AlbumCard key={album.id} album={album} />;
+          })}
+        </Card.Group>
+        <Divider />
+        <Breadcrumb size="small">
           <Breadcrumb.Section active>1</Breadcrumb.Section>
-          <Breadcrumb.Divider icon='right chevron' />
+          <Breadcrumb.Divider icon="right chevron" />
           <Breadcrumb.Section link>2</Breadcrumb.Section>
-          <Breadcrumb.Divider icon='right chevron' />
+          <Breadcrumb.Divider icon="right chevron" />
           <Breadcrumb.Section link>3</Breadcrumb.Section>
         </Breadcrumb>
       </Container>
@@ -44,8 +47,8 @@ class Albums extends Component {
  */
 const mapState = (state) => {
   return {
-    albums: state.albums
-  }
+    albums: state.albums,
+  };
 };
 
 const mapDispatch = (dispatch) => {
@@ -55,29 +58,3 @@ const mapDispatch = (dispatch) => {
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
 export default withRouter(connect(mapState, null)(Albums));
-
-/**
- * PROP TYPES
- */
-Albums.propTypes = {
-  albums: PropTypes.array.isRequired
-};
-
-{/*
-{
-              albums.map(album => {
-                return <Item key={album.id}>
-                  <Item.Image size='medium' src={album.image} />
-
-                  <Item.Content>
-                    <Item.Header>{album.name}</Item.Header>
-                    <Item.Meta>
-                      <span className='price'>{album.displayPrice}</span>
-                    </Item.Meta>
-                    <Item.Description>{album.description}</Item.Description>
-                    <Button primary>Purchase Album</Button>
-                  </Item.Content>
-                </Item>
-              })
-            }
-*/}

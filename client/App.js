@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 import { Main, Login, Signup, UserHome } from './components';
-import { me, fetchAlbums } from './store';
+import { me, fetchAlbums, fetchArtists } from './store';
 
 /**
  * COMPONENT
@@ -42,6 +42,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
       dispatch(fetchAlbums());
+      dispatch(fetchArtists());
     },
   };
 };
