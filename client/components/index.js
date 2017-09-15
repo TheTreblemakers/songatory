@@ -10,6 +10,7 @@ export { default as Footer } from './Footer';
 export { default as Albums } from './Albums';
 export { default as Artists } from './Artists';
 export { default as Landing } from './Landing';
+export { default as SearchBar } from './SearchBar';
 export { default as Splash } from './Splash';
 export { default as Songs } from './Songs';
 export { Login, Signup } from './AuthForm';
