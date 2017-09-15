@@ -25,7 +25,7 @@ class Songs extends Component {
 
   render() {
     const { songs } = this.props;
-
+    
     return (
       <Container style={this.styles.container}>
         <h2>All Songs</h2>
@@ -44,7 +44,7 @@ class Songs extends Component {
               songs.map(song => (
                 <Table.Row key={song.id}>
                   <Table.Cell> {song.name}</Table.Cell>
-                  <Table.Cell> {song.artist.name}</Table.Cell>
+                   <Table.Cell> {song.album.artist.name}</Table.Cell> 
                   <Table.Cell>{song.album.name}</Table.Cell>
                   <Table.Cell>{song.price}</Table.Cell>
                 </Table.Row>

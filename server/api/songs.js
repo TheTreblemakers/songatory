@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Song, Artist, Album } = require('../db/models');
+const {Song, Album } = require('../db/models');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
@@ -12,9 +12,7 @@ router.param('id', (req, res, next, id) => {
 
 // GET /api/songs/
 router.get('/', (req, res, next) => {
-  Song.findAll({
-    include: [ Artist, Album ]
-  })
+  Song.findAll()
     .then(songs => res.json(songs))
     .catch(next);
 });

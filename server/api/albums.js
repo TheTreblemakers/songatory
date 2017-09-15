@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Album} = require('../db/models');
+const {Album, Artist} = require('../db/models');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
