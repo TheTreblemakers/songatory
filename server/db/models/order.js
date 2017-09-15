@@ -15,7 +15,21 @@ const Order = db.define('order', {
   paymentMethod: {
     type: Sequelize.STRING
   }
+}, {
+  hooks: {
+    beforeValidate: order => {
+      return Order.findOne({ where: { userId: order.userId, fulfilled: false } })
+        .then(matchedOrder => {
+          if (matchedOrder) {
+            return Sequelize.Promise.reject(new Error('User already has an unfulfilled order'));
+          } else {
+            return order;
+          }
+        });
+    },
+  },
 });
+
 
 module.exports = Order;
 
