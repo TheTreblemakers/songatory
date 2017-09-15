@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Grid, Image, Button, Label, Breadcrumb } from 'semantic-ui-react';
-import history from '../history';
+import { Container, Icon, Item, Button, Label, Breadcrumb } from 'semantic-ui-react';
 
 class Artists extends Component {
   constructor(props) {
@@ -17,71 +16,34 @@ class Artists extends Component {
   }
 
   render() {
+    console.log(this.props);
+    const { artists } = this.props;
+    const imgUrl = `http://via.placeholder.com/150x150`;
     return (
       <Container style={this.styles.container}>
         <h2>All Artists</h2>
-        <Grid columns={3} divided>
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 1</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 2</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 3</Label>
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 1</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 2</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 3</Label>
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 1</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 2</Label>
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button>
-                <Image src="http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg" />
-                <Label>Artist 3</Label>
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Item.Group divided>
+          {artists.map((artist, index) => {
+            if (index > 10) return;
+            return (
+              <Item key={artist.id}>
+                <Item.Image src={imgUrl} />
+                <Item.Content>
+                  <Item.Header as="a">{artist.name}</Item.Header>
+                  <Item.Description>{artist.bio}</Item.Description>
+                  <Item.Extra>
+                    <Button primary floated="right">
+                      Details
+                      <Icon name="right chevron" />
+                    </Button>
+                    <Label>category#001</Label>
+                    <Label>category#002</Label>
+                  </Item.Extra>
+                </Item.Content>
+              </Item>
+            );
+          })}
+        </Item.Group>
         <Breadcrumb size="small">
           <Breadcrumb.Section active>1</Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />
@@ -97,10 +59,14 @@ class Artists extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {
+    artists: state.artists,
+  };
+};
 
 const mapDispatch = (dispatch) => {};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(null, null)(Artists));
+export default withRouter(connect(mapState, null)(Artists));
