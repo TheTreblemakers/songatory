@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import { withRouter } from 'react-router-dom';
 import history from '../history';
 import { SearchBar } from '../components';
 import { Container, Menu, Input, Icon } from 'semantic-ui-react';
+=======
+import { withRouter, Link } from 'react-router-dom';
+import { Menu, Input, Icon } from 'semantic-ui-react';
+>>>>>>> 3a991575e66499d3e05afc8bed46da0f29c6377b
 import { logout } from '../store';
 
 class Navbar extends Component {
@@ -19,8 +24,6 @@ class Navbar extends Component {
       { url: '/artists', name: 'Artists' },
       { url: '/albums', name: 'Albums' },
       { url: '/songs', name: 'Songs' },
-      { url: '/login', name: 'Login' },
-      { url: '/signup', name: 'Sign Up' },
     ];
     this.styles = {
       navbar: {
@@ -36,6 +39,7 @@ class Navbar extends Component {
     };
   }
 
+<<<<<<< HEAD
   handleItemClick = (e, { name }) => {
     const link = this.links.find((link) => {
       return link.name === name;
@@ -45,6 +49,8 @@ class Navbar extends Component {
     });
   };
 
+=======
+>>>>>>> 3a991575e66499d3e05afc8bed46da0f29c6377b
   render() {
     let activeItem;
     return (
@@ -57,7 +63,7 @@ class Navbar extends Component {
         </Menu.Menu>
         {this.links.map((link) => {
           return (
-            <Menu.Item key={link.name} name={link.name} onClick={this.handleItemClick}>
+            <Menu.Item key={link.name} name={link.name} as={Link} to={link.url}>
               {link.name}
             </Menu.Item>
           );
@@ -65,8 +71,8 @@ class Navbar extends Component {
         <Menu.Item position="right">
           <Icon link name="cart" size="large" />
         </Menu.Item>
-        <Menu.Item name="Login" onClick={this.handleItemClick} />
-        <Menu.Item name="Sign Up" onClick={this.handleItemClick} />
+        <Menu.Item name="Login" as={Link} to={`/login`} />
+        <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
       </Menu>
     );
   }
