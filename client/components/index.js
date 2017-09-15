@@ -8,6 +8,7 @@ export { default as UserHome } from './UserHome';
 export { default as Navbar } from './Navbar';
 export { default as Footer } from './Footer';
 export { default as Albums } from './Albums';
+export { default as AlbumCard } from './AlbumCard';
 export { default as Artists } from './Artists';
 export { default as ArtistCard } from './ArtistCard';
 export { default as Landing } from './Landing';
