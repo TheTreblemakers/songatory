@@ -26,7 +26,7 @@ class App extends Component {
 /**
  * CONTAINER
  */
-const mapState = {};
+const mapState = () => ({});
 
 const mapDispatch = (dispatch) => {
   return {

@@ -35,6 +35,7 @@ class Navbar extends Component {
 
   render() {
     const { isLoggedIn, handleLogout } = this.props;
+
     return (
       <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
@@ -58,8 +59,13 @@ class Navbar extends Component {
         <Menu.Item position="right">
           <Icon link name="cart" size="large" />
         </Menu.Item>
-        <Menu.Item name="Login" as={Link} to={`/login`} />
-        <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
+        { isLoggedIn
+          ? <Menu.Item name="Log Out" onClick={handleLogout} />
+          : <Menu.Menu>
+            <Menu.Item name="Login" as={Link} to={`/login`} />
+            <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
+          </Menu.Menu>
+        }
       </Menu>
     );
   }
