@@ -48,6 +48,17 @@ rp(options)
         salt: crypto.randomBytes(16).toString('base64'),
         googleId: faker.internet.userName(),
       }));
+
+      users.push({
+        name: `admin`,
+        email: 'admin@equifax.com',
+        isAdmin: true,
+        currentOrder: faker.random.number(),
+        password: `admin`,
+        salt: crypto.randomBytes(16).toString('base64'),
+        googleId: faker.internet.userName(),
+      });
+
       return Promise.all(
         users.map((user) => {
           return User.create(user);
@@ -106,20 +117,21 @@ rp(options)
     };
 
     const seed = () => {
-      return generateArtists().map((artist) => {
-        return generateAlbums()
-          .map((album) => {
-            return generateSongs().then((songs) => {
-              return album.setSongs(songs);
+      return generateArtists()
+        .map((artist) => {
+          return generateAlbums()
+            .map((album) => {
+              return generateSongs().then((songs) => {
+                return album.setSongs(songs);
+              });
+            })
+            .then((albums) => {
+              return artist.setAlbums(albums);
             });
-          })
-          .then((albums) => {
-            return artist.setAlbums(albums);
-          })
-          .then(() => {
-            return generateUsers();
-          });
-      });
+        })
+        .then(() => {
+          return generateUsers();
+        });
     };
 
     const seedDb = () => {
