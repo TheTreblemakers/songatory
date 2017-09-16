@@ -15,9 +15,14 @@ Album.hasMany(Song);
 Song.belongsTo(Album);
 
 Album.hasMany(Review);
-
 Song.hasMany(Review);
 
+Album.addScope('withSongs', {
+  include: [ Song ],
+});
+Artist.addScope('populated', {
+  include: [ Album.scope('withSongs') ],
+});
 
 module.exports = {
   User,
@@ -25,5 +30,5 @@ module.exports = {
   Album,
   Order,
   Review,
-  Song
+  Song,
 };
