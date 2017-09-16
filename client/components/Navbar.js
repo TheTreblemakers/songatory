@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Menu, Input, Icon } from 'semantic-ui-react';
-import { SearchBar } from '../components';
+import { Menu, Input, Icon, Dropdown } from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.searchOptions = [
+      { key: 'Artists', text: 'Artists', value: 'artists' },
+      { key: 'Albums', text: 'Albums', value: 'albums' },
+      { key: 'Songs', text: 'Songs', value: 'songs' },
+    ];
     this.links = [
       { url: '/', name: 'Home' },
       { url: '/artists', name: 'Artists' },
@@ -36,7 +40,7 @@ class Navbar extends Component {
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
-            <Input icon="search" placeholder="What's your jam?" fluid />
+            <Input inverted placeholder="What's your jam?" icon="search" iconPosition="left" action="Search" fluid />
           </Menu.Item>
         </Menu.Menu>
         {this.links.map((link) => {

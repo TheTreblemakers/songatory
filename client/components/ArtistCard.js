@@ -4,12 +4,11 @@ import { Image, Card, Icon } from 'semantic-ui-react';
 
 const ArtistCard = (props) => {
   const artist = props.artist;
-  // const imgUrl = 'http://via.placeholder.com/300x300';
   const imgUrl = artist.image;
   const artistUrl = `/artists/${artist.id}`;
   return (
     <Card key={props.key} raised>
-      <Image src={imgUrl} as={Link} to={artistUrl} />
+      <Image size="medium" src={imgUrl} as={Link} to={artistUrl} />
       <Card.Content>
         <Card.Header>{artist.name}</Card.Header>
         <Card.Meta>Artist Blurb Goes Here</Card.Meta>
