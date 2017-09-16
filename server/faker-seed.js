@@ -11,15 +11,11 @@ let orderNumber = 123456789;
 faker.seed(54321);
 
 const num_users = 100;
-const num_albums = 100;
-const maxAlbumsPerArtist = 3;
-const maxSongsPerAlbum = 10;
-const num_artists = 5;
+const num_artists = 16;
+const maxAlbumsPerArtist = 5;
+const maxSongsPerAlbum = 12;
 const num_reviews = 100;
-const num_songs = 100;
 
-// const artistImgUrl = 'http://via.placeholder.com/200x200';
-const artistImgUrl = 'buble.jpg';
 let imgIds;
 
 var options = {
@@ -37,23 +33,31 @@ rp(options)
     });
   })
   .then(() => {
-    let users = _.times(num_users, () => ({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      isAdmin: Math.random() < 0.05 ? true : false,
-      currentOrder: faker.random.number(),
-      password: faker.internet.password(),
-      salt: crypto.randomBytes(16).toString('base64'),
-      googleId: faker.internet.userName(),
-    }));
-
-    let reviews = _.times(num_albums, () => ({
+    let reviews = _.times(num_reviews, () => ({
       score: faker.random.number({ min: 0, max: 5 }),
       content: faker.lorem.paragraph(),
     }));
 
+    const generateUsers = () => {
+      let users = _.times(num_users, () => ({
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        isAdmin: Math.random() < 0.05 ? true : false,
+        currentOrder: faker.random.number(),
+        password: faker.internet.password(),
+        salt: crypto.randomBytes(16).toString('base64'),
+        googleId: faker.internet.userName(),
+      }));
+      return Promise.all(
+        users.map((user) => {
+          return User.create(user);
+        }),
+      );
+    };
+
     const generateSongs = () => {
-      let songs = _.times(maxSongsPerAlbum, () => ({
+      const numSongs = faker.random.number({ min: 5, max: maxSongsPerAlbum });
+      let songs = _.times(numSongs, () => ({
         name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
         trackNumber: faker.random.number({ min: 1, max: 20 }),
         price: faker.random.number({ min: 25, max: 99 }),
@@ -82,7 +86,8 @@ rp(options)
     };
 
     const generateAlbums = () => {
-      let albums = _.times(maxAlbumsPerArtist, () => {
+      const numAlbums = faker.random.number({ min: 1, max: maxAlbumsPerArtist });
+      let albums = _.times(numAlbums, () => {
         const id = imgIds[Math.floor(Math.random() * imgIds.length)];
         return {
           name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
@@ -100,8 +105,6 @@ rp(options)
       );
     };
 
-    // const generateSongs = () => {};
-
     const seed = () => {
       return generateArtists().map((artist) => {
         return generateAlbums()
@@ -112,6 +115,9 @@ rp(options)
           })
           .then((albums) => {
             return artist.setAlbums(albums);
+          })
+          .then(() => {
+            return generateUsers();
           });
       });
     };
