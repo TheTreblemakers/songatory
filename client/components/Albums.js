@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { AlbumCard } from '../components';
-import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
+import { addAlbumToCart } from '../store';
+import history from '../history';
+import { Container, Divider, Card, Breadcrumb, Button } from 'semantic-ui-react';
 
 class Albums extends Component {
   constructor(props) {
@@ -26,7 +28,10 @@ class Albums extends Component {
         <Card.Group itemsPerRow={4}>
           {albums.map((album, idx) => {
             if (idx > 15) return;
-            return <AlbumCard key={album.id} album={album} />;
+            return (<div key={album.id}>
+              <AlbumCard album={album} />
+              <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
+            </div>);
           })}
         </Card.Group>
         <Divider />
@@ -52,9 +57,23 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => {
-  return {};
+  return {
+    handleAddToCart (e) {
+      const albumId = +e.target.value;
+      dispatch(addAlbumToCart({id: albumId}));
+      history.push('/cart');
+    }
+  };
 };
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, null)(Albums));
+export default withRouter(connect(mapState, mapDispatch)(Albums));
+
+/**
+ * PROP TYPES
+ */
+Albums.propTypes = {
+  albums: PropTypes.array.isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
+};

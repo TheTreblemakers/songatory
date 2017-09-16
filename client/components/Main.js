@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Albums, Album, Artists, Artist, Navbar, Footer, Songs, Landing, Login, Signup } from '../components';
+import { Albums, Album, Artists, Artist, Navbar, Footer, Songs, Landing, Login, Signup, Cart } from '../components';
 import { Container, Grid } from 'semantic-ui-react';
 import { logout } from '../store';
 import { Route, Switch } from 'react-router-dom';
@@ -40,6 +40,7 @@ const Main = (props) => {
         <Route exact path="/songs" component={Songs} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart}/>
       </Container>
       <Footer />
     </div>
