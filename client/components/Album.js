@@ -1,35 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, Button, Item } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Image, Button, Item, Container } from 'semantic-ui-react';
+import { fetchAlbum } from '../store';
 
-const Album = (props) => {
-  const { albums } = props;
+class Album extends Component {
+  constructor(props) {
+    super(props);
+    this.styles = {
+      container: {
+        padding: `2em`,
+      },
+    };
+  }
 
-  return (
-    <div>
-      {albums.map((album) => {
-        return (
-          <Item key={album.id}>
-            <Item.Image size="medium" src={album.image} />
-            <Item.Content>
-              <Item.Header>{album.name}</Item.Header>
-              <Item.Meta>
-                <span className="price">{album.displayPrice}</span>
-              </Item.Meta>
-              <Item.Description>{album.description}</Item.Description>
-              <Button primary>Purchase Album</Button>
-            </Item.Content>
-          </Item>
-        );
-      })}
-    </div>
-  );
+  componentDidMount() {
+    this.props.getAlbum(this.props.match.params.id);
+  }
+
+  render() {
+    const styles = this.styles;
+    const album = this.props.album;
+    return (
+      <Container style={styles.container}>
+        <div>Album: {album.name}</div>
+      </Container>
+    );
+  }
+}
+
+const mapState = (state) => {
+  return {
+    album: state.albums.currentAlbum,
+  };
 };
 
-export default Album;
-/**
- * PROP TYPES
- */
-Album.propTypes = {
-  albums: PropTypes.array.isRequired,
-};
+const mapDispatch = (dispatch) => ({
+  getAlbum: (id) => {
+    dispatch(fetchAlbum(id));
+  },
+});
+
+// The `withRouter` wrapper makes sure that updates are not blocked
+// when the url changes
+export default connect(mapState, mapDispatch)(Album);

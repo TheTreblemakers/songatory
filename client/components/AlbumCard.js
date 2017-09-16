@@ -4,15 +4,14 @@ import { Image, Card, Icon } from 'semantic-ui-react';
 
 const AlbumCard = (props) => {
   const album = props.album;
-  const imgUrl = 'http://via.placeholder.com/300x300';
+  const imgUrl = album.image;
   const albumUrl = `/albums/${album.id}`;
   return (
     <Card key={props.key} raised>
       <Image src={imgUrl} as={Link} to={albumUrl} />
       <Card.Content>
         <Card.Header>{album.name}</Card.Header>
-        <Card.Meta>{`Artist: ${album.artist.name}`}</Card.Meta>
-        <Card.Description>{album.description.split('.')[0]}</Card.Description>
+        <Card.Meta>{`${album.artist.name}`}</Card.Meta>
       </Card.Content>
       <Card.Content extra>
         <Icon name="right chevron" />

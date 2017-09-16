@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Container, Table, Breadcrumb } from 'semantic-ui-react';
+import { Container, Table, Breadcrumb, Button } from 'semantic-ui-react';
+import { addSongToCart } from '../store';
 import history from '../history';
 import { fetchSongs } from '../store/songs';
 
@@ -25,7 +26,7 @@ class Songs extends Component {
 
   render() {
     const { songs } = this.props;
-    
+
     return (
       <Container style={this.styles.container}>
         <h2>All Songs</h2>
@@ -44,9 +45,10 @@ class Songs extends Component {
               songs.map(song => (
                 <Table.Row key={song.id}>
                   <Table.Cell> {song.name}</Table.Cell>
-                   <Table.Cell> {song.album.artist.name}</Table.Cell> 
+                   <Table.Cell> {song.album.artist.name}</Table.Cell>
                   <Table.Cell>{song.album.name}</Table.Cell>
                   <Table.Cell>{song.price}</Table.Cell>
+                  <Button value={song.id} onClick={this.props.handleAddToCart}> Add To Cart</Button>
                 </Table.Row>
               ))
             }
@@ -78,6 +80,11 @@ const mapDispatch = (dispatch) => {
   return {
     fetchSongsData: () => {
       dispatch(fetchSongs());
+    },
+    handleAddToCart (e) {
+      const songId = +e.target.value;
+      dispatch(addSongToCart({id: songId}));
+      history.push('/cart');
     }
   };
 };

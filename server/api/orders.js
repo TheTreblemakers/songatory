@@ -28,3 +28,5 @@ router.get('/', (req, res, next) => {
     .then(orders => res.json(orders))
     .catch(next);
 });
+
+router.use('/cart', require('./cart'));
