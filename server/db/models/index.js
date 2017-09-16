@@ -26,6 +26,11 @@ Album.belongsToMany(Order, { through: 'order_album_item' });
 Order.belongsToMany(Song, { through: 'order_song_item' });
 Song.belongsToMany(Order, { through: 'order_song_item' });
 
+Artist.belongsToMany(Category, { through: 'ArtistCategory' });
+Album.belongsToMany(Category, { through: 'AlbumCategory' });
+Category.belongsToMany(Artist, { through: 'ArtistCategory' });
+Category.belongsToMany(Album, { through: 'AlbumCategory' });
+
 Album.addScope('withSongs', {
   include: [ Song ],
 });
@@ -36,10 +41,9 @@ Artist.addScope('populated', {
   include: [ Album.scope('withSongs') ],
 });
 
-Artist.belongsToMany(Category, { through: 'ArtistCategory' });
-Album.belongsToMany(Category, { through: 'AlbumCategory' });
-Category.belongsToMany(Artist, { through: 'ArtistCategory' });
-Category.belongsToMany(Album, { through: 'AlbumCategory' });
+Category.addScope('populated', {
+  include: [ Album ],
+});
 
 module.exports = {
   User,
