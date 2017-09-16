@@ -60,6 +60,6 @@ export default withRouter(connect(mapState)(Artists));
  * PROP TYPES
  */
 Artists.propTypes = {
-  artists: PropTypes.artists.isRequired,
+  artists: PropTypes.array.isRequired,
 };
 
