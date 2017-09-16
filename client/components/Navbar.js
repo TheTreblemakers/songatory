@@ -56,7 +56,7 @@ class Navbar extends Component {
             </Menu.Item>
           );
         })}
-        <Menu.Item position="right">
+        <Menu.Item position="right" as={Link} to={`/cart`}>
           <Icon link name="cart" size="large" />
         </Menu.Item>
         { isLoggedIn
