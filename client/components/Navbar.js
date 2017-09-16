@@ -34,9 +34,10 @@ class Navbar extends Component {
   }
 
   render() {
-    let activeItem;
+    let { activeItem } = this.state;
+    console.log('navbar:', this.props.location.pathname);
     return (
-      <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
+      <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
@@ -45,7 +46,12 @@ class Navbar extends Component {
         </Menu.Menu>
         {this.links.map((link) => {
           return (
-            <Menu.Item key={link.name} name={link.name} as={Link} to={link.url}>
+            <Menu.Item
+              active={this.props.location.pathname === link.url}
+              key={link.name}
+              name={link.name}
+              as={Link}
+              to={link.url}>
               {link.name}
             </Menu.Item>
           );

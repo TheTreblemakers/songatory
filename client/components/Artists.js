@@ -20,7 +20,6 @@ class Artists extends Component {
   render() {
     const { artists } = this.props;
     const styles = this.styles;
-    console.log(artists);
     return (
       <Container style={styles.container}>
         <h2>All Artists</h2>
