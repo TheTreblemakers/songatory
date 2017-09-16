@@ -52,7 +52,7 @@ class Albums extends Component {
  */
 const mapState = (state) => {
   return {
-    albums: state.albums,
+    albums: state.albums.allAlbums,
   };
 };
 

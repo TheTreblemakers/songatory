@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Image, Button, Item, Container } from 'semantic-ui-react';
+import { fetchAlbum } from '../store';
 
 class Album extends Component {
   constructor(props) {
@@ -12,14 +14,33 @@ class Album extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getAlbum(this.props.match.params.id);
+  }
+
   render() {
     const styles = this.styles;
+    const album = this.props.album;
     return (
       <Container style={styles.container}>
-        <div>Album {this.props.match.params.id}</div>
+        <div>Album: {album.name}</div>
       </Container>
     );
   }
 }
 
-export default Album;
+const mapState = (state) => {
+  return {
+    album: state.albums.currentAlbum,
+  };
+};
+
+const mapDispatch = (dispatch) => ({
+  getAlbum: (id) => {
+    dispatch(fetchAlbum(id));
+  },
+});
+
+// The `withRouter` wrapper makes sure that updates are not blocked
+// when the url changes
+export default connect(mapState, mapDispatch)(Album);

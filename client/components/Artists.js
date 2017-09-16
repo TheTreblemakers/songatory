@@ -48,7 +48,7 @@ class Artists extends Component {
  */
 const mapState = (state) => {
   return {
-    artists: state.artists,
+    artists: state.artists.allArtists,
   };
 };
 

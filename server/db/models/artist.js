@@ -3,15 +3,15 @@ const db = require('../db');
 
 const Artist = db.define('artist', {
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   bio: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
   },
   image: {
     type: Sequelize.STRING,
     // defaultValue: /*** insert default image ***/
-  }
+  },
 });
 
 module.exports = Artist;
@@ -20,13 +20,10 @@ module.exports = Artist;
  * instanceMethods
  */
 
-
 /**
  * classMethods
  */
 
-
 /**
  * hooks
  */
-
