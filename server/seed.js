@@ -1,5 +1,5 @@
 const db = require('./db');
-const { User, Album, Artist, Review, Song } = require('./db/models');
+const { User, Album, Artist, Review, Song, Order } = require('./db/models');
 
 let orderNumber = 123456789;
 // let date = new Date();
@@ -182,12 +182,42 @@ const songs = [
   }
 ];
 
+const orders = [
+  {
+    date: '9/10/17',
+    fulfilled: false,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/11/17',
+    fulfilled: false,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/12/17',
+    fulfilled: false,
+    paymentMethod: 'paypal'
+  },
+  {
+    date: '9/13/17',
+    fulfilled: false,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/14/17',
+    fulfilled: false,
+    paymentMethod: 'credit card'
+  },
+];
+
 const seed = () => {
   let seedUsers;
   let seedAlbums;
   let seedSongs;
   let seedReviews;
   let seedArtists;
+  let seedOrders;
+
   return Promise.all(users.map(user =>
     User.create(user))
   )
@@ -217,7 +247,13 @@ const seed = () => {
     })
     .then((createdReviews) => {
       seedReviews = createdReviews;
-      return Promise.all(createdReviews.map((review, index) =>
+      return Promise.all(orders.map(order =>
+        Order.create(order))
+      );
+    })
+    .then((createdOrders) => {
+      seedOrders = createdOrders;
+      return Promise.all(seedReviews.map((review, index) =>
         seedUsers[index % seedUsers.length].addReview(review)
       ));
     })
@@ -238,6 +274,11 @@ const seed = () => {
     .then(() =>
       Promise.all(seedAlbums.map((album, index) =>
         seedArtists[index % seedArtists.length].addAlbum(album)
+      ))
+    )
+    .then(() =>
+      Promise.all(seedOrders.map((order, index) =>
+        seedUsers[index % seedUsers.length].addOrder(order)
       ))
     );
 };
