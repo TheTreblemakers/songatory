@@ -63,14 +63,17 @@ class Navbar extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
-  return {};
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.user.id,
+  };
 };
 
-const mapDispatch = (dispatch) => {
-  return {};
-};
+export default withRouter(connect(mapState)(Navbar));
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Navbar));
+/**
+ * PROP TYPES
+ */
+Navbar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};
