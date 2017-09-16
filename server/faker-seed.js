@@ -55,7 +55,7 @@ rp(options)
         isAdmin: true,
         currentOrder: faker.random.number(),
         password: `admin`,
-        salt: crypto.randomBytes(16).toString('base64'),
+        salt: '12345',
         googleId: faker.internet.userName(),
       });
 
