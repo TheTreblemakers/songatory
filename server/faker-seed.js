@@ -1,16 +1,19 @@
 const db = require('./db');
 const _ = require('lodash');
+const path = require('path');
 const faker = require('faker');
+const fs = require('fs');
 const crypto = require('crypto');
 const rp = require('request-promise');
 const Promise = require('bluebird');
-const { User, Album, Artist, Review, Song } = require('./db/models');
+const { Category, User, Album, Artist, Review, Song } = require('./db/models');
 
 let orderNumber = 123456789;
 // let date = new Date();
 faker.seed(54321);
 
 const num_users = 100;
+const num_categories = 15;
 const num_artists = 16;
 const maxAlbumsPerArtist = 5;
 const maxSongsPerAlbum = 12;
@@ -37,6 +40,20 @@ rp(options)
       score: faker.random.number({ min: 0, max: 5 }),
       content: faker.lorem.paragraph(),
     }));
+
+    const generateCategories = () => {
+      const filePath = path.join(__dirname, '/genres.txt');
+      let genreList = fs.readFileSync(filePath).toString().split('\n');
+      genreList = getRandomSubarray(genreList, num_categories);
+      let categories = genreList.map((genre) => ({
+        name: genre,
+      }));
+      return Promise.all(
+        categories.map((category) => {
+          return Category.create(category);
+        }),
+      );
+    };
 
     const generateUsers = () => {
       let users = _.times(num_users, () => ({
@@ -132,6 +149,16 @@ rp(options)
         })
         .then(() => {
           return generateUsers();
+        })
+        .then(() => {
+          return generateCategories();
+        })
+        .then((createdCategories) => {
+          return Album.findAll().map((album) => {
+            // console.log(Object.getOwnPropertyNames(album.__proto__));
+            const albumCategories = getRandomSubarray(createdCategories, 3);
+            return album.setCategories(albumCategories);
+          });
         });
     };
 
@@ -155,3 +182,17 @@ rp(options)
 
     seedDb();
   });
+
+const getRandomSubarray = (arr, size) => {
+  var shuffled = arr.slice(0),
+    i = arr.length,
+    temp,
+    index;
+  while (i--) {
+    index = Math.floor((i + 1) * Math.random());
+    temp = shuffled[index];
+    shuffled[index] = shuffled[i];
+    shuffled[i] = temp;
+  }
+  return shuffled.slice(0, size);
+};

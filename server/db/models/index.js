@@ -2,6 +2,7 @@ const User = require('./user');
 const Artist = require('./artist');
 const Album = require('./album');
 const Order = require('./order');
+const Category = require('./category');
 const Review = require('./review');
 const Song = require('./song');
 
@@ -27,10 +28,16 @@ Artist.addScope('populated', {
   include: [ Album.scope('withSongs') ],
 });
 
+Artist.belongsToMany(Category, { through: 'ArtistCategory' });
+Album.belongsToMany(Category, { through: 'AlbumCategory' });
+Category.belongsToMany(Artist, { through: 'ArtistCategory' });
+Category.belongsToMany(Album, { through: 'AlbumCategory' });
+
 module.exports = {
   User,
   Artist,
   Album,
+  Category,
   Order,
   Review,
   Song,
