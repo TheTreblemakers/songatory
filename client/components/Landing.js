@@ -12,13 +12,19 @@ const Landing = (props) => {
     },
   };
 
+  const drawTitle = () => {
+    return (
+      <Header inverted style={styles.title}>
+        songatory
+      </Header>
+    );
+  };
+
   return (
     <Splash>
-      <Transition transitionOnMount={true} animation="fade up" duration={2000}>
-        <Header inverted style={styles.title}>
-          songatory
-        </Header>
-      </Transition>
+      <Transition.Group as={Header} animation="fade up" duration={2000}>
+        {drawTitle()}
+      </Transition.Group>
     </Splash>
   );
 };
