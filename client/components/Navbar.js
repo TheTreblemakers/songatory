@@ -9,10 +9,7 @@ import { logout } from '../store';
 class Navbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      url: '/',
-      activeItem: 'Home',
-    };
+    this.state = {};
     this.links = [
       { url: '/', name: 'Home' },
       { url: '/artists', name: 'Artists' },
@@ -34,17 +31,12 @@ class Navbar extends Component {
   }
 
   render() {
-    let { activeItem } = this.state;
-    console.log('navbar:', this.props.location.pathname);
     return (
       <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
-            <SearchBar />
-            {
-              //<Input icon="search" placeholder="Search..." fluid />
-            }
+            <Input icon="search" placeholder="What's your jam?" fluid />
           </Menu.Item>
         </Menu.Menu>
         {this.links.map((link) => {
