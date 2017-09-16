@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Segment, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchAlbum } from '../store';
 
 class Album extends Component {
@@ -10,6 +10,13 @@ class Album extends Component {
     this.styles = {
       container: {
         padding: `2em`,
+      },
+      title: {
+        fontSize: `4em`,
+      },
+      subtitle: {
+        fontSize: `2em`,
+        padding: `0.2em`,
       },
     };
   }
@@ -35,13 +42,19 @@ class Album extends Component {
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
             <Item.Content>
-              <Header size="huge">{album.name}</Header>
-              <Divider />
-              by <Header sub>{artist.name}</Header>
-              <Divider />
-              {categories.map((category) => {
-                return <Label key={category.id}>{category.name}</Label>;
-              })}
+              <Header style={styles.title} size="huge">
+                {album.name}
+              </Header>
+              <Divider /> by
+              <Header style={styles.subtitle} sub>
+                {artist.name}
+              </Header>{' '}
+              sounds like:
+              <Segment>
+                {categories.map((category) => {
+                  return <Label key={category.id}>{category.name}</Label>;
+                })}
+              </Segment>
               <Item.Description>
                 <Table striped>
                   <Table.Header>
