@@ -8,7 +8,6 @@ import { logout } from '../store';
 class Navbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.searchOptions = [
       { key: 'Artists', text: 'Artists', value: 'artists' },
       { key: 'Albums', text: 'Albums', value: 'albums' },
@@ -35,6 +34,7 @@ class Navbar extends Component {
   }
 
   render() {
+    const { isLoggedIn, handleLogout } = this.props;
     return (
       <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
@@ -74,11 +74,20 @@ const mapState = state => {
   };
 };
 
-export default withRouter(connect(mapState)(Navbar));
+const mapDispatch = (dispatch) => {
+  return {
+    handleLogout(evt) {
+      evt.preventDefault();
+      dispatch(logout());
+    },
+  };
+};
+export default withRouter(connect(mapState, mapDispatch)(Navbar));
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
