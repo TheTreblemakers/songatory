@@ -14,13 +14,14 @@ class Artist extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getArtist(this.props.match.params.id);
   }
 
   render() {
     const styles = this.styles;
     const artist = this.props.artist;
+    console.log(artist);
     return (
       <Container style={styles.container}>
         <div>Artist: {artist.name}</div>
