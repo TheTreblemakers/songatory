@@ -20,6 +20,9 @@ Song.hasMany(Review);
 Album.addScope('withSongs', {
   include: [ Song ],
 });
+Album.addScope('populated', {
+  include: [ Song, Artist ],
+});
 Artist.addScope('populated', {
   include: [ Album.scope('withSongs') ],
 });

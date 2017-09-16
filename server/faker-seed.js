@@ -68,9 +68,10 @@ rp(options)
 
     const generateSongs = () => {
       const numSongs = faker.random.number({ min: 5, max: maxSongsPerAlbum });
+      let trackNumber = 1;
       let songs = _.times(numSongs, () => ({
         name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
-        trackNumber: faker.random.number({ min: 1, max: 20 }),
+        trackNumber: trackNumber++,
         price: faker.random.number({ min: 25, max: 99 }),
       }));
       return Promise.all(

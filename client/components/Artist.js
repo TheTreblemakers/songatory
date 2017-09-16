@@ -29,10 +29,14 @@ class Artist extends Component {
         <Divider />
         <Item.Group>
           {albums.map((album) => {
-            console.log(album.songs);
+            album.songs = album.songs
+              ? album.songs.sort((song1, song2) => {
+                  return song1.trackNumber - song2.trackNumber;
+                })
+              : [];
             return (
               <Item key={album.id}>
-                <Item.Image src={album.image} />
+                <Item.Image shape="rounded" src={album.image} />
                 <Item.Content>
                   <Item.Header as="a">{album.name}</Item.Header>
                   <Item.Meta>
@@ -42,6 +46,7 @@ class Artist extends Component {
                     <Table striped>
                       <Table.Header>
                         <Table.Row>
+                          <Table.HeaderCell>Track</Table.HeaderCell>
                           <Table.HeaderCell>Name</Table.HeaderCell>
                           <Table.HeaderCell>Price</Table.HeaderCell>
                         </Table.Row>
@@ -49,6 +54,7 @@ class Artist extends Component {
                       <Table.Body>
                         {album.songs.map((song) => (
                           <Table.Row key={song.id}>
+                            <Table.Cell> {song.trackNumber}</Table.Cell>
                             <Table.Cell> {song.name}</Table.Cell>
                             <Table.Cell>{song.price}</Table.Cell>
                           </Table.Row>

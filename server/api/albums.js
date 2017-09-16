@@ -3,18 +3,18 @@ const { Album } = require('../db/models');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
-  Album.findById(id)
-    .then(album => {
+  Album.scope('populated')
+    .findById(id)
+    .then((album) => {
       req.album = album;
       next();
-    }).catch(next);
+    })
+    .catch(next);
 });
 
 // GET /api/albums/
 router.get('/', (req, res, next) => {
-  Album.findAll()
-    .then(albums => res.json(albums))
-    .catch(next);
+  Album.findAll().then((albums) => res.json(albums)).catch(next);
 });
 
 // GET /api/albums/:id/
