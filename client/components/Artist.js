@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchArtist } from '../store';
 
@@ -36,7 +37,7 @@ class Artist extends Component {
               : [];
             return (
               <Item key={album.id}>
-                <Item.Image shape="rounded" src={album.image} />
+                <Item.Image as={Link} to={`/albums/${album.id}`} shape="rounded" src={album.image} />
                 <Item.Content>
                   <Item.Header as="a">{album.name}</Item.Header>
                   <Item.Meta>
