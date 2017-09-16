@@ -8,7 +8,6 @@ import { logout } from '../store';
 class Navbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.searchOptions = [
       { key: 'Artists', text: 'Artists', value: 'artists' },
       { key: 'Albums', text: 'Albums', value: 'albums' },
@@ -35,6 +34,8 @@ class Navbar extends Component {
   }
 
   render() {
+    const { isLoggedIn, handleLogout } = this.props;
+
     return (
       <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
@@ -58,8 +59,13 @@ class Navbar extends Component {
         <Menu.Item position="right">
           <Icon link name="cart" size="large" />
         </Menu.Item>
-        <Menu.Item name="Login" as={Link} to={`/login`} />
-        <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
+        { isLoggedIn
+          ? <Menu.Item name="Log Out" onClick={handleLogout} />
+          : <Menu.Menu>
+            <Menu.Item name="Login" as={Link} to={`/login`} />
+            <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
+          </Menu.Menu>
+        }
       </Menu>
     );
   }
@@ -68,14 +74,26 @@ class Navbar extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
-  return {};
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.user.id,
+  };
 };
 
 const mapDispatch = (dispatch) => {
-  return {};
+  return {
+    handleLogout(evt) {
+      evt.preventDefault();
+      dispatch(logout());
+    },
+  };
 };
-
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Navbar));
+
+/**
+ * PROP TYPES
+ */
+Navbar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+};
