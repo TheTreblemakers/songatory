@@ -25,7 +25,7 @@ class Albums extends Component {
         <h2>All Albums</h2>
         <Card.Group itemsPerRow={4}>
           {albums.map((album, idx) => {
-            if (idx > 16) return;
+            if (idx > 15) return;
             return <AlbumCard key={album.id} album={album} />;
           })}
         </Card.Group>
@@ -52,7 +52,7 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => {
-  return {}
+  return {};
 };
 
 // The `withRouter` wrapper makes sure that updates are not blocked

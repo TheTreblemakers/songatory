@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Image, Button, Item, Container } from 'semantic-ui-react';
 
-class Album extends Component {
+class Artist extends Component {
   constructor(props) {
     super(props);
     this.styles = {
@@ -16,10 +16,10 @@ class Album extends Component {
     const styles = this.styles;
     return (
       <Container style={styles.container}>
-        <div>Album {this.props.match.params.id}</div>
+        <div>Artist {this.props.match.params.id}</div>
       </Container>
     );
   }
 }
 
-export default Album;
+export default Artist;

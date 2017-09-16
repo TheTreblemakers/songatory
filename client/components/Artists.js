@@ -20,13 +20,12 @@ class Artists extends Component {
   render() {
     const { artists } = this.props;
     const styles = this.styles;
-    console.log(artists);
     return (
       <Container style={styles.container}>
         <h2>All Artists</h2>
         <Card.Group itemsPerRow={4}>
           {artists.map((artist, idx) => {
-            if (idx > 16) return;
+            if (idx > 15) return;
             return <ArtistCard key={artist.id} artist={artist} />;
           })}
         </Card.Group>

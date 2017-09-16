@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Albums, Artists, Navbar, Footer, Songs, Landing, Login, Signup } from '../components';
+import { Albums, Album, Artists, Artist, Navbar, Footer, Songs, Landing, Login, Signup } from '../components';
 import { Container, Grid } from 'semantic-ui-react';
 import { logout } from '../store';
 import { Route, Switch } from 'react-router-dom';
@@ -33,9 +33,11 @@ const Main = (props) => {
       <Navbar />
       <Container style={styles.containerFull} fluid>
         <Route exact path="/" component={Landing} />
-        <Route path="/albums" component={Albums} />
-        <Route path="/artists" component={Artists} />
-        <Route path="/songs" component={Songs} />
+        <Route exact path="/albums" component={Albums} />
+        <Route exact path="/albums/:id" component={Album} />
+        <Route exact path="/artists" component={Artists} />
+        <Route exact path="/artists/:id" component={Artist} />
+        <Route exact path="/songs" component={Songs} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
       </Container>
