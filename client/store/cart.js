@@ -44,10 +44,19 @@ export const addAlbumToCart = (album) =>
 export const addSongToCart = (song) =>
   dispatch =>
     axios.post(`/api/orders/cart/songs`, song)
-      .then(res => {
-        console.log(res.data);
-        dispatch(addCartSongsToState(res.data || cart.songs));
-      })
+      .then(res => dispatch(addCartSongsToState(res.data || cart.songs)))
+      .catch(err => console.log(err));
+
+export const removeAlbumFromCart = (albumId) =>
+  dispatch =>
+    axios.delete(`/api/orders/cart/albums/${albumId}`)
+      .then(res => dispatch(getCartAlbums(res.data || cart.albums)))
+      .catch(err => console.log(err));
+
+export const removeSongFromCart = (songId) =>
+  dispatch =>
+    axios.delete(`/api/orders/cart/songs/${songId}`)
+      .then(res => dispatch(getCartSongs(res.data || cart.songs)))
       .catch(err => console.log(err));
 
 /**
