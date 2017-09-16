@@ -26,7 +26,7 @@ class Artists extends Component {
         <h2>All Artists</h2>
         <Card.Group itemsPerRow={4}>
           {artists.map((artist, idx) => {
-            if (idx > 16) return;
+            if (idx > 15) return;
             return <ArtistCard key={artist.id} artist={artist} />;
           })}
         </Card.Group>

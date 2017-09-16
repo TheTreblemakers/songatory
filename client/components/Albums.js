@@ -27,10 +27,10 @@ class Albums extends Component {
         <h2>All Albums</h2>
         <Card.Group itemsPerRow={4}>
           {albums.map((album, idx) => {
-            if (idx > 16) return;
+            if (idx > 15) return;
             return (<div key={album.id}>
               <AlbumCard album={album} />
-              <Button value={album.id} onClick={this.props.handleAddToCart}> Add To Cart</Button>
+              <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
             </div>);
           })}
         </Card.Group>
