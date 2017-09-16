@@ -27,10 +27,10 @@ class Albums extends Component {
         <h2>All Albums</h2>
         <Card.Group itemsPerRow={4}>
           {albums.map((album, idx) => {
-            if (idx > 16) return;
+            if (idx > 15) return;
             return (<div key={album.id}>
               <AlbumCard album={album} />
-              <Button value={album.id} onClick={this.props.handleAddToCart}> Add To Cart</Button>
+              <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
             </div>);
           })}
         </Card.Group>
@@ -52,7 +52,7 @@ class Albums extends Component {
  */
 const mapState = (state) => {
   return {
-    albums: state.albums,
+    albums: state.albums.allAlbums,
   };
 };
 
@@ -69,3 +69,11 @@ const mapDispatch = (dispatch) => {
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Albums));
+
+/**
+ * PROP TYPES
+ */
+Albums.propTypes = {
+  albums: PropTypes.array.isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
+};

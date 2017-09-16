@@ -26,7 +26,7 @@ class Artists extends Component {
         <h2>All Artists</h2>
         <Card.Group itemsPerRow={4}>
           {artists.map((artist, idx) => {
-            if (idx > 16) return;
+            if (idx > 15) return;
             return <ArtistCard key={artist.id} artist={artist} />;
           })}
         </Card.Group>
@@ -48,12 +48,18 @@ class Artists extends Component {
  */
 const mapState = (state) => {
   return {
-    artists: state.artists,
+    artists: state.artists.allArtists,
   };
 };
 
-const mapDispatch = (dispatch) => {};
-
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, null)(Artists));
+export default withRouter(connect(mapState)(Artists));
+
+/**
+ * PROP TYPES
+ */
+Artists.propTypes = {
+  artists: PropTypes.array.isRequired,
+};
+
