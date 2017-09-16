@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
+import { removeAlbumFromCart, removeSongFromCart  } from '../store';
 import { Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 
@@ -31,7 +32,8 @@ class Cart extends Component {
               <h3>Albums</h3>
               <List divided verticalAlign='middle'>
               {
-                cart.albums.map(album => <CartAlbumItem  key={album.id} album={album} />)
+                cart.albums.map(album => <CartAlbumItem key={album.id} album={album} handleAlbumDelete={this.props.handleAlbumDelete} />
+                )
               }
             </List>
           </div>
@@ -53,7 +55,7 @@ class Cart extends Component {
 
               <Table.Body>
                 {
-                  cart.songs.map(song => <CartSongItem key={song.id} song={song} />)
+                  cart.songs.map(song => <CartSongItem key ={song.id} song={song} handleSongDelete={this.props.handleSongDelete} />)
                 }
               </Table.Body>
             </Table>
@@ -80,8 +82,19 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => { };
+const mapDispatch = (dispatch) => {
+  return {
+    handleAlbumDelete(e) {
+      const albumId = +e.target.value;
+      dispatch(removeAlbumFromCart(albumId));
+    },
+    handleSongDelete(e) {
+      const songId = +e.target.value;
+      dispatch(removeSongFromCart(songId));
+    }
+  };
+ };
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, null)(Cart));
+export default withRouter(connect(mapState, mapDispatch)(Cart));
