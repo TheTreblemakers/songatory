@@ -2,21 +2,21 @@ const db = require('./db');
 const _ = require('lodash');
 const faker = require('faker');
 const crypto = require('crypto');
+const https = require('https');
 const { User, Album, Artist, Review, Song } = require('./db/models');
 
 let orderNumber = 123456789;
 // let date = new Date();
-faker.seed(12345);
+faker.seed(54321);
 
 const num_users = 100;
 const num_albums = 100;
-const num_artists = 100;
+const num_artists = 50;
 const num_reviews = 100;
 const num_songs = 100;
 
 // const artistImgUrl = 'http://via.placeholder.com/200x200';
 const artistImgUrl = 'buble.jpg';
-const albumImgUrl = 'http://s3.amazonaws.com/NRNArt/Michael-Buble--To-Be-Loved-album-cover.jpg';
 
 let users = _.times(num_users, () => ({
   name: faker.name.findName(),
@@ -28,19 +28,25 @@ let users = _.times(num_users, () => ({
   googleId: faker.internet.userName(),
 }));
 
-let albums = _.times(num_albums, () => ({
-  name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
-  description: faker.lorem.paragraph(),
-  price: faker.random.number({ min: 500, max: 1000 }),
-  year: faker.date.past(100).getFullYear(),
-  image: albumImgUrl,
-}));
+let albums = _.times(num_albums, () => {
+  const id = faker.random.number({ min: 0, max: 400 });
+  return {
+    name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
+    description: faker.lorem.sentence(),
+    price: faker.random.number({ min: 500, max: 1000 }),
+    year: faker.date.past(100).getFullYear(),
+    image: `https://unsplash.it/g/200/?image=${id}`,
+  };
+});
 
-let artists = _.times(num_albums, () => ({
-  name: (faker.hacker.noun() + ' ' + faker.company.bsBuzz()).replace(/\b\w/g, (l) => l.toUpperCase()),
-  bio: faker.lorem.paragraphs(),
-  image: artistImgUrl,
-}));
+let artists = _.times(num_albums, () => {
+  const id = faker.random.number({ min: 0, max: 400 });
+  return {
+    name: (faker.hacker.noun() + ' ' + faker.company.bsBuzz()).replace(/\b\w/g, (l) => l.toUpperCase()),
+    bio: faker.lorem.sentences(),
+    image: `https://unsplash.it/200/?image=${id}`,
+  };
+});
 
 let reviews = _.times(num_albums, () => ({
   score: faker.random.number({ min: 0, max: 5 }),

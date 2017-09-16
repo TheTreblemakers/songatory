@@ -41,7 +41,10 @@ class Navbar extends Component {
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
-            <Input icon="search" placeholder="Search..." fluid />
+            <SearchBar />
+            {
+              //<Input icon="search" placeholder="Search..." fluid />
+            }
           </Menu.Item>
         </Menu.Menu>
         {this.links.map((link) => {

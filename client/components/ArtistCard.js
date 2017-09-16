@@ -4,7 +4,8 @@ import { Image, Card, Icon } from 'semantic-ui-react';
 
 const ArtistCard = (props) => {
   const artist = props.artist;
-  const imgUrl = 'http://via.placeholder.com/300x300';
+  // const imgUrl = 'http://via.placeholder.com/300x300';
+  const imgUrl = artist.image;
   const artistUrl = `/artists/${artist.id}`;
   return (
     <Card key={props.key} raised>
