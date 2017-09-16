@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order } = require('../db/models');
+const { Order, Album } = require('../db/models');
 module.exports = router;
 
 // Load cart
@@ -20,4 +20,13 @@ router.use('/cart/', (req, res, next) => {
 // GET /api/orders/cart/
 router.get('/cart/', (req, res, next) => {
   res.json({ albums: req.order.albums, songs: req.order.songs });
+});
+
+// POST /api/orders/cart/albums/
+router.post('/cart/albums/', (req, res, next) => {
+  Album.findOne(req.body)
+    .then(album => req.order.addAlbum(album))
+    .then(() => req.order.reload())
+    .then(order => res.json(order.albums))
+    .catch(next);
 });
