@@ -52,8 +52,14 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {};
-
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, null)(Artists));
+export default withRouter(connect(mapState)(Artists));
+
+/**
+ * PROP TYPES
+ */
+Artists.propTypes = {
+  artists: PropTypes.artists.isRequired,
+};
+
