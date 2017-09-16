@@ -78,7 +78,7 @@ describe('thunk creators', () => {
     describe('action creators', () => {
 
         describe('getCart', () => {
-            it('returns expected action description', () => {
+            xit('returns expected action description', () => {
                 const actionDescriptor = getCart(fakeCart);
                 expect(actionDescriptor).to.be.deep.equal({
                     type: 'GET_CART',
