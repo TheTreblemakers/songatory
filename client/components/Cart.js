@@ -20,7 +20,7 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.props;
-    console.log(cart);
+    //console.log(cart);
 
     return (
       <Container style={this.styles.container}>
@@ -31,7 +31,7 @@ class Cart extends Component {
               <h3>Albums</h3>
               <List divided verticalAlign='middle'>
               {
-                cart.albums.map(album => <CartAlbumItem key={album.id} album={album} />)
+                cart.albums.map(album => <CartAlbumItem  key={album.id} album={album} />)
               }
             </List>
           </div>
@@ -60,9 +60,11 @@ class Cart extends Component {
           </div>
           : null
         }
-
         <Button floated='right'>
           Buy Order
+        </Button>
+        <Button floated='right'>
+          Edit Cart
         </Button>
       </Container>
     );
