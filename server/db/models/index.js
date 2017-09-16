@@ -10,9 +10,12 @@ const OrderSongItem = require('./orderSong');
 User.hasMany(Order);
 User.hasMany(Review);
 
-Artist.belongsToMany(Album, { through: 'artist_album' });
+Artist.hasMany(Album);
+Album.belongsTo(Artist);
 
 Album.hasMany(Song);
+Song.belongsTo(Album);
+
 Album.hasMany(Review);
 
 Song.hasMany(Review);

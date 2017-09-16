@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Menu, Input, Icon } from 'semantic-ui-react';
+import { SearchBar } from '../components';
 import { logout } from '../store';
 
 class Navbar extends Component {
@@ -62,9 +63,13 @@ class Navbar extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {};
+};
 
-const mapDispatch = (dispatch) => {};
+const mapDispatch = (dispatch) => {
+  return {};
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes

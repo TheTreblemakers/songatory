@@ -27,8 +27,12 @@ const Footer = (props) => {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+const mapState = (state) => {
+  return {}
+};
 
-const mapDispatch = (dispatch) => {};
+const mapDispatch = (dispatch) => {
+  return {}
+};
 
 export default withRouter(connect(mapState, mapDispatch)(Footer));

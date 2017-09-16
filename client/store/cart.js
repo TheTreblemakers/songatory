@@ -9,7 +9,7 @@ const GET_CART = 'GET_CART';
 /**
  * INITIAL STATE
  */
-const cart = [];
+const cart = {};
 
 /**
  * ACTION CREATORS

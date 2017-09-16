@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import CartItem from './CartItem';
-import { Container, Button, List } from 'semantic-ui-react';
+import CartAlbumItem from './CartAlbumItem';
+import CartSongItem from './CartSongItem';
+import { Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 
 class Cart extends Component {
@@ -19,18 +20,47 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.props;
-    //console.log(cart);
+    console.log(cart);
 
     return (
       <Container style={this.styles.container}>
         <h2>Cart</h2>
-        <List divided verticalAlign='middle'>
-          {
-            fakeCart.map(item => {
-              return <CartItem key={item.id} item={item} />;
-            })
-          }
-        </List>
+        {
+          cart.albums
+          ? <div>
+              <h3>Albums</h3>
+              <List divided verticalAlign='middle'>
+              {
+                cart.albums.map(album => <CartAlbumItem key={album.id} album={album} />)
+              }
+            </List>
+          </div>
+        : null
+        }
+        {
+          cart.songs
+          ?<div>
+            <h3>Songs</h3>
+            <Table striped>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Album Name</Table.HeaderCell>
+                  <Table.HeaderCell>Track Number</Table.HeaderCell>
+                  <Table.HeaderCell>Price</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {
+                  cart.songs.map(song => <CartSongItem key={song.id} song={song} />)
+                }
+              </Table.Body>
+            </Table>
+          </div>
+          : null
+        }
+
         <Button floated='right'>
           Buy Order
         </Button>
@@ -52,11 +82,4 @@ const mapDispatch = (dispatch) => { };
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(null, null)(Cart));
-
-/**
- * PROP TYPES
- */
-Cart.propTypes = {
-  cart: PropTypes.array.isRequired
-};
+export default withRouter(connect(mapState, null)(Cart));
