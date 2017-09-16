@@ -155,8 +155,8 @@ rp(options)
         })
         .then((createdCategories) => {
           return Album.findAll().map((album) => {
-            // console.log(Object.getOwnPropertyNames(album.__proto__));
-            const albumCategories = getRandomSubarray(createdCategories, 3);
+            const n = faker.random.number({ min: 1, max: 5 });
+            const albumCategories = getRandomSubarray(createdCategories, n);
             return album.setCategories(albumCategories);
           });
         });

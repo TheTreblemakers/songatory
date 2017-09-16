@@ -26,6 +26,7 @@ class Album extends Component {
           return song1.trackNumber - song2.trackNumber;
         })
       : [];
+    const categories = album.categories || [];
     const artist = album.artist || {};
     console.log('album', album);
     return (
@@ -37,6 +38,10 @@ class Album extends Component {
               <Header size="huge">{album.name}</Header>
               <Divider />
               by <Header sub>{artist.name}</Header>
+              <Divider />
+              {categories.map((category) => {
+                return <Label key={category.id}>{category.name}</Label>;
+              })}
               <Item.Description>
                 <Table striped>
                   <Table.Header>

@@ -22,7 +22,7 @@ Album.addScope('withSongs', {
   include: [ Song ],
 });
 Album.addScope('populated', {
-  include: [ Song, Artist ],
+  include: [ Song, Artist, Category ],
 });
 Artist.addScope('populated', {
   include: [ Album.scope('withSongs') ],
