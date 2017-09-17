@@ -17,7 +17,7 @@ class Navbar extends Component {
       { url: '/', name: 'Home' },
       { url: '/artists/page/1', name: 'Artists' },
       { url: '/albums/page/1', name: 'Albums' },
-      { url: '/songs', name: 'Songs' },
+      { url: '/songs/page/1', name: 'Songs' },
     ];
     this.styles = {
       navbar: {

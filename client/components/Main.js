@@ -50,7 +50,7 @@ const Main = (props) => {
         <Route exact path="/albums/:id" component={Album} />
         <Route exact path="/artists/page/:pageNumber" component={Artists} />
         <Route exact path="/artists/:id" component={Artist} />
-        <Route exact path="/songs" component={Songs} />
+        <Route exact path="/songs/page/:pageNumber" component={Songs} />
         <Route exact path="/categories/:id" component={Category} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
