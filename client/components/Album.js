@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Segment, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchAlbum } from '../store';
 
@@ -41,7 +42,7 @@ class Album extends Component {
         <Item.Group>
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
-            <Item.Content>
+            <Item.Content verticalAlign="middle">
               <Header style={styles.title} size="huge">
                 {album.name}
               </Header>
@@ -52,7 +53,11 @@ class Album extends Component {
               sounds like:
               <Segment>
                 {categories.map((category) => {
-                  return <Label key={category.id}>{category.name}</Label>;
+                  return (
+                    <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
+                      {category.name}
+                    </Label>
+                  );
                 })}
               </Segment>
               <Item.Description>
