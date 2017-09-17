@@ -37,13 +37,26 @@ class Navbar extends Component {
     const { isLoggedIn, handleLogout } = this.props;
     const cart = this.props.cart;
     const itemsInCart = cart.songs.length + cart.albums.length;
+    const options = [
+      { key: 'artists', text: 'Artists', value: 'artists' },
+      { key: 'albums', text: 'Albums', value: 'albums' },
+      { key: 'songs', text: 'Songs', value: 'songs' },
+    ];
 
     return (
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
-            <Input inverted placeholder="What's your jam?" icon="search" iconPosition="left" action="Search" fluid />
+            <Input
+              label={<Dropdown defaultValue="artists" options={options} />}
+              labelPosition="right"
+              inverted
+              placeholder="What's your jam?"
+              icon="search"
+              iconPosition="left"
+              fluid
+            />
           </Menu.Item>
         </Menu.Menu>
         {this.links.map((link) => {
