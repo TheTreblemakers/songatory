@@ -21,7 +21,7 @@ class Artists extends PureComponent {
 
   render() {
     const { artists } = this.props;
-    const currentPage = this.state.currentPage;
+    const currentPage = this.props.match.params.pageNumber;
     const artistsPerPage = 2;
     const start = (currentPage - 1) * artistsPerPage;
     const end = start + artistsPerPage;
@@ -37,12 +37,19 @@ class Artists extends PureComponent {
         <h2>All Artists</h2>
         <Breadcrumb size="small">
           {pageList.map((pageNumber) => {
+            const pageUrl = `/artists/page/${pageNumber}`;
             if (pageNumber === numberOfPages) {
-              return <Breadcrumb.Section active={currentPage === pageNumber}>{pageNumber}</Breadcrumb.Section>;
+              return (
+                <Breadcrumb.Section key={pageNumber} as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+              );
             }
             return (
               <span key={pageNumber}>
-                <Breadcrumb.Section active={currentPage === pageNumber}>{pageNumber}</Breadcrumb.Section>
+                <Breadcrumb.Section as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
                 <Breadcrumb.Divider icon="right angle" />
               </span>
             );

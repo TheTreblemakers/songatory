@@ -15,7 +15,7 @@ class Navbar extends Component {
     ];
     this.links = [
       { url: '/', name: 'Home' },
-      { url: '/artists', name: 'Artists' },
+      { url: '/artists/page/1', name: 'Artists' },
       { url: '/albums', name: 'Albums' },
       { url: '/songs', name: 'Songs' },
     ];
@@ -59,13 +59,14 @@ class Navbar extends Component {
         <Menu.Item position="right" as={Link} to={`/cart`}>
           <Icon link name="cart" size="large" />
         </Menu.Item>
-        { isLoggedIn
-          ? <Menu.Item name="Log Out" onClick={handleLogout} />
-          : <Menu.Menu>
+        {isLoggedIn ? (
+          <Menu.Item name="Log Out" onClick={handleLogout} />
+        ) : (
+          <Menu.Menu>
             <Menu.Item name="Login" as={Link} to={`/login`} />
             <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
           </Menu.Menu>
-        }
+        )}
       </Menu>
     );
   }
@@ -74,7 +75,7 @@ class Navbar extends Component {
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
   };
