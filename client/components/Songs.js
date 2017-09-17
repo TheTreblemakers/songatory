@@ -77,14 +77,12 @@ class Songs extends Component {
                 <Table.Cell>{song.album.name}</Table.Cell>
                 <Table.Cell>{song.price}</Table.Cell>
                 <Table.Cell>
-                  <Button animated="vertical">
-                    <Button.Content
-                      onClick={() => {
-                        this.props.handleAddToCart(song.id);
-                      }}
-                      hidden>
-                      Buy
-                    </Button.Content>
+                  <Button
+                    animated="vertical"
+                    onClick={() => {
+                      this.props.handleAddToCart(song.id);
+                    }}>
+                    <Button.Content hidden>Buy</Button.Content>
                     <Button.Content visible>
                       <Icon name="add to cart" />
                     </Button.Content>

@@ -39,7 +39,7 @@ class Navbar extends Component {
     const itemsInCart = cart.songs.length + cart.albums.length;
 
     return (
-      <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
+      <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
@@ -49,6 +49,7 @@ class Navbar extends Component {
         {this.links.map((link) => {
           return (
             <Menu.Item
+              color="teal"
               active={this.props.location.pathname === link.url}
               key={link.name}
               name={link.name}
@@ -59,8 +60,8 @@ class Navbar extends Component {
           );
         })}
         <Menu.Item position="right" as={Link} to={`/cart`}>
-          <Icon link name="cart" size="big" />
           {itemsInCart > 0 && <Label color="teal">{itemsInCart}</Label>}
+          <Icon link name="cart" size="big" />
         </Menu.Item>
         {isLoggedIn ? (
           <Menu.Item name="Log Out" onClick={handleLogout} />
