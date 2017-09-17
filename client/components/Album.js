@@ -22,6 +22,8 @@ class Album extends Component {
     };
   }
 
+  // <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
+
   componentDidMount() {
     this.props.getArtist(this.props.match.params.id);
   }

@@ -28,10 +28,7 @@ class Albums extends Component {
         <Card.Group itemsPerRow={4}>
           {albums.map((album, idx) => {
             if (idx > 15) return;
-            return (<div key={album.id}>
-              <AlbumCard album={album} />
-              <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
-            </div>);
+            return <AlbumCard key={album.id} album={album} />;
           })}
         </Card.Group>
         <Divider />
@@ -58,11 +55,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleAddToCart (e) {
+    handleAddToCart(e) {
       const albumId = +e.target.value;
-      dispatch(addAlbumToCart({id: albumId}));
+      dispatch(addAlbumToCart({ id: albumId }));
       history.push('/cart');
-    }
+    },
   };
 };
 
