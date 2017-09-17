@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Divider, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
-import history from '../history';
-import { fetchSongs } from '../store/songs';
 
 class SearchResults extends Component {
   constructor(props) {
@@ -17,14 +15,12 @@ class SearchResults extends Component {
     };
   }
 
-  componentDidMount() {}
-
   render() {
+    console.log('results: ', this.props.results);
     return (
       <Container style={this.styles.container}>
         <h2>All Search Results</h2>
         <Divider />
-
         <Table striped>
           <Table.Header>
             <Table.Row>
@@ -48,21 +44,8 @@ class SearchResults extends Component {
  */
 const mapState = (state) => {
   return {
-    // songs: state.songs,
+    results: state.search,
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {};
-};
-
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default withRouter(connect(mapState, mapDispatch)(SearchResults));
-
-/**
- * PROP TYPES
- */
-SearchResults.propTypes = {
-  songs: PropTypes.array,
-};
+export default withRouter(connect(mapState, null)(SearchResults));

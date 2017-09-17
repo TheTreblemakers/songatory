@@ -14,6 +14,7 @@ import {
   Landing,
   Login,
   Signup,
+  SearchResults,
   Cart,
 } from '../components';
 import { Button, Icon, Container, Grid } from 'semantic-ui-react';
@@ -62,6 +63,7 @@ const Main = (props) => {
         <Route exact path="/artists/:id" component={Artist} />
         <Route exact path="/songs/page/:pageNumber" component={Songs} />
         <Route exact path="/categories/:id" component={Category} />
+        <Route path="/search/results" component={SearchResults} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />

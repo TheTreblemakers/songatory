@@ -2,10 +2,11 @@ const router = require('express').Router();
 const { Song, Artist, Album } = require('../db/models');
 module.exports = router;
 
-// GET /api/search?type=""&val=""
-router.get('/', (req, res, next) => {
+// POST /api/search?type=""&val=""
+router.post('/', (req, res, next) => {
   const queryType = req.query.type;
   const query = req.query.val;
+  console.log(`Received ${query} for ${queryType}`);
   const options = {
     where: {
       name: {

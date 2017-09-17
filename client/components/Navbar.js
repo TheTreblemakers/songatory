@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Form, Menu, Input, Label, Icon, Dropdown } from 'semantic-ui-react';
+import { makeQuery } from '../store/search';
 import { logout } from '../store';
+import history from '../history';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: '',
-      queryType: '',
+      queryType: 'artists',
     };
     this.searchOptions = [
       { key: 'Artists', text: 'Artists', value: 'artists' },
@@ -40,7 +42,7 @@ class Navbar extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.query);
+    this.props.search(this.state.query, this.state.queryType);
   };
 
   handleChange = (e, { name, value }) => {
@@ -131,14 +133,17 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    handleLogout(evt) {
-      evt.preventDefault();
-      dispatch(logout());
-    },
-  };
-};
+const mapDispatch = (dispatch) => ({
+  search: (query, queryType) => {
+    console.log('tryin to search: ', query, queryType);
+    dispatch(makeQuery(query, queryType));
+  },
+  handleLogout: (evt) => {
+    evt.preventDefault();
+    dispatch(logout());
+  },
+});
+
 export default withRouter(connect(mapState, mapDispatch)(Navbar));
 
 /**
