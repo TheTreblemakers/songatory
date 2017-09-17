@@ -22,8 +22,57 @@ class Category extends Component {
   render() {
     const styles = this.styles;
     const category = this.props.category;
-    console.log(category);
-    return <Container style={styles.container}>Category</Container>;
+    const albums = category.albums || [];
+    return (
+      <Container style={styles.container}>
+        <Header style={styles.title}>{category.name}</Header>
+        <Divider />
+        <Item.Group>
+          {albums.map((album) => {
+            album.songs = album.songs
+              ? album.songs.sort((song1, song2) => {
+                  return song1.trackNumber - song2.trackNumber;
+                })
+              : [];
+            return (
+              <Item key={album.id}>
+                <Item.Image as={Link} to={`/albums/${album.id}`} shape="rounded" src={album.image} />
+                <Item.Content>
+                  <Item.Header as="a">{album.name}</Item.Header>
+                  <Item.Meta>
+                    <span className="cinema">{album.description}</span>
+                  </Item.Meta>
+                  <Item.Description>
+                    <Table striped>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Track</Table.HeaderCell>
+                          <Table.HeaderCell>Name</Table.HeaderCell>
+                          <Table.HeaderCell>Price</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {album.songs.map((song) => (
+                          <Table.Row key={song.id}>
+                            <Table.Cell> {song.trackNumber}</Table.Cell>
+                            <Table.Cell> {song.name}</Table.Cell>
+                            <Table.Cell>{song.price}</Table.Cell>
+                          </Table.Row>
+                        ))}
+                      </Table.Body>
+                    </Table>
+                  </Item.Description>
+                  <Item.Extra>
+                    <Label>category1</Label>
+                    <Label>category2</Label>
+                  </Item.Extra>
+                </Item.Content>
+              </Item>
+            );
+          })}
+        </Item.Group>
+      </Container>
+    );
   }
 }
 

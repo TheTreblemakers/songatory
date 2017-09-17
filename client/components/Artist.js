@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Table, Grid, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchArtist } from '../store';
 
 class Artist extends Component {
@@ -11,6 +11,10 @@ class Artist extends Component {
     this.styles = {
       container: {
         padding: `2em`,
+      },
+      title: {
+        fontSize: `6em`,
+        fontWeight: 'bold',
       },
     };
   }
@@ -25,10 +29,21 @@ class Artist extends Component {
     const albums = artist.albums || [];
     return (
       <Container style={styles.container}>
-        <Image shape="circular" bordered size="medium" src={artist.image} />
-        <Header size="large">{artist.name}</Header>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <Image shape="circular" bordered size="medium" src={artist.image} />
+            </Grid.Column>
+            <Grid.Column width={12} verticalAlign="middle">
+              <Header style={styles.title} size="large">
+                {artist.name}
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
         <Divider />
-        <Item.Group>
+        <Item.Group divided>
           {albums.map((album) => {
             album.songs = album.songs
               ? album.songs.sort((song1, song2) => {
@@ -63,10 +78,6 @@ class Artist extends Component {
                       </Table.Body>
                     </Table>
                   </Item.Description>
-                  <Item.Extra>
-                    <Label>category1</Label>
-                    <Label>category2</Label>
-                  </Item.Extra>
                 </Item.Content>
               </Item>
             );
