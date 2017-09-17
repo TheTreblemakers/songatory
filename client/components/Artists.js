@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { ArtistCard } from '../components';
 import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
-class Artists extends PureComponent {
+class Artists extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -38,14 +38,14 @@ class Artists extends PureComponent {
             const pageUrl = `/artists/page/${pageNumber}`;
             if (pageNumber === numberOfPages) {
               return (
-                <Breadcrumb.Section link key={pageNumber} as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                <Breadcrumb.Section link key={pageNumber} as={NavLink} to={pageUrl} active={currentPage === pageNumber}>
                   {pageNumber}
                 </Breadcrumb.Section>
               );
             }
             return (
               <span key={pageNumber}>
-                <Breadcrumb.Section link as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                <Breadcrumb.Section link as={NavLink} to={pageUrl} active={currentPage === pageNumber}>
                   {pageNumber}
                 </Breadcrumb.Section>
                 <Breadcrumb.Divider icon="right angle" />
