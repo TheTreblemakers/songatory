@@ -25,7 +25,8 @@ class Navbar extends Component {
     ];
     this.styles = {
       navbar: {
-        minHeight: `4em`,
+        // minHeight: `3.5em`,
+        height: `3.8em`,
       },
       search: {
         width: `400px`,
