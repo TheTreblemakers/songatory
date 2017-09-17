@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Menu, Input, Icon, Dropdown } from 'semantic-ui-react';
+import { Menu, Input, Label, Icon, Dropdown } from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
@@ -35,6 +35,8 @@ class Navbar extends Component {
 
   render() {
     const { isLoggedIn, handleLogout } = this.props;
+    const cart = this.props.cart;
+    const itemsInCart = cart.songs.length + cart.albums.length;
 
     return (
       <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
@@ -57,7 +59,8 @@ class Navbar extends Component {
           );
         })}
         <Menu.Item position="right" as={Link} to={`/cart`}>
-          <Icon link name="cart" size="large" />
+          <Icon link name="cart" size="big" />
+          {itemsInCart > 0 && <Label color="teal">{itemsInCart}</Label>}
         </Menu.Item>
         {isLoggedIn ? (
           <Menu.Item name="Log Out" onClick={handleLogout} />
@@ -78,6 +81,7 @@ class Navbar extends Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    cart: state.cart,
   };
 };
 
