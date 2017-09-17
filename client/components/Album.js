@@ -47,7 +47,7 @@ class Album extends Component {
                 {album.name}
               </Header>
               <Divider /> by
-              <Header style={styles.subtitle} sub>
+              <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}
               </Header>{' '}
               sounds like:

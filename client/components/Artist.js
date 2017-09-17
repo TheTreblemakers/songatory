@@ -74,7 +74,9 @@ class Artist extends Component {
               <Item key={album.id}>
                 <Item.Image as={Link} to={`/albums/${album.id}`} shape="rounded" src={album.image} />
                 <Item.Content>
-                  <Item.Header as="a">{album.name}</Item.Header>
+                  <Item.Header as={Link} to={`/albums/${album.id}`}>
+                    {album.name}
+                  </Item.Header>
                   <Item.Meta>
                     <span className="cinema">{album.description}</span>
                   </Item.Meta>
