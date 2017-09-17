@@ -52,7 +52,7 @@ export default function(state = initialState, action) {
   const newState = Object.assign({}, state);
   switch (action.type) {
     case GET_CATEGORIES:
-      newState.allCategories = action.categorys;
+      newState.allCategories = action.categories;
       return newState;
     case GET_CATEGORY:
       newState.currentCategory = action.category;

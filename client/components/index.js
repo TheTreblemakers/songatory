@@ -13,6 +13,7 @@ export { default as AlbumCard } from './AlbumCard';
 export { default as Artists } from './Artists';
 export { default as Artist } from './Artist';
 export { default as ArtistCard } from './ArtistCard';
+export { default as Category } from './Category';
 export { default as Landing } from './Landing';
 export { default as SearchBar } from './SearchBar';
 export { default as Splash } from './Splash';

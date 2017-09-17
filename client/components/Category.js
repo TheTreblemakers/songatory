@@ -1,4 +1,3 @@
-// View of all Categorys and Albums in this Category
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -23,14 +22,14 @@ class Category extends Component {
   render() {
     const styles = this.styles;
     const category = this.props.category;
-    const albums = category.albums || [];
+    console.log(category);
     return <Container style={styles.container}>Category</Container>;
   }
 }
 
 const mapState = (state) => {
   return {
-    category: state.categorys.currentCategory,
+    category: state.categories.currentCategory,
   };
 };
 

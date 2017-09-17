@@ -8,7 +8,7 @@ import artists from './artists';
 import categories from './categories';
 import cart from './cart';
 
-export const reducer = combineReducers({ user, artists, albums, songs, cart });
+export const reducer = combineReducers({ user, categories, artists, albums, songs, cart });
 const middleware = applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }));
 const store = createStore(
   reducer,
