@@ -155,8 +155,8 @@ rp(options)
         })
         .then((createdCategories) => {
           return Album.findAll().map((album) => {
-            const n = faker.random.number({ min: 1, max: 5 });
-            const albumCategories = getRandomSubarray(createdCategories, n);
+            const numCategories = faker.random.number({ min: 1, max: 3 });
+            const albumCategories = getRandomSubarray(createdCategories, numCategories);
             return album.setCategories(albumCategories);
           });
         });

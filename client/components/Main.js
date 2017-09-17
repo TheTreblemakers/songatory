@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Route, Switch } from 'react-router-dom';
 import {
   Albums,
   Album,
@@ -16,9 +16,8 @@ import {
   Signup,
   Cart,
 } from '../components';
-import { Container, Grid } from 'semantic-ui-react';
+import { Button, Icon, Container, Grid } from 'semantic-ui-react';
 import { logout } from '../store';
-import { Route, Switch } from 'react-router-dom';
 
 /**
  * COMPONENT
@@ -39,7 +38,18 @@ const Main = (props) => {
       marginTop: '4em',
       flex: '1',
     },
+    stickyCart: {
+      margin: 0,
+      top: 'auto',
+      right: 20,
+      bottom: 20,
+      left: 'auto',
+      position: 'fixed',
+    },
   };
+
+  // const cart = props.cart;
+  // const itemsInCart = cart.songs.length + cart.albums.length;
 
   return (
     <div style={styles.body}>
@@ -67,6 +77,7 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    cart: state.cart,
   };
 };
 

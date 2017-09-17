@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Menu, Input, Label, Icon, Dropdown } from 'semantic-ui-react';
+import { Form, Menu, Input, Label, Icon, Dropdown } from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      query: '',
+      queryType: '',
+    };
     this.searchOptions = [
       { key: 'Artists', text: 'Artists', value: 'artists' },
       { key: 'Albums', text: 'Albums', value: 'albums' },
@@ -33,10 +37,22 @@ class Navbar extends Component {
     };
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state.query);
+  };
+
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value }, () => {
+      console.log(this.state);
+    });
+  };
+
   render() {
     const { isLoggedIn, handleLogout } = this.props;
     const cart = this.props.cart;
     const itemsInCart = cart.songs.length + cart.albums.length;
+    const query = this.state.query;
     const options = [
       { key: 'artists', text: 'Artists', value: 'artists' },
       { key: 'albums', text: 'Albums', value: 'albums' },
@@ -47,16 +63,31 @@ class Navbar extends Component {
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
-          <Menu.Item style={this.styles.search}>
-            <Input
-              label={<Dropdown defaultValue="artists" options={options} />}
-              labelPosition="right"
-              inverted
-              placeholder="What's your jam?"
-              icon={<Icon name="search" link />}
-              iconPosition="left"
-              fluid
-            />
+          <Menu.Item>
+            <Form onSubmit={this.handleSubmit} style={this.styles.search}>
+              <Form.Field>
+                <Input
+                  onChange={this.handleChange}
+                  label={
+                    <Dropdown
+                      onChange={this.handleChange}
+                      className="field"
+                      defaultValue="artists"
+                      name="queryType"
+                      options={options}
+                    />
+                  }
+                  labelPosition="right"
+                  inverted
+                  name="query"
+                  value={query}
+                  placeholder="What's your jam?"
+                  icon={<Icon name="search" />}
+                  iconPosition="left"
+                  fluid
+                />
+              </Form.Field>
+            </Form>
           </Menu.Item>
         </Menu.Menu>
         {this.links.map((link) => {
