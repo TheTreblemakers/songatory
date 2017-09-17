@@ -52,13 +52,15 @@ class Album extends Component {
               </Header>{' '}
               sounds like:
               <Segment>
-                {categories.map((category) => {
-                  return (
-                    <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
-                      {category.name}
-                    </Label>
-                  );
-                })}
+                <Label.Group>
+                  {categories.map((category) => {
+                    return (
+                      <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
+                        {category.name}
+                      </Label>
+                    );
+                  })}
+                </Label.Group>
               </Segment>
               <Item.Description>
                 <Table striped>

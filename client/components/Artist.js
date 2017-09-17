@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Table, Grid, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Table, Segment, Grid, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchArtist } from '../store';
 
 class Artist extends Component {
@@ -27,6 +27,15 @@ class Artist extends Component {
     const styles = this.styles;
     const artist = this.props.artist;
     const albums = artist.albums || [];
+    const categories = albums
+      ? albums.reduce((acc, album) => {
+          let c = album.categories.map((category) => {
+            return category;
+          });
+          return acc.concat(c);
+        }, [])
+      : [];
+
     return (
       <Container style={styles.container}>
         <Grid>
@@ -38,6 +47,17 @@ class Artist extends Component {
               <Header style={styles.title} size="large">
                 {artist.name}
               </Header>
+              <Segment>
+                <Label.Group>
+                  {categories.map((category) => {
+                    return (
+                      <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
+                        {category.name}
+                      </Label>
+                    );
+                  })}
+                </Label.Group>
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>

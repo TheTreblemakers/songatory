@@ -38,7 +38,7 @@ Album.addScope('populated', {
   include: [ Song, Artist, Category ],
 });
 Artist.addScope('populated', {
-  include: [ Album.scope('withSongs') ],
+  include: [ Album.scope('populated') ],
 });
 
 Category.addScope('populated', {
