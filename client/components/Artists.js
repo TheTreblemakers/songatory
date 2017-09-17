@@ -8,9 +8,7 @@ import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 class Artists extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      currentPage: 1,
-    };
+    this.state = {};
     this.styles = {
       container: {
         padding: `2em`,
@@ -22,7 +20,7 @@ class Artists extends PureComponent {
   render() {
     const { artists } = this.props;
     const currentPage = this.props.match.params.pageNumber;
-    const artistsPerPage = 2;
+    const artistsPerPage = 16;
     const start = (currentPage - 1) * artistsPerPage;
     const end = start + artistsPerPage;
     const pageArtists = artists.slice(start, end);
@@ -34,20 +32,20 @@ class Artists extends PureComponent {
 
     return (
       <Container style={styles.container}>
-        <h2>All Artists</h2>
+        <h2>Our Artists</h2>
         <Breadcrumb size="small">
           {pageList.map((pageNumber) => {
             const pageUrl = `/artists/page/${pageNumber}`;
             if (pageNumber === numberOfPages) {
               return (
-                <Breadcrumb.Section key={pageNumber} as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                <Breadcrumb.Section link key={pageNumber} as={Link} to={pageUrl} active={currentPage === pageNumber}>
                   {pageNumber}
                 </Breadcrumb.Section>
               );
             }
             return (
               <span key={pageNumber}>
-                <Breadcrumb.Section as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                <Breadcrumb.Section link as={Link} to={pageUrl} active={currentPage === pageNumber}>
                   {pageNumber}
                 </Breadcrumb.Section>
                 <Breadcrumb.Divider icon="right angle" />

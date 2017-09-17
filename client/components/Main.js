@@ -46,7 +46,7 @@ const Main = (props) => {
       <Navbar />
       <Container style={styles.containerFull} fluid>
         <Route exact path="/" component={Landing} />
-        <Route exact path="/albums" component={Albums} />
+        <Route exact path="/albums/page/:pageNumber" component={Albums} />
         <Route exact path="/albums/:id" component={Album} />
         <Route exact path="/artists/page/:pageNumber" component={Artists} />
         <Route exact path="/artists/:id" component={Artist} />
