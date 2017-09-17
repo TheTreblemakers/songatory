@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
   Order.findAll({
     where: {
       userId: req.user.id,
-      fulfilled: false
+      fulfilled: true
     }
   })
     .then(orders => res.json(orders))

@@ -185,8 +185,58 @@ const songs = [
 const orders = [
   {
     date: '9/10/17',
-    fulfilled: false,
+    fulfilled: true,
+    paymentMethod: 'credit card',
+  },
+  {
+    date: '9/11/17',
+    fulfilled: true,
     paymentMethod: 'credit card'
+  },
+  {
+    date: '9/12/17',
+    fulfilled: true,
+    paymentMethod: 'paypal'
+  },
+  {
+    date: '9/13/17',
+    fulfilled: true,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/14/17',
+    fulfilled: true,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/15/17',
+    fulfilled: true,
+    paymentMethod: 'credit card',
+  },
+  {
+    date: '9/16/17',
+    fulfilled: true,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/17/17',
+    fulfilled: true,
+    paymentMethod: 'paypal'
+  },
+  {
+    date: '9/18/17',
+    fulfilled: true,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/14/17',
+    fulfilled: true,
+    paymentMethod: 'credit card'
+  },
+  {
+    date: '9/10/17',
+    fulfilled: true,
+    paymentMethod: 'credit card',
   },
   {
     date: '9/11/17',
@@ -279,6 +329,16 @@ const seed = () => {
     .then(() =>
       Promise.all(seedOrders.map((order, index) =>
         seedUsers[index % seedUsers.length].addOrder(order)
+      ))
+    )
+    .then(() =>
+      Promise.all(seedOrders.map((order, index) =>
+        seedSongs[index % seedSongs.length].addOrder(order)
+      ))
+    )
+    .then(() =>
+      Promise.all(seedOrders.map((order, index) =>
+        seedAlbums[index % seedAlbums.length].addOrder(order)
       ))
     );
 };

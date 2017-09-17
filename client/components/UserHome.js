@@ -47,11 +47,10 @@ class UserHome extends Component {
               {
                 orders.map(order => (
                   <Table.Row key={order.id}>
-                    {/* <Table.Cell> order name</Table.Cell> */}
-                    <Table.Cell> {order.id}</Table.Cell>
-                    <Table.Cell> {order.date}</Table.Cell>
+                    <Table.Cell>{order.id}</Table.Cell>
+                    <Table.Cell>{order.date}</Table.Cell>
                     <Table.Cell>
-                      <Table >
+                      <Table>
                         <Table.Header>
                           <Table.Row>
                             <Table.HeaderCell>Product Name</Table.HeaderCell>
@@ -59,38 +58,23 @@ class UserHome extends Component {
                             <Table.HeaderCell>Price</Table.HeaderCell>
                           </Table.Row>
                         </Table.Header>
-                        {/* <Table.Body>
-                          {orders.products.map(product => (
-                            <Table.Row key={product.id}>
-                              <Table.Cell> {product.name}</Table.Cell>
-                              <Table.Cell> {product.type}</Table.Cell>
-                              <Table.Cell> {product.status}</Table.Cell>
-                              <Table.Cell> {product.price}</Table.Cell>
-                            </Table.Row>
-                          ))} */}
                         <Table.Body>
-                            <Table.Row key="test">
-                              <Table.Cell>test</Table.Cell>
-                              <Table.Cell>test</Table.Cell>
-                              <Table.Cell>test</Table.Cell>
-                              <Table.Cell>test</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="test2">
-                              <Table.Cell>test2</Table.Cell>
-                              <Table.Cell>test2</Table.Cell>
-                              <Table.Cell>test2</Table.Cell>
-                              <Table.Cell>test2</Table.Cell>
-                            </Table.Row>
+                          {/* {orders.albums &&
+                            orders.albums.map(product => (
+                              <Table.Row key={product.id}>
+                                <Table.Cell>{product.name}</Table.Cell>
+                                <Table.Cell>Album</Table.Cell>
+                                <Table.Cell>{product.price}</Table.Cell>
+                              </Table.Row>
+                            ))
+                          } */}
                         </Table.Body>
                       </Table>
                     </Table.Cell>
-                    {/* <Table.Cell>order.status</Table.Cell> */}
-                    {/* <Table.Cell>order.price</Table.Cell> */}
                   </Table.Row>
                 ))
               }
             </Table.Body>
-
           </Table>
           <Breadcrumb>
             <Breadcrumb.Section active>1</Breadcrumb.Section>
@@ -110,10 +94,11 @@ class UserHome extends Component {
  */
 const mapState = (state) => {
   console.log('userhome state: ', state);
+  /* orders: [{ id: 1234321, date: '12/21/2014', products: [{ productName: 'Bye Bye Bye', type: 'Song', status: 'Available', price: '$1.21' }, { productName: 'Bye Bye Bye', type: 'Album', status: 'Available', price: '$31.21' }, { productName: 'Genie in a bottle', type: 'Song', status: 'Available', price: '$1.24' }] }, { id: 1234322, date: '12/24/2014', products: [{ productName: 'Bye Bye Bye', type: 'Song', status: 'Available', price: '$1.21' }, { productName: 'Livin la vida loca', type: 'Song', status: 'Available', price: '$1.28' }] }] */
   return {
     email: state.user.email,
     userId: state.user.id,
-    orders: [{ id: 1234321, date: '12/21/2014', products: [{ productName: 'Bye Bye Bye', type: 'Song', status: 'Available', price: '$1.21' }, { productName: 'Bye Bye Bye', type: 'Album', status: 'Available', price: '$31.21' }, { productName: 'Genie in a bottle', type: 'Song', status: 'Available', price: '$1.24' }] }, { id: 1234322, date: '12/24/2014', products: [{ productName: 'Bye Bye Bye', type: 'Song', status: 'Available', price: '$1.21' }, { productName: 'Livin la vida loca', type: 'Song', status: 'Available', price: '$1.28' }] }]
+    orders: state.orders
   };
 };
 

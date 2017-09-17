@@ -21,7 +21,7 @@ const getUserOrders = orders => ({ type: GET_USERORDERS, orders });
  */
 export const fetchUserOrders = () => dispatch => {
   
-  axios.get(`/api/orders/`)
+  axios.get('/api/orders/')
     .then(res => {
       dispatch(getUserOrders(res.data || defaultOrders));
     })
