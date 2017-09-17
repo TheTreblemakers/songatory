@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Divider, Container, Table, Breadcrumb, Button } from 'semantic-ui-react';
+import { Divider, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
 import { addSongToCart } from '../store';
 import history from '../history';
 import { fetchSongs } from '../store/songs';
@@ -65,7 +65,6 @@ class Songs extends Component {
               <Table.HeaderCell>Artist</Table.HeaderCell>
               <Table.HeaderCell>Album</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
-              <Table.HeaderCell>Price</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
@@ -77,10 +76,14 @@ class Songs extends Component {
                 <Table.Cell> {song.album.artist.name}</Table.Cell>
                 <Table.Cell>{song.album.name}</Table.Cell>
                 <Table.Cell>{song.price}</Table.Cell>
-                <Button value={song.id} onClick={this.props.handleAddToCart}>
-                  {' '}
-                  Add To Cart
-                </Button>
+                <Table.Cell>
+                  <Button animated="vertical" value={song.id} onClick={this.props.handleAddToCart}>
+                    <Button.Content hidden>Buy</Button.Content>
+                    <Button.Content visible>
+                      <Icon name="add to cart" />
+                    </Button.Content>
+                  </Button>
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
