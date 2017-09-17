@@ -53,7 +53,7 @@ class Navbar extends Component {
               labelPosition="right"
               inverted
               placeholder="What's your jam?"
-              icon="search"
+              icon={<Icon name="search" link />}
               iconPosition="left"
               fluid
             />
