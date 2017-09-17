@@ -77,8 +77,14 @@ class Songs extends Component {
                 <Table.Cell>{song.album.name}</Table.Cell>
                 <Table.Cell>{song.price}</Table.Cell>
                 <Table.Cell>
-                  <Button animated="vertical" value={song.id} onClick={this.props.handleAddToCart}>
-                    <Button.Content hidden>Buy</Button.Content>
+                  <Button animated="vertical">
+                    <Button.Content
+                      onClick={() => {
+                        this.props.handleAddToCart(song.id);
+                      }}
+                      hidden>
+                      Buy
+                    </Button.Content>
                     <Button.Content visible>
                       <Icon name="add to cart" />
                     </Button.Content>
@@ -107,10 +113,9 @@ const mapDispatch = (dispatch) => {
     fetchSongsData: () => {
       dispatch(fetchSongs());
     },
-    handleAddToCart(e) {
-      const songId = +e.target.value;
+    handleAddToCart(songId) {
       dispatch(addSongToCart({ id: songId }));
-      history.push('/cart');
+      // history.push('/cart');
     },
   };
 };
