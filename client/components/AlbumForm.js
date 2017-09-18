@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Segment, Table, Header, Divider, Label, Button, Item, Form } from 'semantic-ui-react';
-import { fetchAlbum, submitAlbumUpdate } from '../store';
+import { fetchAlbum, changeAlbumDetails, submitAlbumUpdate } from '../store';
 
 class AlbumForm extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class AlbumForm extends Component {
 
   render() {
     const styles = this.styles;
-    const album = this.props.album;
+    const { album, handleChange } = this.props;
     album.songs = album.songs
       ? album.songs.sort((song1, song2) => {
           return song1.trackNumber - song2.trackNumber;
@@ -38,7 +38,7 @@ class AlbumForm extends Component {
     const categories = album.categories || [];
     const artist = album.artist || {};
     return (
-      <Form style={styles.container}>
+      <Form style={styles.container} onChange={handleChange}>
         <Item.Group>
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
@@ -46,26 +46,26 @@ class AlbumForm extends Component {
               <Header style={styles.title} size="huge">
                 <Form.Field>
                   <label>Name:</label>
-                  <input value={album.name} />
+                  <input name="name" value={album.name} />
                 </Form.Field>
               </Header>
               <Form.Group widths="equal">
                 <Form.Field>
                   <label>Image Url:</label>
-                  <input value={album.image} />
+                  <input name="image" value={album.image} />
                 </Form.Field>
                 <Form.Field>
                   <label>Year:</label>
-                  <input value={album.year} />
+                  <input name="year" value={album.year} />
                 </Form.Field>
                 <Form.Field>
                   <label>Price:</label>
-                  <input value={album.displayPrice} />
+                  <input disabled name="price" value={album.displayPrice} />
                 </Form.Field>
               </Form.Group>
                 <Form.Field>
                   <label>Description:</label>
-                  <input value={album.description} />
+                  <input name="description" value={album.description} />
                 </Form.Field>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
@@ -123,6 +123,11 @@ const mapDispatch = (dispatch) => ({
   getAlbum: (id) => {
     dispatch(fetchAlbum(id));
   },
+
+  handleChange(evt) {
+    dispatch(changeAlbumDetails(evt.target.name, evt.target.value));
+  },
+
   handleSubmit (evt) {
     evt.preventDefault();
     console.log(this.props);

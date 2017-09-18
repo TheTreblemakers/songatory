@@ -6,6 +6,7 @@ import history from '../history';
  */
 const GET_ALBUMS = 'GET_ALBUMS';
 const GET_ALBUM = 'GET_ALBUM';
+const CHANGE_ALBUM_DETAILS = 'CHANGE_ALBUM_DETAILS';
 
 /**
  * INITIAL STATE
@@ -24,6 +25,10 @@ export const getAlbums = (albums) => {
 
 export const getAlbum = (album) => {
   return { type: GET_ALBUM, album };
+};
+
+export const changeAlbumDetails = (prop, val) => {
+  return { type: CHANGE_ALBUM_DETAILS, prop, val };
 };
 
 /**
@@ -64,6 +69,9 @@ export default function(state = initialState, action) {
       return newState;
     case GET_ALBUM:
       newState.currentAlbum = action.album;
+      return newState;
+    case CHANGE_ALBUM_DETAILS:
+      newState.currentAlbum = Object.assign({}, state.currentAlbum, { [action.prop]: action.val });
       return newState;
     default:
       return state;
