@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
 import { removeSongFromUserCart, fetchUserCart, fetchGuestCart, removeAlbumFromUserCart } from '../store';
-import { Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
+import { Divider, Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 
 class Cart extends Component {
@@ -36,13 +36,25 @@ class Cart extends Component {
         {cart.albums.length > 0 ? (
           <div>
             <h3>Albums</h3>
-            <List divided verticalAlign="middle">
-              {cart.albums.map((album) => (
-                <CartAlbumItem key={album.id} album={album} handleAlbumDelete={this.props.handleAlbumDelete} />
-              ))}
-            </List>
+            <Table striped>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell />
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Artist</Table.HeaderCell>
+                  <Table.HeaderCell>Price</Table.HeaderCell>
+                  <Table.HeaderCell />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {cart.albums.map((album) => (
+                  <CartAlbumItem key={album.id} album={album} handleAlbumDelete={this.props.handleAlbumDelete} />
+                ))}
+              </Table.Body>
+            </Table>
           </div>
         ) : null}
+        <Divider hidden />
         {cart.songs.length > 0 ? (
           <div>
             <h3>Songs</h3>
@@ -64,6 +76,7 @@ class Cart extends Component {
             </Table>
           </div>
         ) : null}
+        <Divider />
         <Button floated="right">Checkout</Button>
       </Container>
     );
