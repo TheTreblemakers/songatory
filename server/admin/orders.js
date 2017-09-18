@@ -4,13 +4,9 @@ module.exports = router;
 
 // GET /admin/manage/orders
 router.get('/', (req, res, next) => {
-  if (req.user.isAdmin) {
-    Order.findAll()
-      .then(orders => res.json(orders))
-      .catch(next);
-  } else {
-    res.sendStatus(403).send('You do not have admin privileges and are forbidden from accessing this page');
-  }
+  Order.findAll()
+    .then(orders => res.json(orders))
+    .catch(next);
 });
 
 // GET /admin/manage/orders/:id

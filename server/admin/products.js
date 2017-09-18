@@ -4,13 +4,9 @@ module.exports = router;
 
 // GET /admin/manage/products
 router.get('/', (req, res, next) => {
-  if (req.user.isAdmin) {
-    return Promise.all([Album.findAll(), Song.findAll()])
-      .then(data => res.json({ albums: data[0], songs: data[1] }))
-      .catch(next);
-  } else {
-    res.sendStatus(403).send('You do not have admin privileges and are forbidden from accessing this page');
-  }
+  return Promise.all([Album.findAll(), Song.findAll()])
+    .then(data => res.json({ albums: data[0], songs: data[1] }))
+    .catch(next);
 });
 
 // GET /admin/manage/products/:id
