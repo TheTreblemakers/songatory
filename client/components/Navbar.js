@@ -45,7 +45,6 @@ class Navbar extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: input validation
     if (this.state.query.length < 3) {
       this.setState({ query: '', inputError: true, searchPlaceholder: 'Please enter at least three characters' });
     } else {
@@ -138,6 +137,7 @@ class Navbar extends Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    // isLoggedIn: !!state.user,
     cart: state.cart,
   };
 };
