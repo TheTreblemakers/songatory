@@ -10,11 +10,15 @@ import cart from './cart';
 import categories from './categories';
 import search from './search';
 
+
+const devToolsExtension = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION__ ?
+  window.__REDUX_DEVTOOLS_EXTENSION__() : false;
+
 export const reducer = combineReducers({ search, user, categories, artists, albums, songs, cart, orders });
 const middleware = applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }));
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  devToolsExtension,
   middleware,
 );
 
