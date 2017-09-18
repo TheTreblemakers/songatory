@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Segment, Table, Header, Divider, Label, Button, Item, Form } from 'semantic-ui-react';
 import { fetchAlbum, submitAlbumUpdate } from '../store';
 
 class AlbumForm extends Component {
@@ -13,7 +13,8 @@ class AlbumForm extends Component {
         padding: `2em`,
       },
       title: {
-        fontSize: `4em`,
+        width: `100%`,
+        marginBottom: `1em`,
       },
       subtitle: {
         fontSize: `2em`,
@@ -22,10 +23,8 @@ class AlbumForm extends Component {
     };
   }
 
-  // <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
-
   componentDidMount() {
-    this.props.getArtist(this.props.match.params.id);
+    this.props.getAlbum(this.props.match.params.id);
   }
 
   render() {
@@ -39,19 +38,35 @@ class AlbumForm extends Component {
     const categories = album.categories || [];
     const artist = album.artist || {};
     return (
-      <Container style={styles.container}>
+      <Form style={styles.container}>
         <Item.Group>
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
             <Item.Content verticalAlign="middle">
               <Header style={styles.title} size="huge">
-                {album.name}
+                <Form.Field>
+                  <label>Name:</label>
+                  <input value={album.name} />
+                </Form.Field>
               </Header>
-              <p>
-                <Header disabled size="huge">
-                  {album.year}
-                </Header>
-              </p>
+              <Form.Group widths="equal">
+                <Form.Field>
+                  <label>Image Url:</label>
+                  <input value={album.image} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Year:</label>
+                  <input value={album.year} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Price:</label>
+                  <input value={album.displayPrice} />
+                </Form.Field>
+              </Form.Group>
+                <Form.Field>
+                  <label>Description:</label>
+                  <input value={album.description} />
+                </Form.Field>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}
@@ -91,7 +106,7 @@ class AlbumForm extends Component {
             </Item.Content>
           </Item>
         </Item.Group>
-      </Container>
+      </Form>
     );
   }
 }
@@ -105,7 +120,7 @@ const mapEdit = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  getArtist: (id) => {
+  getAlbum: (id) => {
     dispatch(fetchAlbum(id));
   },
   handleSubmit (evt) {

@@ -50,9 +50,6 @@ const Main = (props) => {
     },
   };
 
-  // const cart = props.cart;
-  // const itemsInCart = cart.songs.length + cart.albums.length;
-
   return (
     <div style={styles.body}>
       <Navbar />
