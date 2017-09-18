@@ -113,6 +113,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchSongs());
     },
     handleAddToCart(songId, isLoggedIn) {
+      console.log('inside add song', isLoggedIn);
       if (isLoggedIn){
         dispatch(addSongToUserCart({ id: songId }));
       }

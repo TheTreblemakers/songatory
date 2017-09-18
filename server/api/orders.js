@@ -8,8 +8,12 @@ router.use('/cart/', (req, res, next) => {
   if (!req.user) {
     res.sendStatus(404);
   } else {
-    Order.findOne({ where: { userId: req.user.id, fulfilled: false } })
-      .then(order => order ? order : Order.create({ userId: req.user.id }))
+    Order.findOne({ where: { session: req.sessionID, fulfilled: false } })
+      .then(order => order ? order : Order.create({ userId: req.user.id, session: req.sessionID }))
+      .then(order => {
+        if (!order.userId) return order.update({userId: req.user.id});
+        else return order;
+      })
       .then(order => {
         req.order = order;
         next();
