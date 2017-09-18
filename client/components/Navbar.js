@@ -71,7 +71,9 @@ class Navbar extends Component {
     return (
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
-          <Menu.Item style={this.styles.title}>songatory</Menu.Item>
+          <Menu.Item as={Link} to={'/'} style={this.styles.title}>
+            songatory
+          </Menu.Item>
           <Menu.Item>
             <Form onSubmit={this.handleSubmit} style={this.styles.search}>
               <Form.Field>

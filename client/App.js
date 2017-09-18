@@ -32,7 +32,6 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me())
-      .then(() => dispatch(fetchCart()));
       dispatch(fetchAlbums());
       dispatch(fetchArtists());
     },
