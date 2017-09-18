@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Router } from 'react-router';
 import PropTypes from 'prop-types';
 import history from './history';
-import { Main, Login, Signup, UserHome } from './components';
+import { Main } from './components';
 import { me, fetchAlbums, fetchArtists, fetchCart } from './store';
 
 /**
