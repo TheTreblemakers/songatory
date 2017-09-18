@@ -14,7 +14,7 @@ faker.seed(54321);
 
 const num_users = 100;
 const num_categories = 15;
-const num_artists = 16;
+const num_artists = 50;
 const maxAlbumsPerArtist = 5;
 const maxSongsPerAlbum = 12;
 const num_reviews = 100;

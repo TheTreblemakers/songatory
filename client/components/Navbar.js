@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Menu, Input, Icon, Dropdown } from 'semantic-ui-react';
+import { Menu, Input, Label, Icon, Dropdown } from 'semantic-ui-react';
 import { logout } from '../store';
 
 class Navbar extends Component {
@@ -15,9 +15,9 @@ class Navbar extends Component {
     ];
     this.links = [
       { url: '/', name: 'Home' },
-      { url: '/artists', name: 'Artists' },
-      { url: '/albums', name: 'Albums' },
-      { url: '/songs', name: 'Songs' },
+      { url: '/artists/page/1', name: 'Artists' },
+      { url: '/albums/page/1', name: 'Albums' },
+      { url: '/songs/page/1', name: 'Songs' },
     ];
     this.styles = {
       navbar: {
@@ -35,18 +35,34 @@ class Navbar extends Component {
 
   render() {
     const { isLoggedIn, handleLogout } = this.props;
+    const cart = this.props.cart;
+    const itemsInCart = cart.songs.length + cart.albums.length;
+    const options = [
+      { key: 'artists', text: 'Artists', value: 'artists' },
+      { key: 'albums', text: 'Albums', value: 'albums' },
+      { key: 'songs', text: 'Songs', value: 'songs' },
+    ];
 
     return (
-      <Menu inverted pointing floated fixed="top" stackable style={this.styles.navbar}>
+      <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
           <Menu.Item style={this.styles.title}>songatory</Menu.Item>
           <Menu.Item style={this.styles.search}>
-            <Input inverted placeholder="What's your jam?" icon="search" iconPosition="left" action="Search" fluid />
+            <Input
+              label={<Dropdown defaultValue="artists" options={options} />}
+              labelPosition="right"
+              inverted
+              placeholder="What's your jam?"
+              icon={<Icon name="search" link />}
+              iconPosition="left"
+              fluid
+            />
           </Menu.Item>
         </Menu.Menu>
         {this.links.map((link) => {
           return (
             <Menu.Item
+              color="teal"
               active={this.props.location.pathname === link.url}
               key={link.name}
               name={link.name}
@@ -57,15 +73,17 @@ class Navbar extends Component {
           );
         })}
         <Menu.Item position="right" as={Link} to={`/cart`}>
-          <Icon link name="cart" size="large" />
+          {itemsInCart > 0 && <Label color="teal">{itemsInCart}</Label>}
+          <Icon link name="cart" size="big" />
         </Menu.Item>
-        { isLoggedIn
-          ? <Menu.Item name="Log Out" onClick={handleLogout} />
-          : <Menu.Menu>
+        {isLoggedIn ? (
+          <Menu.Item name="Log Out" onClick={handleLogout} />
+        ) : (
+          <Menu.Menu>
             <Menu.Item name="Login" as={Link} to={`/login`} />
             <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
           </Menu.Menu>
-        }
+        )}
       </Menu>
     );
   }
@@ -74,9 +92,10 @@ class Navbar extends Component {
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    cart: state.cart,
   };
 };
 
