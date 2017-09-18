@@ -66,7 +66,6 @@ class Navbar extends Component {
       { key: 'albums', text: 'Albums', value: 'albums' },
       { key: 'songs', text: 'Songs', value: 'songs' },
     ];
-    console.log('cur user:', user);
     return (
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>

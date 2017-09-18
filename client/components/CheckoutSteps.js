@@ -1,35 +1,28 @@
-import React from 'react';
-import { Icon, Step } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Header, Icon, Step } from 'semantic-ui-react';
 
-const steps = [
-  { icon: 'truck', title: 'Shipping', description: 'Choose your shipping options' },
-  { active: true, icon: 'payment', title: 'Billing', description: 'Enter billing information' },
-  { disabled: true, icon: 'info', title: 'Confirm Order' },
-];
+class StepExampleGroups extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-const StepExampleGroups = () => (
-  <div>
-    <Step.Group>
-      <Step>
-        <Icon name="truck" />
-        <Step.Content>
-          <Step.Title>Shipping</Step.Title>
-          <Step.Description>Choose your shipping options</Step.Description>
-        </Step.Content>
-      </Step>
+  render() {
+    const steps = this.steps;
+    const pathname = this.props.location.pathname;
+    return (
+      <div>
+        <Header>{pathname}</Header>
+        <Step.Group>
+          <Step active>
+            <Icon name="payment" />
+            <Step.Content title="Billing" description="Enter billing information" />
+          </Step>
+          <Step disabled icon="info" title="Confirm Order" />
+        </Step.Group>
+      </div>
+    );
+  }
+}
 
-      <Step active>
-        <Icon name="payment" />
-        <Step.Content title="Billing" description="Enter billing information" />
-      </Step>
-
-      <Step disabled icon="info" title="Confirm Order" />
-    </Step.Group>
-
-    <br />
-
-    <Step.Group items={steps} />
-  </div>
-);
-
-export default StepExampleGroups;
+export default withRouter(StepExampleGroups);

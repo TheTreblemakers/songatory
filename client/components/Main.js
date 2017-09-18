@@ -72,7 +72,7 @@ class Main extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route exact path="/cart" component={Cart} />
-          <Route exact path="/cart/checkout" component={Checkout} />
+          <Route path="/cart/checkout/" component={Checkout} />
         </Container>
         <Footer />
       </div>

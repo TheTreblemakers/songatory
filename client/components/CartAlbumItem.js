@@ -11,6 +11,7 @@ const CartAlbumItem = (props) => {
         <Image src={album.image} size="mini" />
       </Table.Cell>
       <Table.Cell> {album.name}</Table.Cell>
+      <Table.Cell> {album.year}</Table.Cell>
       <Table.Cell>{album.artist.name}</Table.Cell>
       <Table.Cell>$ {album.displayPrice}</Table.Cell>
       <Table.Cell>

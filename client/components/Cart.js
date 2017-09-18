@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import CartAlbumItem from './CartAlbumItem';
-import CartSongItem from './CartSongItem';
+import { CartAlbumItem, CartSongItem } from '../components';
 import {
   removeSongFromUserCart,
   removeAlbumFromUserCart,
@@ -46,6 +45,7 @@ class Cart extends Component {
                 <Table.Row>
                   <Table.HeaderCell />
                   <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Year</Table.HeaderCell>
                   <Table.HeaderCell>Artist</Table.HeaderCell>
                   <Table.HeaderCell>Price</Table.HeaderCell>
                   <Table.HeaderCell />
@@ -71,9 +71,10 @@ class Cart extends Component {
             <Table striped>
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell>Name</Table.HeaderCell>
-                  <Table.HeaderCell>Album Name</Table.HeaderCell>
-                  <Table.HeaderCell>Track Number</Table.HeaderCell>
+                  <Table.HeaderCell />
+                  <Table.HeaderCell>Title</Table.HeaderCell>
+                  <Table.HeaderCell>Album</Table.HeaderCell>
+                  <Table.HeaderCell>Track #</Table.HeaderCell>
                   <Table.HeaderCell>Price</Table.HeaderCell>
                   <Table.HeaderCell />
                 </Table.Row>
@@ -88,7 +89,7 @@ class Cart extends Component {
         ) : null}
         <Divider hidden />
         {totalItems > 0 ? (
-          <Button as={Link} to="/cart/checkout" floated="right">
+          <Button as={Link} to="/cart/checkout/billing" floated="right">
             Checkout
           </Button>
         ) : (
