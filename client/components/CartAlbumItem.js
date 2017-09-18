@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Image, List, Button } from 'semantic-ui-react';
 
 const CartAlbumItem = (props) => {
-  const { album, handleAlbumDelete } = props;
+  const { album, handleAlbumDelete, isLoggedIn } = props;
 
   return (
     <Table.Row>
@@ -14,7 +14,7 @@ const CartAlbumItem = (props) => {
       <Table.Cell>{album.artist.name}</Table.Cell>
       <Table.Cell>{album.displayPrice}</Table.Cell>
       <Table.Cell>
-        <Button icon="remove" value={album.id} onClick={handleAlbumDelete} />
+        <Button icon="remove" onClick={() => handleAlbumDelete(album.id, isLoggedIn)} />
       </Table.Cell>
     </Table.Row>
   );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Segment, Icon, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
-import { addAlbumToUserCart, fetchAlbum } from '../store';
+import { addAlbumToUserCart, addAlbumToGuestCart, fetchAlbum } from '../store';
 
 class Album extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Album extends Component {
 
   render() {
     const styles = this.styles;
-    const album = this.props.album;
+    const {album, isLoggedIn } = this.props;
     album.songs = album.songs
       ? album.songs.sort((song1, song2) => {
           return song1.trackNumber - song2.trackNumber;
@@ -53,7 +53,7 @@ class Album extends Component {
               <Button
                 animated="vertical"
                 onClick={() => {
-                  this.props.handleAddToCart(album.id);
+                  this.props.handleAddToCart(album.id, isLoggedIn);
                 }}>
                 <Button.Content hidden>Buy</Button.Content>
                 <Button.Content visible>
@@ -107,13 +107,20 @@ class Album extends Component {
 const mapState = (state) => {
   return {
     album: state.albums.currentAlbum,
+    isLoggedIn: !!state.user.id
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    handleAddToCart(albumId) {
-      dispatch(addAlbumToUserCart({ id: albumId }));
+    handleAddToCart(albumId, isLoggedIn) {
+      if (isLoggedIn){
+        dispatch(addAlbumToUserCart({ id: albumId }));
+      }
+      else {
+        dispatch(addAlbumToGuestCart({ id: albumId }));
+      }
+
     },
     getAlbum: (id) => {
       dispatch(fetchAlbum(id));

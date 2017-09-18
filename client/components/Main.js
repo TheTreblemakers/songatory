@@ -55,7 +55,6 @@ class Main extends Component {
   // const itemsInCart = cart.songs.length + cart.albums.length;
 
   render() {
-    console.log(`user: ${this.props.isLoggedIn}`);
     const styles = this.styles;
     return (
       <div style={styles.body}>

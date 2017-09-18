@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
-import { removeSongFromUserCart, fetchUserCart, fetchGuestCart, removeAlbumFromUserCart } from '../store';
-import { Divider, Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
+import {
+  removeSongFromUserCart,
+  removeAlbumFromUserCart,
+  removeAlbumFromGuestCart,
+  removeSongFromGuestCart
+} from '../store';
+import { Segment, Header, Container, Button, List, Table, Divider } from 'semantic-ui-react';
 import history from '../history';
 
 class Cart extends Component {
@@ -20,7 +25,7 @@ class Cart extends Component {
   }
 
   render() {
-    const { cart } = this.props;
+    const { cart, isLoggedIn, handleAlbumDelete, handleSongDelete } = this.props;
     const totalItems = cart.albums.length + cart.songs.length;
     //console.log(cart);
     //const cart = this.props.cart;
@@ -48,7 +53,7 @@ class Cart extends Component {
               </Table.Header>
               <Table.Body>
                 {cart.albums.map((album) => (
-                  <CartAlbumItem key={album.id} album={album} handleAlbumDelete={this.props.handleAlbumDelete} />
+                  <CartAlbumItem key={album.id} album={album} isLoggedIn = {isLoggedIn} handleAlbumDelete={handleAlbumDelete} />
                 ))}
               </Table.Body>
             </Table>
@@ -70,7 +75,7 @@ class Cart extends Component {
               </Table.Header>
               <Table.Body>
                 {cart.songs.map((song) => (
-                  <CartSongItem key={song.id} song={song} handleSongDelete={this.props.handleSongDelete} />
+                  <CartSongItem key={song.id} song={song} isLoggedIn={isLoggedIn} handleSongDelete={handleSongDelete} />
                 ))}
               </Table.Body>
             </Table>
@@ -90,25 +95,29 @@ const mapState = (state) => {
   //console.log(state);
   return {
     cart: state.cart,
-    user: state.user,
+    isLoggedIn: !!state.user.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadUserCart() {
-      dispatch(fetchUserCart());
+    handleAlbumDelete(albumId, isLoggedIn) {
+      if (isLoggedIn){
+        dispatch(removeAlbumFromUserCart(albumId));
+      }
+      else {
+        dispatch(removeAlbumFromGuestCart(albumId));
+      }
     },
-    loadGuestCart() {
-      dispatch(fetchGuestCart());
-    },
-    handleAlbumDelete(e) {
-      const albumId = +e.target.value;
-      dispatch(removeAlbumFromUserCart(albumId));
-    },
-    handleSongDelete(e) {
-      const songId = +e.target.value;
-      dispatch(removeSongFromUserCart(songId));
+    handleSongDelete(songId, isLoggedIn) {
+      console.log('isloggedin in song delete', isLoggedIn);
+      if (isLoggedIn){
+        dispatch(removeSongFromUserCart(songId));
+      }
+      else {
+        console.log('inside guest delete');
+        dispatch(removeSongFromGuestCart(songId));
+      }
     },
   };
 };
