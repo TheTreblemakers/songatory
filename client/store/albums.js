@@ -45,6 +45,14 @@ export const fetchAlbum = (id) => (dispatch) =>
     })
     .catch((err) => console.log(err));
 
+export const submitAlbumUpdate = (id) => (dispatch) =>
+  axios
+    .put(`/admin/albums/${id}`)
+    .then((res) => {
+      history.push(`/albums/${id}`);
+    })
+    .catch((err) => console.log(err));
+
 /**
  * REDUCER
  */
