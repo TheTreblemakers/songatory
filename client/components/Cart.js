@@ -86,10 +86,14 @@ class Cart extends Component {
             </Table>
           </div>
         ) : null}
-        <Divider />
-        <Button as={Link} to="/cart/checkout" floated="right">
-          Checkout
-        </Button>
+        <Divider hidden />
+        {totalItems > 0 ? (
+          <Button as={Link} to="/cart/checkout" floated="right">
+            Checkout
+          </Button>
+        ) : (
+          ''
+        )}
       </Container>
     );
   }
