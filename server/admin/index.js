@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 
 router.use('/orders', require('./orders'));
 router.use('/users', require('./users'));
-router.use('/products', require('./products'));
+router.use('/albums', require('./albums'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');
