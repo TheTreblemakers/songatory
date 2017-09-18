@@ -10,9 +10,12 @@ import history from '../history';
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.defaultPlaceholder = "What's your jam?";
     this.state = {
       query: '',
       queryType: 'artists',
+      inputError: false,
+      searchPlaceholder: this.defaultPlaceholder,
     };
     this.searchOptions = [
       { key: 'Artists', text: 'Artists', value: 'artists' },
@@ -42,13 +45,16 @@ class Navbar extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.search(this.state.query, this.state.queryType);
+    // TODO: input validation
+    if (this.state.query.length < 3) {
+      this.setState({ query: '', inputError: true, searchPlaceholder: 'Please enter at least three characters' });
+    } else {
+      this.props.search(this.state.query, this.state.queryType);
+    }
   };
 
   handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value }, () => {
-      // console.log(this.state);
-    });
+    this.setState({ searchPlaceholder: this.defaultPlaceholder, [name]: value, inputError: false }, () => {});
   };
 
   render() {
@@ -82,9 +88,10 @@ class Navbar extends Component {
                   }
                   labelPosition="right"
                   inverted
+                  error={this.state.inputError}
                   name="query"
                   value={query}
-                  placeholder="What's your jam?"
+                  placeholder={this.state.searchPlaceholder}
                   icon={<Icon name="search" />}
                   iconPosition="left"
                   fluid

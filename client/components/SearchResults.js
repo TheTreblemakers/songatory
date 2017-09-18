@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Divider, Header, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
+import { List, Image, Divider, Header, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
 
 class SearchResults extends Component {
   constructor(props) {
@@ -21,28 +21,22 @@ class SearchResults extends Component {
 
     return (
       <Container style={this.styles.container}>
-        <h2>{`Search Results in ${queryType}`}:</h2>
-        <Divider />
-        <Table striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+        {results.length > 0 ? <h2>{`Search Results in ${queryType}`}:</h2> : <h2>No results found.</h2>}
+        <List size="huge" relaxed animated celled verticalAlign="middle">
           {results &&
             results.map((result) => {
               return (
-                <Table.Row key={result.id}>
-                  <Table.Cell>
-                    <Header as={Link} to={`/${queryType}/${result.id}`}>
+                <List.Item key={result.id}>
+                  {result.image && <Image avatar src={result.image} />}
+                  <List.Content>
+                    <List.Header as={Link} to={`/${queryType}/${result.id}`}>
                       {result.name}
-                    </Header>
-                  </Table.Cell>
-                </Table.Row>
+                    </List.Header>
+                  </List.Content>
+                </List.Item>
               );
             })}
-          <Table.Body />
-        </Table>
+        </List>
       </Container>
     );
   }
