@@ -5,6 +5,7 @@ import { withRouter, Link, Route, Switch } from 'react-router-dom';
 import {
   Albums,
   Album,
+  EditAlbum,
   Artists,
   Artist,
   Category,
@@ -60,6 +61,7 @@ const Main = (props) => {
         <Route exact path="/" component={Landing} />
         <Route exact path="/albums/page/:pageNumber" component={Albums} />
         <Route exact path="/albums/:id" component={Album} />
+        <Route exact path="/albums/:id/edit" component={EditAlbum} />
         <Route exact path="/artists/page/:pageNumber" component={Artists} />
         <Route exact path="/artists/:id" component={Artist} />
         <Route exact path="/songs/page/:pageNumber" component={Songs} />
