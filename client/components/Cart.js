@@ -4,13 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
-import {
-  removeAlbumFromCart,
-  removeSongFromUserCart,
-  fetchUserCart,
-  fetchGuestCart,
-  removeAlbumFromUserCart,
-} from '../store';
+import { removeSongFromUserCart, fetchUserCart, fetchGuestCart, removeAlbumFromUserCart } from '../store';
 import { Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 

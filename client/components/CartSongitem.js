@@ -4,6 +4,7 @@ import { Table, Button } from 'semantic-ui-react';
 
 const CartSongItem = (props) => {
   const { song, handleSongDelete } = props;
+
   return (
     <Table.Row>
       <Table.Cell> {song.name}</Table.Cell>

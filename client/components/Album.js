@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
-import { fetchAlbum } from '../store';
+import { Segment, Icon, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { addAlbumToUserCart, fetchAlbum } from '../store';
 
 class Album extends Component {
   constructor(props) {
@@ -22,10 +22,8 @@ class Album extends Component {
     };
   }
 
-  // <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
-
   componentDidMount() {
-    this.props.getArtist(this.props.match.params.id);
+    this.props.getAlbum(this.props.match.params.id);
   }
 
   render() {
@@ -52,6 +50,16 @@ class Album extends Component {
                   {album.year}
                 </Header>
               </div>
+              <Button
+                animated="vertical"
+                onClick={() => {
+                  this.props.handleAddToCart(album.id);
+                }}>
+                <Button.Content hidden>Buy</Button.Content>
+                <Button.Content visible>
+                  <Icon name="add to cart" />
+                </Button.Content>
+              </Button>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}
@@ -102,11 +110,16 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => ({
-  getArtist: (id) => {
-    dispatch(fetchAlbum(id));
-  },
-});
+const mapDispatch = (dispatch) => {
+  return {
+    handleAddToCart(albumId) {
+      dispatch(addAlbumToUserCart({ id: albumId }));
+    },
+    getAlbum: (id) => {
+      dispatch(fetchAlbum(id));
+    },
+  };
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
