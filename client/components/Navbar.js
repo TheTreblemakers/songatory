@@ -47,7 +47,7 @@ class Navbar extends Component {
 
   handleChange = (e, { name, value }) => {
     this.setState({ [name]: value }, () => {
-      console.log(this.state);
+      // console.log(this.state);
     });
   };
 
@@ -135,7 +135,6 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => ({
   search: (query, queryType) => {
-    console.log('tryin to search: ', query, queryType);
     dispatch(makeQuery(query, queryType));
   },
   handleLogout: (evt) => {

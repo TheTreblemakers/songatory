@@ -38,7 +38,6 @@ class Album extends Component {
       : [];
     const categories = album.categories || [];
     const artist = album.artist || {};
-    console.log('album', album);
     return (
       <Container style={styles.container}>
         <Item.Group>

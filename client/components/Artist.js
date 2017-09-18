@@ -51,7 +51,7 @@ class Artist extends Component {
                 <Label.Group>
                   {categories.map((category) => {
                     return (
-                      <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
+                      <Label as={Link} to={`/categories/${category.id}`} key={category.name}>
                         {category.name}
                       </Label>
                     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { Divider, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
+import { Divider, Header, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
 
 class SearchResults extends Component {
   constructor(props) {
@@ -16,22 +16,31 @@ class SearchResults extends Component {
   }
 
   render() {
-    console.log('results: ', this.props.results);
+    const results = this.props.results;
+    const queryType = this.props.queryType.charAt(0).toUpperCase() + this.props.queryType.slice(1);
+
     return (
       <Container style={this.styles.container}>
-        <h2>All Search Results</h2>
+        <h2>{`Search Results in ${queryType}`}:</h2>
         <Divider />
         <Table striped>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Artist</Table.HeaderCell>
-              <Table.HeaderCell>Album</Table.HeaderCell>
-              <Table.HeaderCell>Price</Table.HeaderCell>
-              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
-
+          {results &&
+            results.map((result) => {
+              return (
+                <Table.Row key={result.id}>
+                  <Table.Cell>
+                    <Header as={Link} to={`/${queryType}/${result.id}`}>
+                      {result.name}
+                    </Header>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
           <Table.Body />
         </Table>
       </Container>
@@ -44,7 +53,8 @@ class SearchResults extends Component {
  */
 const mapState = (state) => {
   return {
-    results: state.search,
+    results: state.search.searchResults,
+    queryType: state.search.queryType,
   };
 };
 
