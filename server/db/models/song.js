@@ -34,8 +34,7 @@ const Song = db.define(
     defaultScope: {
       include: [ Album ],
     },
-  },
-);
+  });
 
 module.exports = Song;
 

@@ -16,6 +16,7 @@ import {
   Signup,
   SearchResults,
   Cart,
+  UserHome,
 } from '../components';
 import { Button, Icon, Container, Grid } from 'semantic-ui-react';
 import { logout } from '../store';
@@ -67,6 +68,7 @@ const Main = (props) => {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
+        <Route path="/home" component={UserHome} />
       </Container>
       <Footer />
     </div>
