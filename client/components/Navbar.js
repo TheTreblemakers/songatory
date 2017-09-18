@@ -57,7 +57,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { isLoggedIn, handleLogout } = this.props;
+    const { isLoggedIn, user, handleLogout } = this.props;
     const cart = this.props.cart;
     const itemsInCart = cart.songs.length + cart.albums.length;
     const query = this.state.query;
@@ -66,7 +66,7 @@ class Navbar extends Component {
       { key: 'albums', text: 'Albums', value: 'albums' },
       { key: 'songs', text: 'Songs', value: 'songs' },
     ];
-
+    console.log('cur user:', user);
     return (
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
@@ -119,7 +119,7 @@ class Navbar extends Component {
           <Icon link name="cart" size="big" />
         </Menu.Item>
         {isLoggedIn ? (
-          <Menu.Item name="Log Out" onClick={handleLogout} />
+          <Menu.Item name={`Log Out - ${user.name}`} onClick={handleLogout} />
         ) : (
           <Menu.Menu>
             <Menu.Item name="Login" as={Link} to={`/login`} />
@@ -138,6 +138,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
     // isLoggedIn: !!state.user,
+    user: state.user,
     cart: state.cart,
   };
 };

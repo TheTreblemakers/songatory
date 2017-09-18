@@ -19,4 +19,6 @@ export { default as Splash } from './Splash';
 export { default as SearchResults } from './SearchResults';
 export { default as Songs } from './Songs';
 export { default as Cart } from './Cart';
+export { default as Checkout } from './Checkout';
+export { default as CheckoutSteps } from './CheckoutSteps';
 export { Login, Signup } from './AuthForm';
