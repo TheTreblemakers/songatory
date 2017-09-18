@@ -5,6 +5,8 @@
  */
 export { default as Main } from './Main';
 export { default as UserHome } from './UserHome';
+export { default as UserPanel } from './UserPanel';
+export { default as UserOrderHistory } from './UserOrderHistory';
 export { default as Navbar } from './Navbar';
 export { default as Footer } from './Footer';
 export { default as Albums } from './Albums';
