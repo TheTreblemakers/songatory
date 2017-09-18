@@ -38,7 +38,6 @@ class Album extends Component {
       : [];
     const categories = album.categories || [];
     const artist = album.artist || {};
-    console.log('album', album);
     return (
       <Container style={styles.container}>
         <Item.Group>
@@ -48,6 +47,11 @@ class Album extends Component {
               <Header style={styles.title} size="huge">
                 {album.name}
               </Header>
+              <p>
+                <Header disabled size="huge">
+                  {album.year}
+                </Header>
+              </p>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}

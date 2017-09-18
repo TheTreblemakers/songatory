@@ -11,7 +11,10 @@ const AlbumCard = (props) => {
       <Image src={imgUrl} as={Link} to={albumUrl} />
       <Card.Content>
         <Card.Header>{album.name}</Card.Header>
-        <Card.Meta>{`${album.artist.name}`}</Card.Meta>
+        <Card.Meta>
+          <h4>{album.artist.name}</h4>
+        </Card.Meta>
+        <Card.Meta>{album.year}</Card.Meta>
       </Card.Content>
       <Card.Content extra>
         <Icon name="right chevron" />

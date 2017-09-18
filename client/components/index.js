@@ -16,6 +16,7 @@ export { default as ArtistCard } from './ArtistCard';
 export { default as Category } from './Category';
 export { default as Landing } from './Landing';
 export { default as Splash } from './Splash';
+export { default as SearchResults } from './SearchResults';
 export { default as Songs } from './Songs';
 export { default as Cart } from './Cart';
 export { Login, Signup } from './AuthForm';

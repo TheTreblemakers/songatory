@@ -6,6 +6,7 @@ router.use('/songs', require('./songs'));
 router.use('/albums', require('./albums'));
 router.use('/artists', require('./artists'));
 router.use('/categories', require('./categories'));
+router.use('/search', require('./search'));
 router.use('/orders', require('./orders'));
 
 router.use((req, res, next) => {

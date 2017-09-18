@@ -87,7 +87,7 @@ rp(options)
       const numSongs = faker.random.number({ min: 5, max: maxSongsPerAlbum });
       let trackNumber = 1;
       let songs = _.times(numSongs, () => ({
-        name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
+        name: generateSongName(),
         trackNumber: trackNumber++,
         price: faker.random.number({ min: 25, max: 99 }),
       }));
@@ -98,11 +98,44 @@ rp(options)
       );
     };
 
+    const generateArtistName = () => {
+      let artistName =
+        Math.random() > 0.5
+          ? faker.hacker.noun() + ' ' + faker.company.bsBuzz()
+          : faker.name.firstName() + ' ' + faker.name.lastName();
+      artistName = artistName.replace(/\b\w/g, (l) => l.toUpperCase());
+      return artistName;
+    };
+
+    const generateSongName = () => {
+      let songNameWords = [];
+      let n = faker.random.number({ min: 1, max: 3 });
+      let fnArray = [ faker.company.bsBuzz, faker.name.jobArea, faker.hacker.noun, faker.company.bsNoun ];
+      while (n--) {
+        songNameWords.push(faker.random.arrayElement(fnArray)());
+      }
+      let songName = songNameWords.join(' ');
+      songName = songName.replace(/\b\w/g, (l) => l.toUpperCase());
+      return songName;
+    };
+
+    const generateAlbumName = () => {
+      let albumNameWords = [];
+      let n = faker.random.number({ min: 1, max: 4 });
+      let fnArray = [ faker.company.bsAdjective, faker.hacker.ingverb, faker.hacker.noun, faker.company.bsNoun ];
+      while (n--) {
+        albumNameWords.push(faker.random.arrayElement(fnArray)());
+      }
+      let albumName = albumNameWords.join(' ');
+      albumName = albumName.replace(/\b\w/g, (l) => l.toUpperCase());
+      return albumName;
+    };
+
     const generateArtists = () => {
       let artists = _.times(num_artists, () => {
         const id = imgIds[Math.floor(Math.random() * imgIds.length)];
         return {
-          name: (faker.hacker.noun() + ' ' + faker.company.bsBuzz()).replace(/\b\w/g, (l) => l.toUpperCase()),
+          name: generateArtistName(),
           bio: faker.lorem.sentences(),
           image: `https://unsplash.it/200/?image=${id}`,
         };
@@ -119,7 +152,7 @@ rp(options)
       let albums = _.times(numAlbums, () => {
         const id = imgIds[Math.floor(Math.random() * imgIds.length)];
         return {
-          name: faker.lorem.words().replace(/\b\w/g, (l) => l.toUpperCase()),
+          name: generateAlbumName(),
           description: faker.lorem.sentence(),
           price: faker.random.number({ min: 500, max: 1000 }),
           year: faker.date.past(100).getFullYear(),
@@ -155,8 +188,8 @@ rp(options)
         })
         .then((createdCategories) => {
           return Album.findAll().map((album) => {
-            const n = faker.random.number({ min: 1, max: 5 });
-            const albumCategories = getRandomSubarray(createdCategories, n);
+            const numCategories = faker.random.number({ min: 1, max: 3 });
+            const albumCategories = getRandomSubarray(createdCategories, numCategories);
             return album.setCategories(albumCategories);
           });
         });

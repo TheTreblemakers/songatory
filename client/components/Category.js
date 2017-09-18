@@ -28,7 +28,7 @@ class Category extends Component {
     const albums = category.albums || [];
     return (
       <Container style={styles.container}>
-        Things that sound like:
+        Albums sounding like
         <Header style={styles.title}>{category.name}</Header>
         <Divider />
         <Card.Group itemsPerRow={4}>
