@@ -11,8 +11,7 @@ const ArtistCard = (props) => {
       <Image size="medium" src={imgUrl} as={Link} to={artistUrl} />
       <Card.Content>
         <Card.Header>{artist.name}</Card.Header>
-        <Card.Meta>Artist Blurb Goes Here</Card.Meta>
-        <Card.Description>{artist.bio.split('.')[0]}</Card.Description>
+        <Card.Meta>{artist.bio.split('.')[0]}</Card.Meta>
       </Card.Content>
       <Card.Content extra>
         <Icon name="right chevron" />

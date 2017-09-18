@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, List } from 'semantic-ui-react';
+import { Image, List, Button } from 'semantic-ui-react';
 
 const CartAlbumItem = (props) => {
-  const {album} = props;
+  const {album, handleAlbumDelete} = props;
 
   return (
     <div>
@@ -16,6 +16,7 @@ const CartAlbumItem = (props) => {
           {album.displayPrice}
         </List.Content>
       </List.Item>
+      <Button value={album.id} onClick={handleAlbumDelete}>Remove From Cart</Button>
     </div>
   );
 };

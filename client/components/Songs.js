@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Container, Table, Breadcrumb, Button } from 'semantic-ui-react';
+import { withRouter, Link } from 'react-router-dom';
+import { Divider, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
 import { addSongToCart } from '../store';
 import history from '../history';
 import { fetchSongs } from '../store/songs';
@@ -10,9 +10,7 @@ import { fetchSongs } from '../store/songs';
 class Songs extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
     this.styles = {
       container: {
         padding: `2em`,
@@ -26,10 +24,40 @@ class Songs extends Component {
 
   render() {
     const { songs } = this.props;
+    const currentPage = this.props.match.params.pageNumber;
+    const songsPerPage = 50;
+    const start = (currentPage - 1) * songsPerPage;
+    const end = start + songsPerPage;
+    const pageSongs = songs.slice(start, end);
+    const styles = this.styles;
+    const numberOfPages = Math.ceil(songs.length / songsPerPage);
+    const pageList = new Array(numberOfPages);
+    for (let i = 0; i < pageList.length; i++) pageList[i] = i + 1;
 
     return (
       <Container style={this.styles.container}>
         <h2>All Songs</h2>
+        <Breadcrumb size="small">
+          {pageList.map((pageNumber) => {
+            const pageUrl = `/songs/page/${pageNumber}`;
+            if (pageNumber === numberOfPages) {
+              return (
+                <Breadcrumb.Section link key={pageNumber} as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+              );
+            }
+            return (
+              <span key={pageNumber}>
+                <Breadcrumb.Section link as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right angle" />
+              </span>
+            );
+          })}
+        </Breadcrumb>
+        <Divider />
         <Table striped>
           <Table.Header>
             <Table.Row>
@@ -37,31 +65,33 @@ class Songs extends Component {
               <Table.HeaderCell>Artist</Table.HeaderCell>
               <Table.HeaderCell>Album</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
-            {
-              songs.map(song => (
-                <Table.Row key={song.id}>
-                  <Table.Cell> {song.name}</Table.Cell>
-                   <Table.Cell> {song.album.artist.name}</Table.Cell>
-                  <Table.Cell>{song.album.name}</Table.Cell>
-                  <Table.Cell>{song.price}</Table.Cell>
-                  <Button value={song.id} onClick={this.props.handleAddToCart}> Add To Cart</Button>
-                </Table.Row>
-              ))
-            }
+            {pageSongs.map((song) => (
+              <Table.Row key={song.id}>
+                <Table.Cell> {song.name}</Table.Cell>
+                <Table.Cell> {song.album.artist.name}</Table.Cell>
+                <Table.Cell>{song.album.name}</Table.Cell>
+                <Table.Cell>{song.price}</Table.Cell>
+                <Table.Cell>
+                  <Button
+                    animated="vertical"
+                    onClick={() => {
+                      this.props.handleAddToCart(song.id);
+                    }}>
+                    <Button.Content hidden>Buy</Button.Content>
+                    <Button.Content visible>
+                      <Icon name="add to cart" />
+                    </Button.Content>
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
           </Table.Body>
-
         </Table>
-        <Breadcrumb>
-          <Breadcrumb.Section active>1</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>2</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>3</Breadcrumb.Section>
-        </Breadcrumb>
       </Container>
     );
   }
@@ -72,7 +102,7 @@ class Songs extends Component {
  */
 const mapState = (state) => {
   return {
-    songs: state.songs
+    songs: state.songs,
   };
 };
 
@@ -81,11 +111,10 @@ const mapDispatch = (dispatch) => {
     fetchSongsData: () => {
       dispatch(fetchSongs());
     },
-    handleAddToCart (e) {
-      const songId = +e.target.value;
-      dispatch(addSongToCart({id: songId}));
-      history.push('/cart');
-    }
+    handleAddToCart(songId) {
+      dispatch(addSongToCart({ id: songId }));
+      // history.push('/cart');
+    },
   };
 };
 
@@ -97,5 +126,5 @@ export default withRouter(connect(mapState, mapDispatch)(Songs));
  * PROP TYPES
  */
 Songs.propTypes = {
-  songs: PropTypes.array
+  songs: PropTypes.array,
 };

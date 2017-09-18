@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { ArtistCard } from '../components';
 import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
@@ -19,25 +19,48 @@ class Artists extends Component {
 
   render() {
     const { artists } = this.props;
+    const currentPage = this.props.match.params.pageNumber;
+    const artistsPerPage = 16;
+    const start = (currentPage - 1) * artistsPerPage;
+    const end = start + artistsPerPage;
+    const pageArtists = artists.slice(start, end);
     const styles = this.styles;
+    const numberOfPages = Math.ceil(artists.length / artistsPerPage);
+    const pageList = new Array(numberOfPages);
+
+    for (let i = 0; i < pageList.length; i++) pageList[i] = i + 1;
 
     return (
       <Container style={styles.container}>
-        <h2>All Artists</h2>
-        <Card.Group itemsPerRow={4}>
-          {artists.map((artist, idx) => {
-            if (idx > 15) return;
-            return <ArtistCard key={artist.id} artist={artist} />;
+        <h2>Our Artists</h2>
+        <Breadcrumb size="small">
+          {pageList.map((pageNumber) => {
+            const pageUrl = `/artists/page/${pageNumber}`;
+            if (pageNumber === numberOfPages) {
+              return (
+                <Breadcrumb.Section link key={pageNumber} as={NavLink} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+              );
+            }
+            return (
+              <span key={pageNumber}>
+                <Breadcrumb.Section link as={NavLink} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right angle" />
+              </span>
+            );
           })}
+        </Breadcrumb>
+        <Divider />
+        <Card.Group itemsPerRow={4}>
+          {pageArtists &&
+            pageArtists.map((artist) => {
+              return <ArtistCard key={artist.id} artist={artist} />;
+            })}
         </Card.Group>
         <Divider />
-        <Breadcrumb size="small">
-          <Breadcrumb.Section active>1</Breadcrumb.Section>
-          <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link>2</Breadcrumb.Section>
-          <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link>3</Breadcrumb.Section>
-        </Breadcrumb>
       </Container>
     );
   }
@@ -62,4 +85,3 @@ export default withRouter(connect(mapState)(Artists));
 Artists.propTypes = {
   artists: PropTypes.array.isRequired,
 };
-

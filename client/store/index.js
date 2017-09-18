@@ -7,13 +7,15 @@ import albums from './albums';
 import artists from './artists';
 import orders from './orders';
 import cart from './cart';
+import categories from './categories';
+import search from './search';
 
-export const reducer = combineReducers({ user, artists, albums, songs, orders, cart });
+export const reducer = combineReducers({ search, user, categories, artists, albums, songs, cart, orders });
 const middleware = applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }));
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  middleware
+  middleware,
 );
 
 export default store;
@@ -23,3 +25,5 @@ export * from './albums';
 export * from './cart';
 export * from './artists';
 export * from './orders';
+export * from './categories';
+export * from './search';

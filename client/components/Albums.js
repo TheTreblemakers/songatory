@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { AlbumCard } from '../components';
 import { addAlbumToCart } from '../store';
 import history from '../history';
-import { Container, Divider, Card, Breadcrumb, Button } from 'semantic-ui-react';
+import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
 class Albums extends Component {
   constructor(props) {
@@ -21,27 +21,47 @@ class Albums extends Component {
 
   render() {
     const { albums } = this.props;
+    const currentPage = this.props.match.params.pageNumber;
+    const albumsPerPage = 16;
+    const start = (currentPage - 1) * albumsPerPage;
+    const end = start + albumsPerPage;
+    const pageAlbums = albums.slice(start, end);
     const styles = this.styles;
+    const numberOfPages = Math.ceil(albums.length / albumsPerPage);
+    const pageList = new Array(numberOfPages);
+
+    for (let i = 0; i < pageList.length; i++) pageList[i] = i + 1;
+
     return (
       <Container style={styles.container}>
         <h2>All Albums</h2>
+        <Breadcrumb size="small">
+          {pageList.map((pageNumber) => {
+            const pageUrl = `/albums/page/${pageNumber}`;
+            if (pageNumber === numberOfPages) {
+              return (
+                <Breadcrumb.Section link key={pageNumber} as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+              );
+            }
+            return (
+              <span key={pageNumber}>
+                <Breadcrumb.Section link as={Link} to={pageUrl} active={currentPage === pageNumber}>
+                  {pageNumber}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right angle" />
+              </span>
+            );
+          })}
+        </Breadcrumb>
+        <Divider />
         <Card.Group itemsPerRow={4}>
-          {albums.map((album, idx) => {
-            if (idx > 15) return;
-            return (<div key={album.id}>
-              <AlbumCard album={album} />
-              <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
-            </div>);
+          {pageAlbums.map((album) => {
+            return <AlbumCard key={album.id} album={album} />;
           })}
         </Card.Group>
         <Divider />
-        <Breadcrumb size="small">
-          <Breadcrumb.Section active>1</Breadcrumb.Section>
-          <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link>2</Breadcrumb.Section>
-          <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link>3</Breadcrumb.Section>
-        </Breadcrumb>
       </Container>
     );
   }
@@ -58,11 +78,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleAddToCart (e) {
+    handleAddToCart(e) {
       const albumId = +e.target.value;
-      dispatch(addAlbumToCart({id: albumId}));
+      dispatch(addAlbumToCart({ id: albumId }));
       history.push('/cart');
-    }
+    },
   };
 };
 

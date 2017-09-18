@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
-import { Container, Button, List, Table } from 'semantic-ui-react';
+import { removeAlbumFromCart, removeSongFromCart } from '../store';
+import { Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 
 class Cart extends Component {
@@ -20,26 +21,30 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.props;
+    const totalItems = cart.albums.length + cart.songs.length;
     //console.log(cart);
 
     return (
       <Container style={this.styles.container}>
-        <h2>Cart</h2>
-        {
-          cart.albums
-          ? <div>
-              <h3>Albums</h3>
-              <List divided verticalAlign='middle'>
-              {
-                cart.albums.map(album => <CartAlbumItem  key={album.id} album={album} />)
-              }
+        {totalItems === 0 ? (
+          <Segment>
+            <Header>Your cart is empty</Header>
+          </Segment>
+        ) : (
+          <Header>Current Order</Header>
+        )}
+        {cart.albums.length > 0 ? (
+          <div>
+            <h3>Albums</h3>
+            <List divided verticalAlign="middle">
+              {cart.albums.map((album) => (
+                <CartAlbumItem key={album.id} album={album} handleAlbumDelete={this.props.handleAlbumDelete} />
+              ))}
             </List>
           </div>
-        : null
-        }
-        {
-          cart.songs
-          ?<div>
+        ) : null}
+        {cart.songs.length > 0 ? (
+          <div>
             <h3>Songs</h3>
             <Table striped>
               <Table.Header>
@@ -48,24 +53,18 @@ class Cart extends Component {
                   <Table.HeaderCell>Album Name</Table.HeaderCell>
                   <Table.HeaderCell>Track Number</Table.HeaderCell>
                   <Table.HeaderCell>Price</Table.HeaderCell>
+                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
-
               <Table.Body>
-                {
-                  cart.songs.map(song => <CartSongItem key={song.id} song={song} />)
-                }
+                {cart.songs.map((song) => (
+                  <CartSongItem key={song.id} song={song} handleSongDelete={this.props.handleSongDelete} />
+                ))}
               </Table.Body>
             </Table>
           </div>
-          : null
-        }
-        <Button floated='right'>
-          Buy Order
-        </Button>
-        <Button floated='right'>
-          Edit Cart
-        </Button>
+        ) : null}
+        <Button floated="right">Checkout</Button>
       </Container>
     );
   }
@@ -76,12 +75,23 @@ class Cart extends Component {
  */
 const mapState = (state) => {
   return {
-    cart: state.cart
+    cart: state.cart,
   };
 };
 
-const mapDispatch = (dispatch) => { };
+const mapDispatch = (dispatch) => {
+  return {
+    handleAlbumDelete(e) {
+      const albumId = +e.target.value;
+      dispatch(removeAlbumFromCart(albumId));
+    },
+    handleSongDelete(e) {
+      const songId = +e.target.value;
+      dispatch(removeSongFromCart(songId));
+    },
+  };
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, null)(Cart));
+export default withRouter(connect(mapState, mapDispatch)(Cart));

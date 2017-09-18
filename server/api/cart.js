@@ -39,3 +39,21 @@ router.post('/songs/', (req, res, next) => {
     .then(order => res.json(order.songs))
     .catch(next);
 });
+
+// DELETE /api/orders/cart/albums/:id/
+router.delete('/albums/:id', (req, res, next) => {
+  Album.findById(req.params.id)
+    .then(album => req.order.removeAlbum(album))
+    .then(() => req.order.reload())
+    .then(order => res.json(order.albums))
+    .catch(next);
+});
+
+// DELETE /api/orders/cart/songs/:id/
+router.delete('/songs/:id', (req, res, next) => {
+  Song.findById(req.params.id)
+    .then(song => req.order.removeSong(song))
+    .then(() => req.order.reload())
+    .then(order => res.json(order.songs))
+    .catch(next);
+});
