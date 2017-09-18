@@ -17,4 +17,5 @@ export { default as Landing } from './Landing';
 export { default as SearchBar } from './SearchBar';
 export { default as Splash } from './Splash';
 export { default as Songs } from './Songs';
+export { default as Cart } from './Cart';
 export { Login, Signup } from './AuthForm';

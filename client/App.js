@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import PropTypes from 'prop-types';
 import history from './history';
 import { Main } from './components';
-import { me, fetchAlbums, fetchArtists } from './store';
+import { me, fetchAlbums, fetchArtists, fetchCart } from './store';
 
 /**
  * COMPONENT
@@ -31,7 +31,8 @@ const mapState = () => ({});
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me());
+      dispatch(me())
+      .then(() => dispatch(fetchCart()));
       dispatch(fetchAlbums());
       dispatch(fetchArtists());
     },
