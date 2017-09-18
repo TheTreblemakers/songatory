@@ -1,21 +1,17 @@
 const router = require('express').Router();
-const { Order, User, Artist, Album, Song } = require('../db/models');
+const { User } = require('../db/models');
 module.exports = router;
 
-// GET /admin/manage/users
+// GET /admin/users
 router.get('/', (req, res, next) => {
   User.findAll()
     .then(users => res.json(users))
     .catch(next);
 });
 
-// GET /admin/manage/users/:id
+// GET /admin/users/:id
 router.get('/:id', (req, res, next) => {
-  User.findAll({
-    where: {
-      id: req.params.id
-    }
-  })
+  User.findById(req.params.id)
     .then(users => res.json(users))
     .catch(next);
 });
