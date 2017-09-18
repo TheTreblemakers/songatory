@@ -29,13 +29,16 @@ const Song = db.define(
         return this.getDataValue('price') / 100;
       },
     },
+    status: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
+    },
   },
   {
     defaultScope: {
-      include: [ Album ],
+      include: [Album],
     },
-  },
-);
+  });
 
 module.exports = Song;
 
