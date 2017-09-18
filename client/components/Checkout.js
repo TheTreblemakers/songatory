@@ -26,6 +26,7 @@ class Checkout extends Component {
         <Divider hidden />
         <Route exact path="/cart/checkout/billing" component={Billing} />
         <Route exact path="/cart/checkout/confirm" component={ConfirmOrder} />
+        <Route exact path="/cart/checkout/complete" component={CompleteOrder} />
       </Container>
     );
   }

@@ -15,6 +15,9 @@ class Billing extends Component {
         <Button as={Link} to="/cart/checkout/confirm" floated="right">
           Next
         </Button>
+        <Button as={Link} to="/cart" floated="right">
+          Back
+        </Button>
       </div>
     );
   }

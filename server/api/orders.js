@@ -8,11 +8,13 @@ router.get('/', (req, res, next) => {
   Order.findAll({
     where: {
       userId: req.user.id,
-      fulfilled: true
-    }
+      fulfilled: true,
+    },
   })
-    .then(orders => res.json(orders))
+    .then((orders) => res.json(orders))
     .catch(next);
 });
+
+router.put('/', (req, res, next) => {});
 
 router.use('/cart', require('./cart'));

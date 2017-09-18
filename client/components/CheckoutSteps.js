@@ -24,7 +24,7 @@ class StepExampleGroups extends Component {
             <Icon name="info" />
             <Step.Content title="Confirm Your Order" />
           </Step>
-          <Step active={'complete' === page}>
+          <Step completed={'complete' === page} active={'complete' === page}>
             <Icon name="checkmark" />
             <Step.Content title="Complete" />
           </Step>

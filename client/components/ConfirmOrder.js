@@ -68,7 +68,7 @@ class ConfirmOrder extends Component {
         <Button as={Link} to={'/cart/checkout/complete'} floated="right">
           Confirm My Order
         </Button>
-        <Button as={Link} to={'/cart/checkout/complete'}>
+        <Button as={Link} floated="right" to={'/cart/checkout/billing'}>
           Back
         </Button>
       </div>
