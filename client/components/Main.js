@@ -17,6 +17,7 @@ import {
   SearchResults,
   Cart,
   Checkout,
+  UserHome,
 } from '../components';
 import { Button, Icon, Container, Grid } from 'semantic-ui-react';
 import { fetchUserCart, fetchGuestCart } from '../store';
@@ -73,6 +74,7 @@ class Main extends Component {
           <Route path="/signup" component={Signup} />
           <Route exact path="/cart" component={Cart} />
           <Route path="/cart/checkout/" component={Checkout} />
+          <Route path="/home" component={UserHome} />
         </Container>
         <Footer />
       </div>
