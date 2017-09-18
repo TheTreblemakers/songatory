@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
-import { removeAlbumFromCart, removeSongFromCart } from '../store';
+import {
+  removeAlbumFromCart,
+  removeSongFromUserCart,
+  fetchUserCart,
+  fetchGuestCart,
+  removeAlbumFromUserCart,
+} from '../store';
 import { Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 
@@ -23,7 +29,7 @@ class Cart extends Component {
     const { cart } = this.props;
     const totalItems = cart.albums.length + cart.songs.length;
     //console.log(cart);
-
+    //const cart = this.props.cart;
     return (
       <Container style={this.styles.container}>
         {totalItems === 0 ? (
@@ -74,20 +80,28 @@ class Cart extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
+  //console.log(state);
   return {
     cart: state.cart,
+    user: state.user,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
+    loadUserCart() {
+      dispatch(fetchUserCart());
+    },
+    loadGuestCart() {
+      dispatch(fetchGuestCart());
+    },
     handleAlbumDelete(e) {
       const albumId = +e.target.value;
-      dispatch(removeAlbumFromCart(albumId));
+      dispatch(removeAlbumFromUserCart(albumId));
     },
     handleSongDelete(e) {
       const songId = +e.target.value;
-      dispatch(removeSongFromCart(songId));
+      dispatch(removeSongFromUserCart(songId));
     },
   };
 };
