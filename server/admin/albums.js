@@ -13,7 +13,7 @@ router.param('id', (req, res, next, id) => {
 });
 
 // PUT /admin/albums/:id/
-router.post('/:id/', (req, res, next) => {
+router.put('/:id/', (req, res, next) => {
   return req.album.update(req.body)
     .then(album => res.json(album))
     .catch(next);

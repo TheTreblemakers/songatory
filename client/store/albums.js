@@ -50,11 +50,11 @@ export const fetchAlbum = (id) => (dispatch) =>
     })
     .catch((err) => console.log(err));
 
-export const submitAlbumUpdate = (id) => (dispatch) =>
+export const submitAlbumUpdate = (album) => (dispatch) =>
   axios
-    .put(`/admin/albums/${id}`)
+    .put(`/admin/albums/${album.id}`, album)
     .then((res) => {
-      history.push(`/albums/${id}`);
+      history.push(`/albums/${album.id}`);
     })
     .catch((err) => console.log(err));
 

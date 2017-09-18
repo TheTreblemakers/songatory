@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Table, Header, Divider, Label, Button, Item, Form } from 'semantic-ui-react';
+import { Segment, Table, Header, Divider, Label, Item, Form } from 'semantic-ui-react';
 import { fetchAlbum, changeAlbumDetails, submitAlbumUpdate } from '../store';
 
 class AlbumForm extends Component {
@@ -21,15 +21,25 @@ class AlbumForm extends Component {
         padding: `0.2em`,
       },
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getAlbum(this.props.match.params.id);
   }
 
+  handleSubmit(evt) {
+    evt.preventDefault();
+    if (this.props.name === 'edit') {
+      this.props.submitEdits(this.props.album);
+    }
+  }
+
   render() {
     const styles = this.styles;
     const { album, handleChange } = this.props;
+    const handleSubmit = this.handleSubmit;
     album.songs = album.songs
       ? album.songs.sort((song1, song2) => {
           return song1.trackNumber - song2.trackNumber;
@@ -38,7 +48,7 @@ class AlbumForm extends Component {
     const categories = album.categories || [];
     const artist = album.artist || {};
     return (
-      <Form style={styles.container} onChange={handleChange}>
+      <Form style={styles.container} onChange={handleChange} onSubmit={handleSubmit}>
         <Item.Group>
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
@@ -63,10 +73,11 @@ class AlbumForm extends Component {
                   <input disabled name="price" value={album.displayPrice} />
                 </Form.Field>
               </Form.Group>
-                <Form.Field>
-                  <label>Description:</label>
-                  <input name="description" value={album.description} />
-                </Form.Field>
+              <Form.Field>
+                <label>Description:</label>
+                <textarea name="description" value={album.description} />
+              </Form.Field>
+              <Form.Button>Update</Form.Button>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}
@@ -128,12 +139,8 @@ const mapDispatch = (dispatch) => ({
     dispatch(changeAlbumDetails(evt.target.name, evt.target.value));
   },
 
-  handleSubmit (evt) {
-    evt.preventDefault();
-    console.log(this.props);
-    if (this.props.name === 'edit') {
-      dispatch(submitAlbumUpdate(this.props.album));
-    }
+  submitEdits (album) {
+    dispatch(submitAlbumUpdate(album));
   }
 });
 
