@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link, Route, Switch } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 import {
   Albums,
   Album,
@@ -19,8 +19,7 @@ import {
   Cart,
   UserHome,
 } from '../components';
-import { Button, Icon, Container, Grid } from 'semantic-ui-react';
-import { logout } from '../store';
+import { Container } from 'semantic-ui-react';
 
 /**
  * COMPONENT
@@ -29,7 +28,7 @@ import { logout } from '../store';
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const { children, handleClick, isLoggedIn } = props;
+  const { isAdmin } = props;
 
   const styles = {
     body: {
@@ -61,7 +60,7 @@ const Main = (props) => {
         <Route exact path="/" component={Landing} />
         <Route exact path="/albums/page/:pageNumber" component={Albums} />
         <Route exact path="/albums/:id" component={Album} />
-        <Route exact path="/albums/:id/edit" component={EditAlbum} />
+        { isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} /> }
         <Route exact path="/artists/page/:pageNumber" component={Artists} />
         <Route exact path="/artists/:id" component={Artist} />
         <Route exact path="/songs/page/:pageNumber" component={Songs} />
@@ -82,28 +81,15 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id,
-    cart: state.cart,
+    isAdmin: state.user.isAdmin || false,
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    handleClick() {
-      dispatch(logout());
-    },
-  };
-};
-
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Main));
+export default withRouter(connect(mapState)(Main));
 
 /**
  * PROP TYPES
  */
 Main.propTypes = {
-  children: PropTypes.object,
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool,
 };
