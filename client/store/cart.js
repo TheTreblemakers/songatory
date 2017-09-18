@@ -23,7 +23,9 @@ export const getCartSongs = songs => ({type: GET_CART_SONGS, songs});
 /**
  * THUNK CREATORS
  */
-export const fetchCart = () =>
+
+//Thunk creators for authenticated users
+export const fetchUserCart = () =>
   dispatch =>
     axios.get('/api/orders/cart')
       .then(res => {
@@ -32,30 +34,40 @@ export const fetchCart = () =>
       })
       .catch(err => console.log(err));
 
-export const addAlbumToCart = (album) =>
+export const addAlbumToUserCart = (album) =>
   dispatch =>
     axios.post(`/api/orders/cart/albums`, album)
       .then(res => dispatch(getCartAlbums(res.data ||      cart.albums)))
       .catch(err => console.log(err));
 
-export const addSongToCart = (song) =>
+export const addSongToUserCart = (song) =>
   dispatch =>
     axios.post(`/api/orders/cart/songs`, song)
       .then(res => dispatch(getCartSongs(res.data || cart.songs)))
       .catch(err => console.log(err));
 
-export const removeAlbumFromCart = (albumId) =>
+export const removeAlbumFromUserCart = (albumId) =>
   dispatch =>
     axios.delete(`/api/orders/cart/albums/${albumId}`)
       .then(res => dispatch(getCartAlbums(res.data || cart.albums)))
       .catch(err => console.log(err));
 
-export const removeSongFromCart = (songId) =>
+export const removeSongFromUserCart = (songId) =>
   dispatch =>
     axios.delete(`/api/orders/cart/songs/${songId}`)
       .then(res => dispatch(getCartSongs(res.data || cart.songs)))
       .catch(err => console.log(err));
 
+
+//Thunk creators for guests(unauthenticated users)
+export const fetchGuestCart = () =>
+  dispatch =>
+    axios.get('/api/guest/cart')
+      .then(res => {
+        dispatch(getCartAlbums(res.data.albums || cart.albums));
+        dispatch(getCartSongs(res.data.songs || cart.songs));
+      })
+      .catch(err => console.log(err));
 /**
  * REDUCER
  */

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import CartAlbumItem from './CartAlbumItem';
 import CartSongItem from './CartSongItem';
-import { removeAlbumFromCart, removeSongFromCart  } from '../store';
+import { removeAlbumFromUserCart, removeSongFromUserCart, fetchUserCart, fetchGuestCart } from '../store';
 import { Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 
@@ -19,16 +19,26 @@ class Cart extends Component {
     };
   }
 
-  render() {
-    const { cart } = this.props;
-    //console.log(cart);
+  //  componentWillReceiveProps(nextProps) {
+  //    const currentUser = nextProps.user;
+  //    console.log('current user', currentUser);
+  //    if (currentUser.id){
+  //      this.props.loadUserCart();
+  //    }
+  //    else {
+  //      this.props.loadGuestCart();
+  //    }
+  // }
 
+
+  render() {
+    //const cart = this.props.cart;
     return (
       <Container style={this.styles.container}>
         <h2>Cart</h2>
         {
           cart.albums
-          ? <div>
+          && <div>
               <h3>Albums</h3>
               <List divided verticalAlign='middle'>
               {
@@ -37,11 +47,10 @@ class Cart extends Component {
               }
             </List>
           </div>
-        : null
         }
         {
           cart.songs
-          ?<div>
+          && <div>
             <h3>Songs</h3>
             <Table striped>
               <Table.Header>
@@ -60,7 +69,6 @@ class Cart extends Component {
               </Table.Body>
             </Table>
           </div>
-          : null
         }
         <Button floated='right'>
           Buy Order
@@ -77,20 +85,28 @@ class Cart extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
+  //console.log(state);
   return {
-    cart: state.cart
+    cart: state.cart,
+    user: state.user
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
+    loadUserCart() {
+      dispatch(fetchUserCart());
+    },
+    loadGuestCart() {
+      dispatch(fetchGuestCart());
+    },
     handleAlbumDelete(e) {
       const albumId = +e.target.value;
-      dispatch(removeAlbumFromCart(albumId));
+      dispatch(removeAlbumFromUserCart(albumId));
     },
     handleSongDelete(e) {
       const songId = +e.target.value;
-      dispatch(removeSongFromCart(songId));
+      dispatch(removeSongFromUserCart(songId));
     }
   };
  };

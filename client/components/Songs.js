@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Container, Table, Breadcrumb, Button } from 'semantic-ui-react';
-import { addSongToCart } from '../store';
+import { addSongToUserCart } from '../store';
 import history from '../history';
 import { fetchSongs } from '../store/songs';
 
@@ -83,7 +83,7 @@ const mapDispatch = (dispatch) => {
     },
     handleAddToCart (e) {
       const songId = +e.target.value;
-      dispatch(addSongToCart({id: songId}));
+      dispatch(addSongToUserCart({id: songId}));
       history.push('/cart');
     }
   };
