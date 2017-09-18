@@ -77,7 +77,7 @@ class AlbumForm extends Component {
                 <label>Description:</label>
                 <textarea name="description" value={album.description} />
               </Form.Field>
-              <Form.Button>Update</Form.Button>
+              <Form.Button primary>Update</Form.Button>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}

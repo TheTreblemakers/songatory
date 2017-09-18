@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Segment, Table, Header, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchAlbum } from '../store';
 
 class Album extends Component {
@@ -13,16 +13,19 @@ class Album extends Component {
         padding: `2em`,
       },
       title: {
+        display: `flex`,
         fontSize: `4em`,
       },
       subtitle: {
         fontSize: `2em`,
         padding: `0.2em`,
       },
+      actionButton: {
+        alignSelf: `center`,
+        marginLeft: `auto`,
+      },
     };
   }
-
-  // <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
 
   componentDidMount() {
     this.props.getArtist(this.props.match.params.id);
@@ -30,7 +33,7 @@ class Album extends Component {
 
   render() {
     const styles = this.styles;
-    const album = this.props.album;
+    const { album, isAdmin } = this.props;
     album.songs = album.songs
       ? album.songs.sort((song1, song2) => {
           return song1.trackNumber - song2.trackNumber;
@@ -46,6 +49,7 @@ class Album extends Component {
             <Item.Content verticalAlign="middle">
               <Header style={styles.title} size="huge">
                 {album.name}
+                { isAdmin && <Button as={Link} to={`/albums/${album.id}/edit`} style={styles.actionButton} primary>Edit Album</Button> }
               </Header>
               <p>
                 <Header disabled size="huge">
@@ -99,6 +103,7 @@ class Album extends Component {
 const mapState = (state) => {
   return {
     album: state.albums.currentAlbum,
+    isAdmin: state.user.isAdmin || false,
   };
 };
 
