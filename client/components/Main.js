@@ -82,14 +82,9 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin || false,
     user: state.user,
     cart: state.cart,
-  };
-};
-
-const mapDispatch = (dispatch) => {
-  return {
-    isAdmin: state.user.isAdmin || false,
   };
 };
 
