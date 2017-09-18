@@ -20,11 +20,10 @@ class Checkout extends Component {
 
   render() {
     const { cart } = this.props;
-    const pathname = this.props.location.pathname;
     return (
       <Container style={this.styles.container}>
-        <Header>{pathname}</Header>
         <CheckoutSteps />
+        <Divider hidden />
         <Route exact path="/cart/checkout/billing" component={Billing} />
         <Route exact path="/cart/checkout/confirm" component={ConfirmOrder} />
       </Container>

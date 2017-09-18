@@ -14,7 +14,6 @@ class ConfirmOrder extends Component {
     const cart = this.props.cart;
     return (
       <div>
-        <Header>Confirm Your Order</Header>
         {cart.albums.length > 0 ? (
           <div>
             <h3>Albums</h3>
@@ -66,9 +65,11 @@ class ConfirmOrder extends Component {
           </div>
         ) : null}
         <Divider />
-        <Button floated="right">Next</Button>
-        <Button as={Link} to={'/cart'} floated="right">
-          Change My Order
+        <Button as={Link} to={'/cart/checkout/complete'} floated="right">
+          Confirm My Order
+        </Button>
+        <Button as={Link} to={'/cart/checkout/complete'}>
+          Back
         </Button>
       </div>
     );
