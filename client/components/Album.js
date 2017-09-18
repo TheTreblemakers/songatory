@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Segment, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchAlbum } from '../store';
 
 class Album extends Component {
@@ -11,8 +12,17 @@ class Album extends Component {
       container: {
         padding: `2em`,
       },
+      title: {
+        fontSize: `4em`,
+      },
+      subtitle: {
+        fontSize: `2em`,
+        padding: `0.2em`,
+      },
     };
   }
+
+  // <Button value={album.id} onClick={this.props.handleAddToCart}>Add To Cart</Button>
 
   componentDidMount() {
     this.props.getArtist(this.props.match.params.id);
@@ -26,6 +36,7 @@ class Album extends Component {
           return song1.trackNumber - song2.trackNumber;
         })
       : [];
+    const categories = album.categories || [];
     const artist = album.artist || {};
     console.log('album', album);
     return (
@@ -33,10 +44,26 @@ class Album extends Component {
         <Item.Group>
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
-            <Item.Content>
-              <Header size="huge">{album.name}</Header>
-              <Divider />
-              by <Header sub>{artist.name}</Header>
+            <Item.Content verticalAlign="middle">
+              <Header style={styles.title} size="huge">
+                {album.name}
+              </Header>
+              <Divider /> by
+              <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
+                {artist.name}
+              </Header>{' '}
+              sounds like:
+              <Segment>
+                <Label.Group>
+                  {categories.map((category) => {
+                    return (
+                      <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
+                        {category.name}
+                      </Label>
+                    );
+                  })}
+                </Label.Group>
+              </Segment>
               <Item.Description>
                 <Table striped>
                   <Table.Header>

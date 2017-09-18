@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { Table, Segment, Grid, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
 import { fetchArtist } from '../store';
 
 class Artist extends Component {
@@ -11,6 +11,10 @@ class Artist extends Component {
     this.styles = {
       container: {
         padding: `2em`,
+      },
+      title: {
+        fontSize: `6em`,
+        fontWeight: 'bold',
       },
     };
   }
@@ -23,12 +27,43 @@ class Artist extends Component {
     const styles = this.styles;
     const artist = this.props.artist;
     const albums = artist.albums || [];
+    const categories = albums
+      ? albums.reduce((acc, album) => {
+          let c = album.categories.map((category) => {
+            return category;
+          });
+          return acc.concat(c);
+        }, [])
+      : [];
+
     return (
       <Container style={styles.container}>
-        <Image shape="circular" bordered size="medium" src={artist.image} />
-        <Header size="large">{artist.name}</Header>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <Image shape="circular" bordered size="medium" src={artist.image} />
+            </Grid.Column>
+            <Grid.Column width={12} verticalAlign="middle">
+              <Header style={styles.title} size="large">
+                {artist.name}
+              </Header>
+              <Segment>
+                <Label.Group>
+                  {categories.map((category) => {
+                    return (
+                      <Label as={Link} to={`/categories/${category.id}`} key={category.id}>
+                        {category.name}
+                      </Label>
+                    );
+                  })}
+                </Label.Group>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
         <Divider />
-        <Item.Group>
+        <Item.Group divided>
           {albums.map((album) => {
             album.songs = album.songs
               ? album.songs.sort((song1, song2) => {
@@ -39,7 +74,9 @@ class Artist extends Component {
               <Item key={album.id}>
                 <Item.Image as={Link} to={`/albums/${album.id}`} shape="rounded" src={album.image} />
                 <Item.Content>
-                  <Item.Header as="a">{album.name}</Item.Header>
+                  <Item.Header as={Link} to={`/albums/${album.id}`}>
+                    {album.name}
+                  </Item.Header>
                   <Item.Meta>
                     <span className="cinema">{album.description}</span>
                   </Item.Meta>
@@ -63,10 +100,6 @@ class Artist extends Component {
                       </Table.Body>
                     </Table>
                   </Item.Description>
-                  <Item.Extra>
-                    <Label>category1</Label>
-                    <Label>category2</Label>
-                  </Item.Extra>
                 </Item.Content>
               </Item>
             );
