@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link, Route, Switch } from 'react-router-dom';
-import { CheckoutSteps, Billing, ConfirmOrder } from '../components';
-import { removeSongFromUserCart, fetchUserCart, fetchGuestCart, removeAlbumFromUserCart } from '../store';
+import { CheckoutSteps, Billing, CompleteOrder, ConfirmOrder } from '../components';
+import { fetchUserCart, fetchGuestCart } from '../store';
 import { Divider, Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
 import history from '../history';
 

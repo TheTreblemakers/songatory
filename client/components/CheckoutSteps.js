@@ -9,8 +9,8 @@ class StepExampleGroups extends Component {
   }
 
   render() {
-    const pathname = this.props.location.pathname;
-    const page = pathname.split('/')[3];
+    const pathname = this.props.location.pathname.split('/');
+    const page = pathname[pathname.length - 1];
     console.log(page);
 
     return (
