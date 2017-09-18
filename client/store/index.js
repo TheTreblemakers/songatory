@@ -10,10 +10,12 @@ import search from './search';
 import cart from './cart';
 
 export const reducer = combineReducers({ search, user, categories, artists, albums, songs, cart });
+const devToolsExtension = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION__ ?
+  window.__REDUX_DEVTOOLS_EXTENSION__() : false;
 const middleware = applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }));
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  devToolsExtension,
   middleware,
 );
 
