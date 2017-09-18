@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Table, Breadcrumb } from 'semantic-ui-react';
+import { Container, Table, Breadcrumb, Grid } from 'semantic-ui-react';
 import history from '../history';
 import { fetchUserOrders } from '../store/orders';
 
@@ -59,15 +59,26 @@ class UserHome extends Component {
                           </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                          {/* {orders.albums &&
-                            orders.albums.map(product => (
-                              <Table.Row key={product.id}>
-                                <Table.Cell>{product.name}</Table.Cell>
+                          {order.albums &&
+                            order.albums.map(album => (
+                              <Table.Row key={album.id}>
+                                <Table.Cell>{album.name}</Table.Cell>
                                 <Table.Cell>Album</Table.Cell>
-                                <Table.Cell>{product.price}</Table.Cell>
+                                <Table.Cell>{album.status ? 'Available' : 'Unavailable'}</Table.Cell>
+                                <Table.Cell>{album.order_album_item.price}</Table.Cell>
                               </Table.Row>
                             ))
-                          } */}
+                          }
+                          {order.songs &&
+                            order.songs.map(song => (
+                              <Table.Row key={song.id}>
+                                <Table.Cell>{song.name}</Table.Cell>
+                                <Table.Cell>Song</Table.Cell>
+                                <Table.Cell>{song.status ? 'Available' : 'Unavailable'}</Table.Cell>
+                                <Table.Cell>{song.order_song_item.price}</Table.Cell>
+                              </Table.Row>
+                            ))
+                          }
                         </Table.Body>
                       </Table>
                     </Table.Cell>
@@ -93,8 +104,7 @@ class UserHome extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log('userhome state: ', state);
-  /* orders: [{ id: 1234321, date: '12/21/2014', products: [{ productName: 'Bye Bye Bye', type: 'Song', status: 'Available', price: '$1.21' }, { productName: 'Bye Bye Bye', type: 'Album', status: 'Available', price: '$31.21' }, { productName: 'Genie in a bottle', type: 'Song', status: 'Available', price: '$1.24' }] }, { id: 1234322, date: '12/24/2014', products: [{ productName: 'Bye Bye Bye', type: 'Song', status: 'Available', price: '$1.21' }, { productName: 'Livin la vida loca', type: 'Song', status: 'Available', price: '$1.28' }] }] */
+
   return {
     email: state.user.email,
     userId: state.user.id,
