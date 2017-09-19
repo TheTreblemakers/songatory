@@ -96,10 +96,7 @@ export const removeSongFromGuestCart = (songId) => (dispatch) =>
     .catch((err) => console.log(err));
 
 export const updateUserCart = (props) => (dispatch) =>
-  axios
-    .put(`/api/orders/cart/`, props)
-    // .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
+  axios.put(`/api/orders/cart/`, props).then(() => dispatch(clearCart())).catch((err) => console.log(err));
 
 /**
  * REDUCER

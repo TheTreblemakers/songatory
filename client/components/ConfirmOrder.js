@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { updateUserCart } from '../store';
 import { withRouter, Link, Route, Switch } from 'react-router-dom';
 import { CartAlbumItem, CartSongItem } from '../components';
 import { Divider, Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
@@ -65,7 +66,7 @@ class ConfirmOrder extends Component {
           </div>
         ) : null}
         <Divider />
-        <Button as={Link} to={'/cart/checkout/complete'} floated="right">
+        <Button as={Link} onClick={() => this.props.completeOrder(cart)} to={'/cart/checkout/complete'} floated="right">
           Confirm My Order
         </Button>
         <Button as={Link} floated="right" to={'/cart/checkout/billing'}>
@@ -84,4 +85,13 @@ const mapState = (state) => {
   };
 };
 
-export default withRouter(connect(mapState, null)(ConfirmOrder));
+const mapDispatch = (dispatch) => {
+  return {
+    completeOrder: (cart) => {
+      cart.fulfilled = true;
+      dispatch(updateUserCart(cart));
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(ConfirmOrder));
