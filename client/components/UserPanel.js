@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Menu, Segment } from 'semantic-ui-react';
 import history from '../history';
 import { withRouter, Link } from 'react-router-dom';
-import { UserOrderHistory, UserEditUsername, UserEditPassword } from '../components';
+import { AllOrderHistory, UserOrderHistory, UserEditUsername, UserEditPassword } from '../components';
 
 /**
  * COMPONENT
@@ -18,6 +18,7 @@ class UserPanel extends Component {
       { url: '/home/update/username', name: 'Update Username' },
       { url: '/home/update/password', name: 'Update Password' },
     ];
+    this.adminLinks = [ { url: '/home/admin/orders', name: 'See All Orders' } ];
     this.styles = {
       container: {
         padding: `2em`,
@@ -26,29 +27,50 @@ class UserPanel extends Component {
   }
 
   render() {
+    const isAdmin = this.props.isAdmin;
     const { activeItem } = this.props;
     return (
       <Grid>
         <Grid.Column width={4}>
-          <Menu fluid vertical pointing>
-            {this.links.map((link) => (
-              <Menu.Item
-                key={link.name}
-                name={link.name}
-                active={
-                  this.props.location.pathname === link.url ||
-                  (this.props.location.pathname === '/home' && link.name === 'View Order History')
-                }
-                as={Link}
-                to={link.url}>
-                {link.name}
-              </Menu.Item>
-            ))}
-          </Menu>
+          {isAdmin && (
+            <Menu fluid vertical pointing>
+              {this.adminLinks.map((link) => (
+                <Menu.Item
+                  key={link.name}
+                  name={link.name}
+                  active={
+                    this.props.location.pathname === link.url ||
+                    (this.props.location.pathname === '/home' && link.name === 'View Order History')
+                  }
+                  as={Link}
+                  to={link.url}>
+                  {link.name}
+                </Menu.Item>
+              ))}
+            </Menu>
+          )}
+          {
+            <Menu fluid vertical pointing>
+              {this.links.map((link) => (
+                <Menu.Item
+                  key={link.name}
+                  name={link.name}
+                  active={
+                    this.props.location.pathname === link.url ||
+                    (this.props.location.pathname === '/home' && link.name === 'View Order History')
+                  }
+                  as={Link}
+                  to={link.url}>
+                  {link.name}
+                </Menu.Item>
+              ))}
+            </Menu>
+          }
         </Grid.Column>
 
         <Grid.Column stretched width={12}>
-          {(activeItem === 'orders' || activeItem === 'home') && <UserOrderHistory />}
+          {this.props.location.pathname === '/home/admin/orders' && <AllOrderHistory />}
+          {this.props.location.pathname === '/home/orders' && <UserOrderHistory />}
           {activeItem === 'username' && <UserEditUsername />}
           {activeItem === 'password' && <UserEditPassword />}
         </Grid.Column>
@@ -61,8 +83,8 @@ class UserPanel extends Component {
  * CONTAINER
  */
 const mapState = (state, ownProps) => {
-  console.log(ownProps.location);
   return {
+    isAdmin: state.user.isAdmin,
     activeItem: ownProps.location.pathname.split('/').pop(),
   };
 };
