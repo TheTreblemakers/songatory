@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const Album = require('./album');
 const Song = require('./song');
+const Promise = require('bluebird');
 
 const Order = db.define(
   'order',
@@ -37,6 +38,15 @@ const Order = db.define(
     },
   }
 );
+
+Order.prototype.mergeOrder = function (newOrder) {
+  const albumsPromise = Promise.map(newOrder.albums, (album) => this.addAlbum(album));
+  const songsPromise = Promise.map(newOrder.songs, (song) => this.addSong(song));
+
+  return Promise.all([ albumsPromise, songsPromise ])
+    .then(() => newOrder.destroy())
+    .then(() => this.reload());
+};
 
 module.exports = Order;
 
