@@ -7,11 +7,12 @@ import history from '../history';
 const GET_CART_ALBUMS = 'GET_CART_ALBUMS';
 const GET_CART_SONGS = 'GET_CART_SONGS';
 const CLEAR_CART = 'CLEAR_CART';
+const SET_PAYMENT = 'SET_PAYMENT_METHOD';
 
 /**
  * INITIAL STATE
  */
-const cart = { albums: [], songs: [] };
+const cart = { albums: [], songs: [], paymentMethod: '' };
 
 /**
  * ACTION CREATORS
@@ -20,6 +21,7 @@ const cart = { albums: [], songs: [] };
 export const getCartAlbums = (albums) => ({ type: GET_CART_ALBUMS, albums });
 export const getCartSongs = (songs) => ({ type: GET_CART_SONGS, songs });
 export const clearCart = () => ({ type: CLEAR_CART });
+export const setPayment = (paymentMethod) => ({ type: SET_PAYMENT, paymentMethod });
 
 /**
  * THUNK CREATORS
@@ -69,7 +71,7 @@ export const fetchGuestCart = () => (dispatch) =>
     })
     .catch((err) => console.log(err));
 
-    export const addAlbumToGuestCart = (album) => (dispatch) =>
+export const addAlbumToGuestCart = (album) => (dispatch) =>
   axios
     .post(`/api/guest/cart/albums`, album)
     .then((res) => dispatch(getCartAlbums(res.data || cart.albums)))
@@ -92,6 +94,13 @@ export const removeSongFromGuestCart = (songId) => (dispatch) =>
     .delete(`/api/guest/cart/songs/${songId}`)
     .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
     .catch((err) => console.log(err));
+
+export const updateUserCart = (props) => (dispatch) =>
+  axios
+    .put(`/api/orders/cart/`, props)
+    // .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
+    .catch((err) => console.log(err));
+
 /**
  * REDUCER
  */
@@ -105,6 +114,9 @@ export default function(state = cart, action) {
       return newState;
     case GET_CART_SONGS:
       newState.songs = action.songs;
+      return newState;
+    case SET_PAYMENT:
+      newState.paymentMethod = action.paymentMethod;
       return newState;
     default:
       return state;

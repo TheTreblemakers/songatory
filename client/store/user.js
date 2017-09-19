@@ -1,6 +1,6 @@
 import axios from 'axios';
 import history from '../history';
-import { clearCart, fetchUserCart, fetchGuestCart } from './cart';
+import { clearCart, mergeCarts, fetchUserCart, fetchGuestCart } from './cart';
 
 /**
  * ACTION TYPES
@@ -27,7 +27,9 @@ export const me = () => (dispatch) =>
   axios.get('/auth/me').then((res) => {
     // get appropriate cart here
     dispatch(getUser(res.data || defaultUser));
+
     if (res.data) {
+      // If there is a user, get their cart
       dispatch(fetchUserCart());
     } else {
       dispatch(fetchGuestCart());
@@ -40,6 +42,9 @@ export const auth = (email, password, method) => (dispatch) =>
     .then((res) => {
       // get appropriate cart here
       dispatch(getUser(res.data));
+      // If there is a cart already, merge carts
+      // Merge carts on backend
+
       dispatch(fetchUserCart());
       history.push('/home');
     })

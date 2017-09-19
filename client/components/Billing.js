@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Segment, Header, Container, Button, List, Table, Divider } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { setPayment } from '../store';
+import { Dropdown, Segment, Header, Container, Button, List, Table, Divider } from 'semantic-ui-react';
 
 class Billing extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.paymentOptions = [ { text: 'Credit Card', value: 'credit-card' }, { text: 'Bitcoin', value: 'bitcoin' } ];
   }
+
+  handleChange = (e, { value }) => this.props.setNewPayment(value);
 
   render() {
     return (
       <div>
-        Billing, yo. Gimme dat green
+        <Dropdown
+          onChange={this.handleChange}
+          placeholder="Payment Method"
+          fluid
+          selection
+          value={this.props.selectedPayment}
+          options={this.paymentOptions}
+        />
+        <Divider hidden />
         <Button as={Link} to="/cart/checkout/confirm" floated="right">
           Next
         </Button>
@@ -23,4 +36,14 @@ class Billing extends Component {
   }
 }
 
-export default Billing;
+const mapState = (state) => {
+  return { paymentMethod: state.cart.paymentMethod };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    setNewPayment: (option) => dispatch(setPayment(option)),
+  };
+};
+
+export default connect(null, mapDispatch)(Billing);
