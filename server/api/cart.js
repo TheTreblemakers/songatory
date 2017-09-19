@@ -96,5 +96,7 @@ function mergeOrders(sOrder, curOrder) {
   const albumsPromise = Promise.map(sOrder.albums, (album) => curOrder.addAlbum(album));
   const songsPromise = Promise.map(sOrder.songs, (song) => curOrder.addSong(song));
 
-  return Promise.all([ albumsPromise, songsPromise ]).then(() => curOrder.reload());
+  return Promise.all([ albumsPromise, songsPromise ])
+    .then(() => sOrder.destroy())
+    .then(() => curOrder.reload());
 }
