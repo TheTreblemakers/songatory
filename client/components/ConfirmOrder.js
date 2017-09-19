@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateUserCart } from '../store';
+import { updateUserCart, updateGuestCart } from '../store';
 import { withRouter, Link, Route, Switch } from 'react-router-dom';
 import { CartAlbumItem, CartSongItem } from '../components';
 import { Divider, Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
@@ -13,6 +13,7 @@ class ConfirmOrder extends Component {
 
   render() {
     const cart = this.props.cart;
+    const user = this.props.user;
     return (
       <div>
         {cart.albums.length > 0 ? (
@@ -66,7 +67,11 @@ class ConfirmOrder extends Component {
           </div>
         ) : null}
         <Divider />
-        <Button as={Link} onClick={() => this.props.completeOrder(cart)} to={'/cart/checkout/complete'} floated="right">
+        <Button
+          as={Link}
+          onClick={() => this.props.completeOrder(cart, user)}
+          to={'/cart/checkout/complete'}
+          floated="right">
           Confirm My Order
         </Button>
         <Button as={Link} floated="right" to={'/cart/checkout/billing'}>
@@ -87,9 +92,13 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    completeOrder: (cart) => {
+    completeOrder: (cart, user) => {
       cart.fulfilled = true;
-      dispatch(updateUserCart(cart));
+      if (user.id) {
+        dispatch(updateUserCart(cart));
+      } else {
+        dispatch(updateGuestCart(cart));
+      }
     },
   };
 };
