@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Divider, Container, Icon, Table, Breadcrumb, Button } from 'semantic-ui-react';
-import { addSongToCart } from '../store';
+import { addSongToUserCart, addSongToGuestCart } from '../store';
 import history from '../history';
 import { fetchSongs } from '../store/songs';
 
@@ -23,7 +23,7 @@ class Songs extends Component {
   }
 
   render() {
-    const { songs } = this.props;
+    const { songs, isLoggedIn } = this.props;
     const currentPage = this.props.match.params.pageNumber;
     const songsPerPage = 50;
     const start = (currentPage - 1) * songsPerPage;
@@ -75,12 +75,12 @@ class Songs extends Component {
                 <Table.Cell> {song.name}</Table.Cell>
                 <Table.Cell> {song.album.artist.name}</Table.Cell>
                 <Table.Cell>{song.album.name}</Table.Cell>
-                <Table.Cell>{song.price}</Table.Cell>
+                <Table.Cell>$ {song.displayPrice}</Table.Cell>
                 <Table.Cell>
                   <Button
                     animated="vertical"
                     onClick={() => {
-                      this.props.handleAddToCart(song.id);
+                      this.props.handleAddToCart(song.id, isLoggedIn);
                     }}>
                     <Button.Content hidden>Buy</Button.Content>
                     <Button.Content visible>
@@ -103,6 +103,7 @@ class Songs extends Component {
 const mapState = (state) => {
   return {
     songs: state.songs,
+    isLoggedIn: !!state.user.id,
   };
 };
 
@@ -111,9 +112,13 @@ const mapDispatch = (dispatch) => {
     fetchSongsData: () => {
       dispatch(fetchSongs());
     },
-    handleAddToCart(songId) {
-      dispatch(addSongToCart({ id: songId }));
-      // history.push('/cart');
+    handleAddToCart(songId, isLoggedIn) {
+      if (isLoggedIn) {
+        dispatch(addSongToUserCart({ id: songId }));
+      } else {
+        dispatch(addSongToGuestCart({ id: songId }));
+        // history.push('/cart');
+      }
     },
   };
 };

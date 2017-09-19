@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
@@ -17,9 +17,11 @@ import {
   Signup,
   SearchResults,
   Cart,
+  Checkout,
   UserHome,
 } from '../components';
-import { Container } from 'semantic-ui-react';
+import { Button, Icon, Container, Grid } from 'semantic-ui-react';
+import { fetchUserCart, fetchGuestCart } from '../store';
 
 /**
  * COMPONENT
@@ -57,7 +59,7 @@ const Main = (props) => {
         <Route exact path="/" component={Landing} />
         <Route exact path="/albums/page/:pageNumber" component={Albums} />
         <Route exact path="/albums/:id" component={Album} />
-        { isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} /> }
+        {isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} />}
         <Route exact path="/artists/page/:pageNumber" component={Artists} />
         <Route exact path="/artists/:id" component={Artist} />
         <Route exact path="/songs/page/:pageNumber" component={Songs} />
@@ -65,7 +67,8 @@ const Main = (props) => {
         <Route path="/search/results" component={SearchResults} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/cart" component={Cart} />
+        <Route exact path="/cart" component={Cart} />
+        <Route path="/cart/checkout" component={Checkout} />
         <Route path="/home" component={UserHome} />
       </Container>
       <Footer />
@@ -78,7 +81,10 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
+    isLoggedIn: !!state.user.id,
     isAdmin: state.user.isAdmin || false,
+    user: state.user,
+    cart: state.cart,
   };
 };
 
@@ -88,5 +94,6 @@ export default withRouter(connect(mapState)(Main));
  * PROP TYPES
  */
 Main.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool,
 };

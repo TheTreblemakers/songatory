@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Table, Header, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
-import { fetchAlbum } from '../store';
+import { Segment, Icon, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { addAlbumToUserCart, addAlbumToGuestCart, fetchAlbum } from '../store';
 
 class Album extends Component {
   constructor(props) {
@@ -28,12 +28,12 @@ class Album extends Component {
   }
 
   componentDidMount() {
-    this.props.getArtist(this.props.match.params.id);
+    this.props.getAlbum(this.props.match.params.id);
   }
 
   render() {
     const styles = this.styles;
-    const { album, isAdmin } = this.props;
+    const { album, isAdmin, isLoggedIn } = this.props;
     album.songs = album.songs
       ? album.songs.sort((song1, song2) => {
           return song1.trackNumber - song2.trackNumber;
@@ -49,13 +49,27 @@ class Album extends Component {
             <Item.Content verticalAlign="middle">
               <Header style={styles.title} size="huge">
                 {album.name}
-                { isAdmin && <Button as={Link} to={`/albums/${album.id}/edit`} style={styles.actionButton} primary>Edit Album</Button> }
+                {isAdmin && (
+                  <Button as={Link} to={`/albums/${album.id}/edit`} style={styles.actionButton} primary>
+                    Edit Album
+                  </Button>
+                )}
               </Header>
-              <p>
+              <div>
                 <Header disabled size="huge">
                   {album.year}
                 </Header>
-              </p>
+              </div>
+              <Button
+                animated="vertical"
+                onClick={() => {
+                  this.props.handleAddToCart(album.id, isLoggedIn);
+                }}>
+                <Button.Content hidden>Buy</Button.Content>
+                <Button.Content visible>
+                  <Icon name="add to cart" />
+                </Button.Content>
+              </Button>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}
@@ -103,15 +117,25 @@ class Album extends Component {
 const mapState = (state) => {
   return {
     album: state.albums.currentAlbum,
+    isLoggedIn: !!state.user.id,
     isAdmin: state.user.isAdmin || false,
   };
 };
 
-const mapDispatch = (dispatch) => ({
-  getArtist: (id) => {
-    dispatch(fetchAlbum(id));
-  },
-});
+const mapDispatch = (dispatch) => {
+  return {
+    handleAddToCart(albumId, isLoggedIn) {
+      if (isLoggedIn) {
+        dispatch(addAlbumToUserCart({ id: albumId }));
+      } else {
+        dispatch(addAlbumToGuestCart({ id: albumId }));
+      }
+    },
+    getAlbum: (id) => {
+      dispatch(fetchAlbum(id));
+    },
+  };
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes

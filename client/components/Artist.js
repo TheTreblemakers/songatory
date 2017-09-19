@@ -77,9 +77,9 @@ class Artist extends Component {
                   <Item.Header as={Link} to={`/albums/${album.id}`}>
                     {album.name}
                   </Item.Header>
-                  <p>
+                  <div>
                     <Item.Meta>{album.year}</Item.Meta>
-                  </p>
+                  </div>
                   <Item.Description>
                     <Table striped>
                       <Table.Header>
