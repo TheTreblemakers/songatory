@@ -14,6 +14,7 @@ class ConfirmOrder extends Component {
   render() {
     const cart = this.props.cart;
     const user = this.props.user;
+    const email = 'test-email@test.com';
     return (
       <div>
         {cart.albums.length > 0 ? (
@@ -69,7 +70,7 @@ class ConfirmOrder extends Component {
         <Divider />
         <Button
           as={Link}
-          onClick={() => this.props.completeOrder(cart, user)}
+          onClick={() => this.props.completeOrder(cart, user, email)}
           to={'/cart/checkout/complete'}
           floated="right">
           Confirm My Order
@@ -92,8 +93,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    completeOrder: (cart, user) => {
+    completeOrder: (cart, user, email) => {
       cart.fulfilled = true;
+      cart.email = email;
       if (user.id) {
         dispatch(updateUserCart(cart));
       } else {

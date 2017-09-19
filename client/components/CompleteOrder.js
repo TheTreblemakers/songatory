@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Segment, Header, Container, Button, List, Table, Divider } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Segment } from 'semantic-ui-react';
 
 class CompleteOrder extends Component {
   constructor(props) {
@@ -9,8 +10,24 @@ class CompleteOrder extends Component {
   }
 
   render() {
-    return <div>You're done, yo.</div>;
+    const user = this.props.user;
+    const email = user.id ? this.props.cart.email : '';
+    return (
+      <div>
+        <Segment textAlign="center">
+          You're all set!
+          <strong>{email}</strong>
+        </Segment>
+      </div>
+    );
   }
 }
 
-export default CompleteOrder;
+const mapState = (state) => {
+  return {
+    cart: state.cart,
+    user: state.user,
+  };
+};
+
+export default connect(mapState, null)(CompleteOrder);
