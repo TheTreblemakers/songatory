@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Menu, Segment } from 'semantic-ui-react';
 import history from '../history';
 import { withRouter, Link } from 'react-router-dom';
-import {
-  UserOrderHistory,
-  UserEditUsername,
-  UserEditPassword,
-} from '../components';
+import { UserOrderHistory, UserEditUsername, UserEditPassword } from '../components';
 
 /**
  * COMPONENT
@@ -16,12 +12,10 @@ import {
 class UserPanel extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
     this.links = [
-      { url: '/home/orders', name: 'View Order History' },
-      { url: '/home/update/username', name: 'Update UserName' },
+      { url: '/home/orders', name: 'Your Order History' },
+      { url: '/home/update/username', name: 'Update Username' },
       { url: '/home/update/password', name: 'Update Password' },
     ];
     this.styles = {
@@ -36,12 +30,15 @@ class UserPanel extends Component {
     return (
       <Grid>
         <Grid.Column width={4}>
-          <Menu fluid vertical tabular>
+          <Menu fluid vertical pointing>
             {this.links.map((link) => (
               <Menu.Item
                 key={link.name}
                 name={link.name}
-                active={this.props.location.pathname === link.url || (this.props.location.pathname === '/home' && link.name === 'View Order History')}
+                active={
+                  this.props.location.pathname === link.url ||
+                  (this.props.location.pathname === '/home' && link.name === 'View Order History')
+                }
                 as={Link}
                 to={link.url}>
                 {link.name}
@@ -71,9 +68,7 @@ const mapState = (state, ownProps) => {
 };
 
 const mapDispatch = (dispatch) => {
-  return {
-
-  };
+  return {};
 };
 
 export default withRouter(connect(mapState, mapDispatch)(UserPanel));
@@ -81,6 +76,4 @@ export default withRouter(connect(mapState, mapDispatch)(UserPanel));
 /**
  * PROP TYPES
  */
-UserPanel.propTypes = {
-
-};
+UserPanel.propTypes = {};

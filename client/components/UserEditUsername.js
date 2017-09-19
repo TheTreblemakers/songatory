@@ -15,7 +15,6 @@ class UserEditUsername extends Component {
     };
     this.styles = {
       navbar: {
-        // minHeight: `3.5em`,
         height: `3.8em`,
       },
       search: {
@@ -29,9 +28,6 @@ class UserEditUsername extends Component {
   }
 
   handleSubmit = (e) => {
-    // e.preventDefault();
-    console.log(this.state.query);
-    // TODO: input validation
     if (!(this.state.query.includes('@'))) {
       this.setState({ query: '', inputError: true, searchPlaceholder: 'Please use a valid email. You did not include an \"@\"!' });
     } else {
@@ -40,7 +36,6 @@ class UserEditUsername extends Component {
   };
 
   handleChange = (e) => {
-    console.log(this.state);
     this.setState({ query: e.target.value, inputError: false });
   };
 

@@ -4,14 +4,14 @@ import { Router } from 'react-router';
 import PropTypes from 'prop-types';
 import history from './history';
 import { Main } from './components';
-import { me, fetchAlbums, fetchArtists, fetchCart, fetchSongs } from './store';
+import { me, fetchAlbums, fetchArtists, fetchUserCart, fetchSongs } from './store';
 
 /**
  * COMPONENT
  */
 class App extends Component {
   componentDidMount() {
-    this.props.loadInitialData();
+    this.props.loadInitialData(this.props.isLoggedIn);
   }
 
   render() {
@@ -26,13 +26,16 @@ class App extends Component {
 /**
  * CONTAINER
  */
-const mapState = () => ({});
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.user.id,
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me())
-      .then(() => dispatch(fetchCart()));
+      dispatch(me());
       dispatch(fetchAlbums());
       dispatch(fetchArtists());
       dispatch(fetchSongs());

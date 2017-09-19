@@ -14,7 +14,6 @@ const ArtistCard = (props) => {
         <Card.Meta>{artist.bio.split('.')[0]}</Card.Meta>
       </Card.Content>
       <Card.Content extra>
-        <Icon name="right chevron" />
         <Link to={artistUrl}>See More</Link>
       </Card.Content>
     </Card>

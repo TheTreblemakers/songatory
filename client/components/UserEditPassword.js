@@ -15,7 +15,6 @@ class UserEditPassword extends Component {
     };
     this.styles = {
       navbar: {
-        // minHeight: `3.5em`,
         height: `3.8em`,
       },
       search: {
@@ -29,9 +28,6 @@ class UserEditPassword extends Component {
   }
 
   handleSubmit = (e) => {
-    // e.preventDefault();
-    console.log(this.state.query);
-    // TODO: input validation
     if (this.state.query.length < 4) {
       this.setState({ query: '', inputError: true, searchPlaceholder: 'Please use a valid password. Must be at least 4 characters!' });
     } else {
@@ -40,7 +36,6 @@ class UserEditPassword extends Component {
   };
 
   handleChange = (e) => {
-    console.log(this.state);
     this.setState({ query: e.target.value, inputError: false });
   };
 

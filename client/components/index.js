@@ -5,6 +5,7 @@
  */
 export { default as Main } from './Main';
 export { default as UserHome } from './UserHome';
+export { default as Billing } from './Billing';
 export { default as UserPanel } from './UserPanel';
 export { default as UserOrderHistory } from './UserOrderHistory';
 export { default as UserEditUsername } from './UserEditUsername';
@@ -24,4 +25,10 @@ export { default as Splash } from './Splash';
 export { default as SearchResults } from './SearchResults';
 export { default as Songs } from './Songs';
 export { default as Cart } from './Cart';
+export { default as Checkout } from './Checkout';
+export { default as ConfirmOrder } from './ConfirmOrder';
+export { default as CompleteOrder } from './CompleteOrder';
+export { default as CheckoutSteps } from './CheckoutSteps';
+export { default as CartAlbumItem } from './CartAlbumItem';
+export { default as CartSongItem } from './CartSongItem';
 export { Login, Signup } from './AuthForm';
