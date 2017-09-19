@@ -11,15 +11,16 @@ class Landing extends Component {
     };
     this.styles = {
       title: {
-        fontSize: '4em',
+        fontSize: '8em',
         fontWeight: 'normal',
         fontFamily: 'Oleo Script',
+        letterSpacing: '0.02em',
       },
     };
   }
 
   componentDidMount() {
-    this.setState({ visible: true });
+    requestAnimationFrame(() => this.setState({ visible: true }));
   }
 
   render() {
