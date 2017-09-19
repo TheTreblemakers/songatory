@@ -8,11 +8,12 @@ const GET_CART_ALBUMS = 'GET_CART_ALBUMS';
 const GET_CART_SONGS = 'GET_CART_SONGS';
 const CLEAR_CART = 'CLEAR_CART';
 const SET_PAYMENT = 'SET_PAYMENT_METHOD';
+const SET_EMAIL = 'SET_EMAIL';
 
 /**
  * INITIAL STATE
  */
-const cart = { albums: [], songs: [], paymentMethod: '' };
+const cart = { email: '', albums: [], songs: [], paymentMethod: '', cart: '' };
 
 /**
  * ACTION CREATORS
@@ -22,6 +23,7 @@ export const getCartAlbums = (albums) => ({ type: GET_CART_ALBUMS, albums });
 export const getCartSongs = (songs) => ({ type: GET_CART_SONGS, songs });
 export const clearCart = () => ({ type: CLEAR_CART });
 export const setPayment = (paymentMethod) => ({ type: SET_PAYMENT, paymentMethod });
+export const setEmail = (email) => ({ type: SET_EMAIL, email });
 
 /**
  * THUNK CREATORS
@@ -98,6 +100,9 @@ export const removeSongFromGuestCart = (songId) => (dispatch) =>
 export const updateUserCart = (props) => (dispatch) =>
   axios.put(`/api/orders/cart/`, props).then(() => dispatch(clearCart())).catch((err) => console.log(err));
 
+export const updateGuestCart = (props) => (dispatch) =>
+  axios.put(`/api/guest/cart/`, props).then(() => dispatch(clearCart())).catch((err) => console.log(err));
+
 /**
  * REDUCER
  */
@@ -114,6 +119,9 @@ export default function(state = cart, action) {
       return newState;
     case SET_PAYMENT:
       newState.paymentMethod = action.paymentMethod;
+      return newState;
+    case SET_EMAIL:
+      newState.email = action.email;
       return newState;
     default:
       return state;

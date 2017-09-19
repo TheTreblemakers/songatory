@@ -39,6 +39,9 @@ class Navbar extends Component {
         fontSize: '1.2em',
         fontFamily: 'Oleo Script',
       },
+      rightMenu: {
+        width: '145px',
+      },
     };
   }
 
@@ -122,14 +125,14 @@ class Navbar extends Component {
           <Icon link name="cart" size="big" />
         </Menu.Item>
         {isLoggedIn ? (
-          <Menu.Menu>
-            <Menu.Item name={`Log Out`} onClick={handleLogout} />
+          <Menu.Menu style={this.styles.rightMenu}>
+            <Menu.Item name={`Logout`} onClick={handleLogout} />
             <Menu.Item color="teal" active={this.props.location.pathname === '/home'} as={Link} to={'/home'}>
               <Icon name="user" size="big" />
             </Menu.Item>
           </Menu.Menu>
         ) : (
-          <Menu.Menu>
+          <Menu.Menu style={this.styles.rightMenu}>
             <Menu.Item name="Login" as={Link} to={`/login`} />
             <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
           </Menu.Menu>
