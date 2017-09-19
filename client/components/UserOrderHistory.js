@@ -12,9 +12,7 @@ import { fetchUserOrders } from '../store/orders';
 class UserOrderHistory extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
     this.styles = {
       container: {
         padding: `2em`,
@@ -30,8 +28,7 @@ class UserOrderHistory extends Component {
     const { orders } = this.props;
 
     return (
-
-      <Container >
+      <Container>
         <h2>Your Recent Order History</h2>
         <Table striped>
           <Table.Header>
@@ -44,63 +41,62 @@ class UserOrderHistory extends Component {
           </Table.Header>
 
           <Table.Body>
-            {
-              orders.map(order => (
-                <Table.Row key={order.id}>
-                  <Table.Cell>{order.id}</Table.Cell>
-                  <Table.Cell>{order.date}</Table.Cell>
-                  <Table.Cell>
-                    <Table>
-                      <Table.Header>
-                        <Table.Row>
-                          <Table.HeaderCell>Name</Table.HeaderCell>
-                          <Table.HeaderCell>Type</Table.HeaderCell>
-                          <Table.HeaderCell>Status</Table.HeaderCell>
-                          <Table.HeaderCell>Subtotal</Table.HeaderCell>
-                        </Table.Row>
-                      </Table.Header>
-                      <Table.Body>
-                        {order.albums &&
-                          order.albums.map(album => (
-                            <Table.Row key={album.id}>
-                              <Table.Cell><Link to={`/albums/${album.id}`}>{album.name}</Link></Table.Cell>
-                              <Table.Cell><Link to={'/albums/page/1'}>Album</Link></Table.Cell>
-                              <Table.Cell>{album.status ? 'Available' : 'Unavailable'}</Table.Cell>
-                              <Table.Cell>{album.order_album_item.price}</Table.Cell>
-                            </Table.Row>
-
-                          ))
-                        }
-                        {order.songs &&
-                          order.songs.map(song => (
-                            <Table.Row key={song.id}>
-                              <Table.Cell><Link to={`/songs/${song.id}`}>{song.name}</Link></Table.Cell>
-                              <Table.Cell><Link to={'/songs/page/1'}>Song</Link></Table.Cell>
-                              <Table.Cell>{song.status ? 'Available' : 'Unavailable'}</Table.Cell>
-                              <Table.Cell>{song.order_song_item.price}</Table.Cell>
-                            </Table.Row>
-                          ))
-                        }
-                      </Table.Body>
-                    </Table>
-                  </Table.Cell>
-                  <Table.Cell>{order.albums.reduce((sum, cur) => {
+            {orders.map((order) => (
+              <Table.Row key={order.id}>
+                <Table.Cell>{order.id}</Table.Cell>
+                <Table.Cell>{order.date}</Table.Cell>
+                <Table.Cell>
+                  <Table>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>Name</Table.HeaderCell>
+                        <Table.HeaderCell>Type</Table.HeaderCell>
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+                        <Table.HeaderCell>Subtotal</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                      {order.albums &&
+                        order.albums.map((album) => (
+                          <Table.Row key={album.id}>
+                            <Table.Cell>
+                              <Link to={`/albums/${album.id}`}>{album.name}</Link>
+                            </Table.Cell>
+                            <Table.Cell>
+                              <Link to={'/albums/page/1'}>Album</Link>
+                            </Table.Cell>
+                            <Table.Cell>{album.status ? 'Available' : 'Unavailable'}</Table.Cell>
+                            <Table.Cell>{album.order_album_item.price}</Table.Cell>
+                          </Table.Row>
+                        ))}
+                      {order.songs &&
+                        order.songs.map((song) => (
+                          <Table.Row key={song.id}>
+                            <Table.Cell>
+                              <Link to={`/songs/${song.id}`}>{song.name}</Link>
+                            </Table.Cell>
+                            <Table.Cell>
+                              <Link to={'/songs/page/1'}>Song</Link>
+                            </Table.Cell>
+                            <Table.Cell>{song.status ? 'Available' : 'Unavailable'}</Table.Cell>
+                            <Table.Cell>{song.order_song_item.price}</Table.Cell>
+                          </Table.Row>
+                        ))}
+                    </Table.Body>
+                  </Table>
+                </Table.Cell>
+                <Table.Cell>
+                  {order.albums.reduce((sum, cur) => {
                     return sum + cur.order_album_item.price;
-                  }, 0) + order.songs.reduce((sum, cur) => {
-                    return sum + cur.order_song_item.price;
-                  }, 0)}</Table.Cell>
-                </Table.Row>
-              ))
-            }
+                  }, 0) +
+                    order.songs.reduce((sum, cur) => {
+                      return sum + cur.order_song_item.price;
+                    }, 0)}
+                </Table.Cell>
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table>
-        <Breadcrumb>
-          <Breadcrumb.Section active>1</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>2</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>3</Breadcrumb.Section>
-        </Breadcrumb>
       </Container>
     );
   }
@@ -110,11 +106,10 @@ class UserOrderHistory extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-
   return {
     email: state.user.email,
     userId: state.user.id,
-    orders: state.orders
+    orders: state.orders,
   };
 };
 
@@ -122,7 +117,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchUserOrdersData: () => {
       dispatch(fetchUserOrders());
-    }
+    },
   };
 };
 
