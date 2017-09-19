@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import PropTypes from 'prop-types';
 import history from './history';
 import { Main } from './components';
-import { me, fetchAlbums, fetchArtists, fetchCart } from './store';
+import { me, fetchAlbums, fetchArtists, fetchCart, fetchSongs } from './store';
 
 /**
  * COMPONENT
@@ -35,6 +35,7 @@ const mapDispatch = (dispatch) => {
       .then(() => dispatch(fetchCart()));
       dispatch(fetchAlbums());
       dispatch(fetchArtists());
+      dispatch(fetchSongs());
     },
   };
 };

@@ -18,9 +18,9 @@ class Songs extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchSongsData();
-  }
+  // componentDidMount() {
+  //   this.props.fetchSongsData();
+  // }
 
   render() {
     const { songs } = this.props;
@@ -108,9 +108,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchSongsData: () => {
-      dispatch(fetchSongs());
-    },
+    // fetchSongsData: () => {
+    //   dispatch(fetchSongs());
+    // },
     handleAddToCart(songId) {
       dispatch(addSongToCart({ id: songId }));
       // history.push('/cart');

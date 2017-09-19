@@ -77,7 +77,7 @@ class Navbar extends Component {
               <Form.Field>
                 <Input
                   onChange={this.handleChange}
-                  label={
+                   label={
                     <Dropdown
                       onChange={this.handleChange}
                       className="field"
