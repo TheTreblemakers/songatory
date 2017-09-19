@@ -28,6 +28,15 @@ export const fetchUserOrders = () => (dispatch) => {
     .catch((err) => console.error('Fetching orders unsuccessful', err));
 };
 
+export const fetchAllOrders = () => (dispatch) => {
+  axios
+    .get('/admin/orders/')
+    .then((res) => {
+      dispatch(getUserOrders(res.data || defaultOrders));
+    })
+    .catch((err) => console.error('Fetching all orders unsuccessful', err));
+};
+
 /**
  * REDUCER
  */
