@@ -4,8 +4,5 @@ module.exports = router;
 
 // GET /admin/orders
 router.get('/', (req, res, next) => {
-  Order.findAll()
-    .then(orders => res.json(orders))
-    .catch(next);
+  Order.findAll({ where: { fulfilled: true } }).then((orders) => res.json(orders)).catch(next);
 });
-

@@ -67,7 +67,6 @@ class UserPanel extends Component {
             </Menu>
           }
         </Grid.Column>
-
         <Grid.Column stretched width={12}>
           {this.props.location.pathname === '/home/admin/orders' && <AllOrderHistory />}
           {this.props.location.pathname === '/home/orders' && <UserOrderHistory />}
