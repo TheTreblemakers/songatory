@@ -94,7 +94,7 @@ class Artist extends Component {
                           <Table.Row key={song.id}>
                             <Table.Cell> {song.trackNumber}</Table.Cell>
                             <Table.Cell> {song.name}</Table.Cell>
-                            <Table.Cell>{song.price}</Table.Cell>
+                            <Table.Cell>${song.displayPrice}</Table.Cell>
                           </Table.Row>
                         ))}
                       </Table.Body>

@@ -26,7 +26,7 @@ const Song = db.define(
     displayPrice: {
       type: Sequelize.VIRTUAL,
       get() {
-        return this.getDataValue('price') / 100;
+        return Number(this.getDataValue('price') / 100).toFixed(2);
       },
     },
     status: {
