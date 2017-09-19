@@ -23,6 +23,7 @@ import {
 import { Button, Icon, Container, Grid } from 'semantic-ui-react';
 import { fetchUserCart, fetchGuestCart } from '../store';
 
+
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -86,6 +87,10 @@ const mapState = (state) => {
     user: state.user,
     cart: state.cart,
   };
+};
+
+const mapDispatch = (dispatch) => {
+  return {};
 };
 
 export default withRouter(connect(mapState)(Main));

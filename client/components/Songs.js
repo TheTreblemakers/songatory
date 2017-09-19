@@ -117,7 +117,6 @@ const mapDispatch = (dispatch) => {
         dispatch(addSongToUserCart({ id: songId }));
       } else {
         dispatch(addSongToGuestCart({ id: songId }));
-        // history.push('/cart');
       }
     },
   };

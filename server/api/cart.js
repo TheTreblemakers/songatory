@@ -1,42 +1,43 @@
 const router = require('express').Router();
 const { Order, Album, Song } = require('../db/models');
 const Promise = require('bluebird');
+
 module.exports = router;
 
-// Load cart
 router.use('/', (req, res, next) => {
-  if (!req.user) {
-    res.sendStatus(404);
-  } else {
-    // console.log('sessionID: ', req.sessionID);
-    const orders = [
-      Order.findOne({ where: { userId: req.user.id, fulfilled: false } }),
-      Order.findOne({ where: { session: req.sessionID, fulfilled: false } }),
-    ];
+  const sessOrder = Order.findOne({
+    where: {
+      session: req.sessionID,
+      userId: null,
+      fulfilled: false,
+    },
+  });
 
-    Promise.all(orders)
-      .then(([ userOrder, sessionOrder ]) => {
-        // console.log('USER ORDER IS????', userOrder);
-        if (!userOrder) {
-          // console.log('------ NO USER ORDER ------');
-          return sessionOrder.update({ userId: req.user.id });
-        } else {
-          const mergeAlbums = Promise.map(sessionOrder.albums, (album) => {
-            userOrder.addAlbum(album);
-          });
-          const mergeSongs = Promise.map(sessionOrder.songs, (song) => {
-            userOrder.addSong(song);
-          });
-          return Promise.all([ mergeAlbums, mergeSongs ]).then(() => userOrder);
-        }
-      })
-      .then((userOrder) => {
-        console.log('MERGED USER ORDER????? ', userOrder.albums.length, userOrder.songs.length);
-        req.order = userOrder;
-        next();
-      })
-      .catch(next);
-  }
+  const curOrder = Order.findOne({
+    where: {
+      userId: req.user.id,
+      fulfilled: false,
+    },
+  });
+
+  Promise.all([ sessOrder, curOrder ])
+    .then(([ sessionOrder, currentOrder ]) => {
+      if (sessionOrder === null && currentOrder === null) {
+        return Order.create({ userId: req.user.id });
+      } else if (sessionOrder === null && currentOrder.id) {
+        return currentOrder;
+      } else if (sessionOrder.id && currentOrder === null) {
+        if (sessionOrder.userId === null) return sessionOrder.update({ userId: req.user.id });
+        else return sessionOrder;
+      } else if (sessionOrder.id && currentOrder.id) {
+        return mergeOrders(sessionOrder, currentOrder);
+      }
+    })
+    .then((order) => {
+      req.order = order;
+      next();
+    })
+    .catch(next);
 });
 
 // GET /api/orders/cart/
@@ -46,7 +47,6 @@ router.get('/', (req, res, next) => {
 
 // PUT /api/orders/cart/
 router.put('/', (req, res, next) => {
-  console.log(req.order);
   req.order
     .update(req.body)
     .then((order) => {
@@ -90,3 +90,11 @@ router.delete('/songs/:id', (req, res, next) => {
     .then((order) => res.json(order.songs))
     .catch(next);
 });
+
+// merge session order to current order
+function mergeOrders(sOrder, curOrder) {
+  const albumsPromise = Promise.map(sOrder.albums, (album) => curOrder.addAlbum(album));
+  const songsPromise = Promise.map(sOrder.songs, (song) => curOrder.addSong(song));
+
+  return Promise.all([ albumsPromise, songsPromise ]).then(() => curOrder.reload());
+}

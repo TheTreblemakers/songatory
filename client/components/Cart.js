@@ -104,7 +104,6 @@ class Cart extends Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  //console.log(state);
   return {
     cart: state.cart,
     isLoggedIn: !!state.user.id,

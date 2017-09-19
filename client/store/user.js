@@ -19,6 +19,7 @@ const defaultUser = {};
 /**
  * ACTION CREATORS
  */
+
 const getUser = user => ({ type: GET_USER, user });
 const updateUsername = username => ({ type: UPDATE_USERNAME, username });
 const updatePassword = password => ({ type: UPDATE_PASSWORD, password });
@@ -31,9 +32,7 @@ export const me = () => (dispatch) =>
   axios.get('/auth/me').then((res) => {
     // get appropriate cart here
     dispatch(getUser(res.data || defaultUser));
-
     if (res.data) {
-      // If there is a user, get their cart
       dispatch(fetchUserCart());
     } else {
       dispatch(fetchGuestCart());
@@ -44,11 +43,7 @@ export const auth = (email, password, method) => (dispatch) =>
   axios
     .post(`/auth/${method}`, { email, password })
     .then((res) => {
-      // get appropriate cart here
       dispatch(getUser(res.data));
-      // If there is a cart already, merge carts
-      // Merge carts on backend
-
       dispatch(fetchUserCart());
       history.push('/home');
     })
