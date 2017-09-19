@@ -23,7 +23,6 @@ class Navbar extends Component {
       { key: 'Songs', text: 'Songs', value: 'songs' },
     ];
     this.links = [
-      { url: '/', name: 'Home' },
       { url: '/artists/page/1', name: 'Artists' },
       { url: '/albums/page/1', name: 'Albums' },
       { url: '/songs/page/1', name: 'Songs' },
@@ -69,7 +68,12 @@ class Navbar extends Component {
     return (
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
-          <Menu.Item as={Link} to={'/'} style={this.styles.title}>
+          <Menu.Item
+            color="teal"
+            active={this.props.location.pathname === '/'}
+            as={Link}
+            to={'/'}
+            style={this.styles.title}>
             songatory
           </Menu.Item>
           <Menu.Item>
@@ -118,7 +122,12 @@ class Navbar extends Component {
           <Icon link name="cart" size="big" />
         </Menu.Item>
         {isLoggedIn ? (
-          <Menu.Item name={`Log Out - ${user.name}`} onClick={handleLogout} />
+          <Menu.Menu>
+            <Menu.Item name={`Log Out`} onClick={handleLogout} />
+            <Menu.Item color="teal" active={this.props.location.pathname === '/home'} as={Link} to={'/home'}>
+              <Icon name="user" size="big" />
+            </Menu.Item>
+          </Menu.Menu>
         ) : (
           <Menu.Menu>
             <Menu.Item name="Login" as={Link} to={`/login`} />
