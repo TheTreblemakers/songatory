@@ -17,7 +17,6 @@ const AlbumCard = (props) => {
         <Card.Meta>{album.year}</Card.Meta>
       </Card.Content>
       <Card.Content extra>
-        <Icon name="right chevron" />
         <Link to={albumUrl}>See More</Link>
       </Card.Content>
     </Card>

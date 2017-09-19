@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { AlbumCard } from '../components';
-import { addAlbumToCart } from '../store';
+import { addAlbumToUserCart } from '../store';
 import history from '../history';
-import { Container, Divider, Card, Breadcrumb } from 'semantic-ui-react';
+import { Container, Button, Divider, Card, Breadcrumb } from 'semantic-ui-react';
 
 class Albums extends Component {
   constructor(props) {
@@ -78,10 +78,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleAddToCart(e) {
+    handleAddToUserCart(e) {
       const albumId = +e.target.value;
-      dispatch(addAlbumToCart({ id: albumId }));
-      history.push('/cart');
+      dispatch(addAlbumToUserCart({ id: albumId }));
     },
   };
 };
@@ -95,5 +94,5 @@ export default withRouter(connect(mapState, mapDispatch)(Albums));
  */
 Albums.propTypes = {
   albums: PropTypes.array.isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
+  handleAddToUserCart: PropTypes.func.isRequired,
 };

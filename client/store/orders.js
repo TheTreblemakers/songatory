@@ -14,18 +14,18 @@ const defaultOrders = [];
 /**
  * ACTION CREATORS
  */
-const getUserOrders = orders => ({ type: GET_USERORDERS, orders });
+const getUserOrders = (orders) => ({ type: GET_USERORDERS, orders });
 
 /**
  * THUNK CREATORS
  */
-export const fetchUserOrders = () => dispatch => {
-  
-  axios.get('/api/orders/')
-    .then(res => {
+export const fetchUserOrders = () => (dispatch) => {
+  axios
+    .get('/api/orders/')
+    .then((res) => {
       dispatch(getUserOrders(res.data || defaultOrders));
     })
-    .catch(err => console.error('Fetching orders unsuccessful', err));
+    .catch((err) => console.error('Fetching orders unsuccessful', err));
 };
 
 /**

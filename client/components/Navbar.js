@@ -45,7 +45,6 @@ class Navbar extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: input validation
     if (this.state.query.length < 3) {
       this.setState({ query: '', inputError: true, searchPlaceholder: 'Please enter at least three characters' });
     } else {
@@ -58,7 +57,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { isLoggedIn, handleLogout } = this.props;
+    const { isLoggedIn, user, handleLogout } = this.props;
     const cart = this.props.cart;
     const itemsInCart = cart.songs.length + cart.albums.length;
     const query = this.state.query;
@@ -67,11 +66,12 @@ class Navbar extends Component {
       { key: 'albums', text: 'Albums', value: 'albums' },
       { key: 'songs', text: 'Songs', value: 'songs' },
     ];
-
     return (
       <Menu inverted floated fixed="top" stackable style={this.styles.navbar}>
         <Menu.Menu>
-          <Menu.Item style={this.styles.title}>songatory</Menu.Item>
+          <Menu.Item as={Link} to={'/'} style={this.styles.title}>
+            songatory
+          </Menu.Item>
           <Menu.Item>
             <Form onSubmit={this.handleSubmit} style={this.styles.search}>
               <Form.Field>
@@ -118,7 +118,7 @@ class Navbar extends Component {
           <Icon link name="cart" size="big" />
         </Menu.Item>
         {isLoggedIn ? (
-          <Menu.Item name="Log Out" onClick={handleLogout} />
+          <Menu.Item name={`Log Out - ${user.name}`} onClick={handleLogout} />
         ) : (
           <Menu.Menu>
             <Menu.Item name="Login" as={Link} to={`/login`} />
@@ -136,6 +136,8 @@ class Navbar extends Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    // isLoggedIn: !!state.user,
+    user: state.user,
     cart: state.cart,
   };
 };
