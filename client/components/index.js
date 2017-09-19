@@ -18,6 +18,7 @@ export { default as AlbumCard } from './AlbumCard';
 export { EditAlbum } from './AlbumForm';
 export { default as Artists } from './Artists';
 export { default as Artist } from './Artist';
+export { default as AllOrderHistory } from './AllOrderHistory';
 export { default as ArtistCard } from './ArtistCard';
 export { default as Category } from './Category';
 export { default as Landing } from './Landing';

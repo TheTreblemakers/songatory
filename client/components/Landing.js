@@ -1,32 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Splash } from '../components';
-import { Header, Transition } from 'semantic-ui-react';
+import { Button, Header, Transition } from 'semantic-ui-react';
 
-const Landing = (props) => {
-  const styles = {
-    title: {
-      fontSize: '4em',
-      fontWeight: 'normal',
-      fontFamily: 'Oleo Script',
-    },
-  };
+class Landing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+    };
+    this.styles = {
+      title: {
+        fontSize: '8em',
+        fontWeight: 'normal',
+        fontFamily: 'Oleo Script',
+        letterSpacing: '0.02em',
+      },
+    };
+  }
 
-  const drawTitle = () => {
-    return (
-      <Header inverted style={styles.title}>
+  componentDidMount() {
+    requestAnimationFrame(() => this.setState({ visible: true }));
+  }
+
+  render() {
+    const visible = this.state.visible;
+    let child = (
+      <Header inverted style={this.styles.title}>
         songatory
       </Header>
     );
-  };
-
-  return (
-    <Splash>
-      <Transition.Group as={Header} animation="fade up" duration={2000}>
-        {drawTitle()}
-      </Transition.Group>
-    </Splash>
-  );
-};
+    return (
+      <Splash>
+        <Transition visible={visible} animation="fade up" duration={2000}>
+          {child}
+        </Transition>
+      </Splash>
+    );
+  }
+}
 
 export default Landing;
