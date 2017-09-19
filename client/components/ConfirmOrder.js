@@ -1,42 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { updateUserCart } from '../store';
+import { withRouter, Link, Route, Switch } from 'react-router-dom';
 import { CartAlbumItem, CartSongItem } from '../components';
-import {
-  removeSongFromUserCart,
-  removeAlbumFromUserCart,
-  removeAlbumFromGuestCart,
-  removeSongFromGuestCart,
-} from '../store';
-import { Segment, Header, Container, Button, List, Table, Divider } from 'semantic-ui-react';
-import history from '../history';
+import { Divider, Segment, Header, Container, Button, List, Table } from 'semantic-ui-react';
 
-class Cart extends Component {
+class ConfirmOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.styles = {
-      container: {
-        padding: `2em`,
-      },
-    };
   }
 
   render() {
-    const { cart, isLoggedIn, handleAlbumDelete, handleSongDelete } = this.props;
-    const totalItems = cart.albums.length + cart.songs.length;
-    //console.log(cart);
-    //const cart = this.props.cart;
+    const cart = this.props.cart;
     return (
-      <Container style={this.styles.container}>
-        {totalItems === 0 ? (
-          <Segment>
-            <Header>Your cart is empty</Header>
-          </Segment>
-        ) : (
-          <Header>Current Order</Header>
-        )}
+      <div>
         {cart.albums.length > 0 ? (
           <div>
             <h3>Albums</h3>
@@ -54,10 +32,10 @@ class Cart extends Component {
               <Table.Body>
                 {cart.albums.map((album) => (
                   <CartAlbumItem
+                    isCheckout
                     key={album.id}
                     album={album}
-                    isLoggedIn={isLoggedIn}
-                    handleAlbumDelete={handleAlbumDelete}
+                    handleAlbumDelete={this.props.handleAlbumDelete}
                   />
                 ))}
               </Table.Body>
@@ -81,54 +59,39 @@ class Cart extends Component {
               </Table.Header>
               <Table.Body>
                 {cart.songs.map((song) => (
-                  <CartSongItem key={song.id} song={song} isLoggedIn={isLoggedIn} handleSongDelete={handleSongDelete} />
+                  <CartSongItem isCheckout key={song.id} song={song} handleSongDelete={this.props.handleSongDelete} />
                 ))}
               </Table.Body>
             </Table>
           </div>
         ) : null}
-        <Divider hidden />
-        {totalItems > 0 ? (
-          <Button as={Link} to="/cart/checkout/billing" floated="right">
-            Checkout
-          </Button>
-        ) : (
-          ''
-        )}
-      </Container>
+        <Divider />
+        <Button as={Link} onClick={() => this.props.completeOrder(cart)} to={'/cart/checkout/complete'} floated="right">
+          Confirm My Order
+        </Button>
+        <Button as={Link} floated="right" to={'/cart/checkout/billing'}>
+          Back
+        </Button>
+      </div>
     );
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
+  //console.log(state);
   return {
     cart: state.cart,
-    isLoggedIn: !!state.user.id,
+    user: state.user,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    handleAlbumDelete(albumId, isLoggedIn) {
-      if (isLoggedIn) {
-        dispatch(removeAlbumFromUserCart(albumId));
-      } else {
-        dispatch(removeAlbumFromGuestCart(albumId));
-      }
-    },
-    handleSongDelete(songId, isLoggedIn) {
-      if (isLoggedIn) {
-        dispatch(removeSongFromUserCart(songId));
-      } else {
-        dispatch(removeSongFromGuestCart(songId));
-      }
+    completeOrder: (cart) => {
+      cart.fulfilled = true;
+      dispatch(updateUserCart(cart));
     },
   };
 };
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Cart));
+export default withRouter(connect(mapState, mapDispatch)(ConfirmOrder));

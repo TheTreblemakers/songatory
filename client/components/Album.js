@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Icon, Table, Header, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
-import { addAlbumToUserCart, addAlbumToGuestCart, fetchAlbum  } from '../store';
+import { Segment, Icon, Table, Header, Image, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
+import { addAlbumToUserCart, addAlbumToGuestCart, fetchAlbum } from '../store';
 
 class Album extends Component {
   constructor(props) {
@@ -49,7 +49,11 @@ class Album extends Component {
             <Item.Content verticalAlign="middle">
               <Header style={styles.title} size="huge">
                 {album.name}
-                { isAdmin && <Button as={Link} to={`/albums/${album.id}/edit`} style={styles.actionButton} primary>Edit Album</Button> }
+                {isAdmin && (
+                  <Button as={Link} to={`/albums/${album.id}/edit`} style={styles.actionButton} primary>
+                    Edit Album
+                  </Button>
+                )}
               </Header>
               <div>
                 <Header disabled size="huge">
@@ -121,13 +125,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleAddToCart(albumId, isLoggedIn) {
-      if (isLoggedIn){
+      if (isLoggedIn) {
         dispatch(addAlbumToUserCart({ id: albumId }));
-      }
-      else {
+      } else {
         dispatch(addAlbumToGuestCart({ id: albumId }));
       }
-
     },
     getAlbum: (id) => {
       dispatch(fetchAlbum(id));

@@ -75,7 +75,7 @@ class Songs extends Component {
                 <Table.Cell> {song.name}</Table.Cell>
                 <Table.Cell> {song.album.artist.name}</Table.Cell>
                 <Table.Cell>{song.album.name}</Table.Cell>
-                <Table.Cell>{song.price}</Table.Cell>
+                <Table.Cell>$ {song.displayPrice}</Table.Cell>
                 <Table.Cell>
                   <Button
                     animated="vertical"
@@ -103,7 +103,7 @@ class Songs extends Component {
 const mapState = (state) => {
   return {
     songs: state.songs,
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
   };
 };
 
@@ -113,15 +113,12 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchSongs());
     },
     handleAddToCart(songId, isLoggedIn) {
-      console.log('inside add song', isLoggedIn);
-      if (isLoggedIn){
+      if (isLoggedIn) {
         dispatch(addSongToUserCart({ id: songId }));
-      }
-     else {
+      } else {
         dispatch(addSongToGuestCart({ id: songId }));
-        // history.push('/cart');
       }
-    }
+    },
   };
 };
 

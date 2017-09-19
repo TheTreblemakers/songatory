@@ -17,6 +17,7 @@ import {
   Signup,
   SearchResults,
   Cart,
+  Checkout,
   UserHome,
 } from '../components';
 import { Button, Icon, Container, Grid } from 'semantic-ui-react';
@@ -59,7 +60,7 @@ const Main = (props) => {
         <Route exact path="/" component={Landing} />
         <Route exact path="/albums/page/:pageNumber" component={Albums} />
         <Route exact path="/albums/:id" component={Album} />
-        { isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} /> }
+        {isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} />}
         <Route exact path="/artists/page/:pageNumber" component={Artists} />
         <Route exact path="/artists/:id" component={Artist} />
         <Route exact path="/songs/page/:pageNumber" component={Songs} />
@@ -67,7 +68,8 @@ const Main = (props) => {
         <Route path="/search/results" component={SearchResults} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/cart" component={Cart} />
+        <Route exact path="/cart" component={Cart} />
+        <Route path="/cart/checkout" component={Checkout} />
         <Route path="/home" component={UserHome} />
       </Container>
       <Footer />
@@ -81,9 +83,9 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin || false,
     user: state.user,
     cart: state.cart,
-    isAdmin: state.user.isAdmin || false,
   };
 };
 
