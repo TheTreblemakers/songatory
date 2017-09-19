@@ -9,8 +9,8 @@ import {
 
 /**
  * COMPONENT
- *  The Main component is our 'picture frame' - it displays the navbar and anything
- *  else common to our entire app. The 'picture' inside the frame is the space
+ *  The UserHome component is our 'picture frame' - it displays the UserPanel and anything
+ *  else common to our user's page. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
 const UserHome = (props) => {

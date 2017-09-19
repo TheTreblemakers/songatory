@@ -27,8 +27,7 @@ class UserOrderHistory extends Component {
   }
 
   render() {
-    const { email, orders } = this.props;
-    console.log('HEYYYYYY orders:  ', orders);
+    const { orders } = this.props;
 
     return (
 

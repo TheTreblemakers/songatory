@@ -5,7 +5,8 @@ import { Grid, Menu, Segment } from 'semantic-ui-react';
 import history from '../history';
 import { withRouter, Link } from 'react-router-dom';
 import {
-  UserOrderHistory
+  UserOrderHistory,
+  UserEditUsername,
 } from '../components';
 
 /**
@@ -31,7 +32,6 @@ class UserPanel extends Component {
 
   render() {
     const { activeItem } = this.props;
-
     return (
       <Grid>
         <Grid.Column width={4}>
@@ -50,8 +50,8 @@ class UserPanel extends Component {
         </Grid.Column>
 
         <Grid.Column stretched width={12}>
-          {activeItem === 'orders' || activeItem === 'home' && <UserOrderHistory />}
-          {activeItem === 'username' && <h3>change USERNAME PLACEHOLDER ***</h3>}
+          {(activeItem === 'orders' || activeItem === 'home') && <UserOrderHistory />}
+          {activeItem === 'username' && <UserEditUsername />}
           {activeItem === 'password' && <h3>change PASSWORD PLACEHOLDER ***</h3>}
         </Grid.Column>
       </Grid>

@@ -51,7 +51,7 @@ rp(options)
       return Promise.all(
         categories.map((category) => {
           return Category.create(category);
-        }),
+        })
       );
     };
 
@@ -79,7 +79,7 @@ rp(options)
       return Promise.all(
         users.map((user) => {
           return User.create(user);
-        }),
+        })
       );
     };
 
@@ -94,7 +94,7 @@ rp(options)
       return Promise.all(
         songs.map((song) => {
           return Song.create(song);
-        }),
+        })
       );
     };
 
@@ -143,7 +143,7 @@ rp(options)
       return Promise.all(
         artists.map((artist) => {
           return Artist.create(artist);
-        }),
+        })
       );
     };
 
@@ -163,7 +163,7 @@ rp(options)
       return Promise.all(
         albums.map((album) => {
           return Album.create(album);
-        }),
+        })
       );
     };
 

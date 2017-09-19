@@ -12,3 +12,15 @@ router.get('/', (req, res, next) => {
     .then(users => res.json(users))
     .catch(next);
 });
+
+router.put('/username/:id', (req, res, next) => {
+  console.log(req.body.email);
+  User.findById(req.params.id)
+    .then(user => {
+      return user.update({
+        email: req.body.email
+      });
+    })
+    .then(user => res.json(user))
+    .catch(next);
+});
