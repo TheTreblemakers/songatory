@@ -2,6 +2,9 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const Album = require('./album');
 const Song = require('./song');
+const OrderAlbumItem = require('./orderAlbum');
+const OrderSongItem = require('./orderSong');
+const Promise = require('bluebird');
 
 const Order = db.define(
   'order',
@@ -34,8 +37,17 @@ const Order = db.define(
           }
         });
       },
+      afterUpdate: (order) => {
+        if (order.changed().indexOf('fulfilled') !== -1) {
+          return order.reload()
+            .then(fetchedOrder => Promise.all([
+              fetchedOrder.albums.map(album => album.order_album_item.update({ price: album.price })),
+              fetchedOrder.songs.map(song => song.order_song_item.update({ price: song.price }))
+            ]));
+        }
+      },
     },
-  },
+  }
 );
 
 module.exports = Order;

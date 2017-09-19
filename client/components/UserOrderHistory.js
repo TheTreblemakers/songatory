@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Table, Breadcrumb, Grid } from 'semantic-ui-react';
-import history from '../history';
+import { Container, Table } from 'semantic-ui-react';
 import { withRouter, Link } from 'react-router-dom';
 import { fetchUserOrders } from '../store/orders';
 
@@ -107,7 +106,6 @@ class UserOrderHistory extends Component {
  */
 const mapState = (state) => {
   return {
-    email: state.user.email,
     userId: state.user.id,
     orders: state.orders,
   };
@@ -127,6 +125,5 @@ export default withRouter(connect(mapState, mapDispatch)(UserOrderHistory));
  * PROP TYPES
  */
 UserOrderHistory.propTypes = {
-  email: PropTypes.string,
   orders: PropTypes.array,
 };
