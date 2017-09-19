@@ -1,6 +1,7 @@
 import axios from 'axios';
 import history from '../history';
 import { clearCart, mergeCarts, fetchUserCart, fetchGuestCart } from './cart';
+import { setError } from './error';
 
 /**
  * ACTION TYPES
@@ -47,7 +48,7 @@ export const auth = (email, password, method) => (dispatch) =>
       dispatch(fetchUserCart());
       history.push('/home');
     })
-    .catch((error) => dispatch(getUser({ error })));
+    .catch((error) => dispatch(setError(error)));
 
 export const logout = () => (dispatch) =>
   axios
