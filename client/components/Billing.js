@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setPayment } from '../store';
 import { Dropdown, Segment, Header, Container, Button, List, Table, Divider } from 'semantic-ui-react';
@@ -25,7 +25,7 @@ class Billing extends Component {
           options={this.paymentOptions}
         />
         <Divider hidden />
-        <Button as={Link} to="/cart/checkout/confirm" floated="right">
+        <Button as={Link} disabled={this.props.paymentMethod === ''} to="/cart/checkout/confirm" floated="right">
           Next
         </Button>
         <Button as={Link} to="/cart" floated="right">
@@ -46,4 +46,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(Billing);
+export default withRouter(connect(mapState, mapDispatch)(Billing));
