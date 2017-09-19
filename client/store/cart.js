@@ -98,23 +98,6 @@ export const removeSongFromGuestCart = (songId) => (dispatch) =>
 export const updateUserCart = (props) => (dispatch) =>
   axios.put(`/api/orders/cart/`, props).then(() => dispatch(clearCart())).catch((err) => console.log(err));
 
-export const addSongToGuestCart = (song) => (dispatch) =>
-  axios
-    .post(`/api/guest/cart/songs`, song)
-    .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
-
-export const removeAlbumFromGuestCart = (albumId) => (dispatch) =>
-  axios
-    .delete(`/api/guest/cart/albums/${albumId}`)
-    .then((res) => dispatch(getCartAlbums(res.data || cart.albums)))
-    .catch((err) => console.log(err));
-
-export const removeSongFromGuestCart = (songId) => (dispatch) =>
-  axios
-    .delete(`/api/guest/cart/songs/${songId}`)
-    .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
 /**
  * REDUCER
  */

@@ -9,38 +9,35 @@ router.use('/', (req, res, next) => {
     where: {
       session: req.sessionID,
       userId: null,
-      fulfilled: false
-    }
+      fulfilled: false,
+    },
   });
 
   const curOrder = Order.findOne({
     where: {
       userId: req.user.id,
-      fulfilled: false
-    }
+      fulfilled: false,
+    },
   });
 
-  Promise.all([sessOrder, curOrder])
-  .then(([sessionOrder, currentOrder]) => {
-    if (sessionOrder === null && currentOrder === null){
-      return Order.create({ userId: req.user.id });
-    }
-    else if (sessionOrder === null && currentOrder.id){
-      return currentOrder;
-    }
-    else if (sessionOrder.id && currentOrder === null){
-      if (sessionOrder.userId === null) return sessionOrder.update({userId: req.user.id});
-      else return sessionOrder;
-    }
-    else if (sessionOrder.id && currentOrder.id){
-      return mergeOrders(sessionOrder, currentOrder);
-    }
-  })
-  .then(order => {
-    req.order = order;
-    next();
-  })
-  .catch(next);
+  Promise.all([ sessOrder, curOrder ])
+    .then(([ sessionOrder, currentOrder ]) => {
+      if (sessionOrder === null && currentOrder === null) {
+        return Order.create({ userId: req.user.id });
+      } else if (sessionOrder === null && currentOrder.id) {
+        return currentOrder;
+      } else if (sessionOrder.id && currentOrder === null) {
+        if (sessionOrder.userId === null) return sessionOrder.update({ userId: req.user.id });
+        else return sessionOrder;
+      } else if (sessionOrder.id && currentOrder.id) {
+        return mergeOrders(sessionOrder, currentOrder);
+      }
+    })
+    .then((order) => {
+      req.order = order;
+      next();
+    })
+    .catch(next);
 });
 
 // GET /api/orders/cart/
@@ -50,7 +47,6 @@ router.get('/', (req, res, next) => {
 
 // PUT /api/orders/cart/
 router.put('/', (req, res, next) => {
-  console.log(req.order);
   req.order
     .update(req.body)
     .then((order) => {
@@ -96,10 +92,9 @@ router.delete('/songs/:id', (req, res, next) => {
 });
 
 // merge session order to current order
-function mergeOrders(sOrder, curOrder){
+function mergeOrders(sOrder, curOrder) {
   const albumsPromise = Promise.map(sOrder.albums, (album) => curOrder.addAlbum(album));
   const songsPromise = Promise.map(sOrder.songs, (song) => curOrder.addSong(song));
 
-  return Promise.all([albumsPromise, songsPromise])
-    .then(() => curOrder.reload());
+  return Promise.all([ albumsPromise, songsPromise ]).then(() => curOrder.reload());
 }
