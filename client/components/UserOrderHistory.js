@@ -6,6 +6,22 @@ import { withRouter, Link } from 'react-router-dom';
 import { fetchUserOrders } from '../store/orders';
 
 /**
+ * HELPER FUNCTION
+ */
+const prettyPrice = (num) => {
+  let total = num || 0;
+  let price;
+  if (total < 10) {
+    price = '$ 00' + total;
+  } else if (total < 100) {
+    price = '$ 0' + total;
+  } else {
+    price = '$ ' + total;
+  }
+  return price.slice(0, -2) + '.' + price.slice(-2);
+};
+
+/**
  * COMPONENT
  */
 class UserOrderHistory extends Component {
@@ -65,7 +81,7 @@ class UserOrderHistory extends Component {
                               <Link to={'/albums/page/1'}>Album</Link>
                             </Table.Cell>
                             <Table.Cell>{album.status ? 'Available' : 'Unavailable'}</Table.Cell>
-                            <Table.Cell>{album.order_album_item.price}</Table.Cell>
+                            <Table.Cell>{prettyPrice(album.order_album_item.price)}</Table.Cell>
                           </Table.Row>
                         ))}
                       {order.songs &&
@@ -78,19 +94,19 @@ class UserOrderHistory extends Component {
                               <Link to={'/songs/page/1'}>Song</Link>
                             </Table.Cell>
                             <Table.Cell>{song.status ? 'Available' : 'Unavailable'}</Table.Cell>
-                            <Table.Cell>{song.order_song_item.price}</Table.Cell>
+                            <Table.Cell>{prettyPrice(song.order_song_item.price)}</Table.Cell>
                           </Table.Row>
                         ))}
                     </Table.Body>
                   </Table>
                 </Table.Cell>
                 <Table.Cell>
-                  {order.albums.reduce((sum, cur) => {
+                  {prettyPrice(order.albums.reduce((sum, cur) => {
                     return sum + cur.order_album_item.price;
                   }, 0) +
                     order.songs.reduce((sum, cur) => {
                       return sum + cur.order_song_item.price;
-                    }, 0)}
+                    }, 0))}
                 </Table.Cell>
               </Table.Row>
             ))}
