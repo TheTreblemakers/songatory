@@ -29,6 +29,10 @@ const Album = db.define('album', {
       }
     }
   },
+  status: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
+  },
   image: {
     type: Sequelize.STRING,
     // defaultValue: /*** insert default image ***/

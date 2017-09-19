@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Icon, Table, Header, Divider, Label, Button, Item, Container } from 'semantic-ui-react';
-import { addAlbumToUserCart, addAlbumToGuestCart, fetchAlbum  } from '../store';
+import { Segment, Table, Header, Divider, Label, Item, Form } from 'semantic-ui-react';
+import { fetchAlbum, changeAlbumDetails, submitAlbumUpdate } from '../store';
 
-class Album extends Component {
+class AlbumForm extends Component {
   constructor(props) {
     super(props);
     this.styles = {
@@ -13,27 +13,33 @@ class Album extends Component {
         padding: `2em`,
       },
       title: {
-        display: `flex`,
-        fontSize: `4em`,
+        width: `100%`,
+        marginBottom: `1em`,
       },
       subtitle: {
         fontSize: `2em`,
         padding: `0.2em`,
       },
-      actionButton: {
-        alignSelf: `center`,
-        marginLeft: `auto`,
-      },
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getAlbum(this.props.match.params.id);
   }
 
+  handleSubmit(evt) {
+    evt.preventDefault();
+    if (this.props.name === 'edit') {
+      this.props.submitEdits(this.props.album);
+    }
+  }
+
   render() {
     const styles = this.styles;
-    const { album, isAdmin, isLoggedIn } = this.props;
+    const { album, handleChange } = this.props;
+    const handleSubmit = this.handleSubmit;
     album.songs = album.songs
       ? album.songs.sort((song1, song2) => {
           return song1.trackNumber - song2.trackNumber;
@@ -42,30 +48,36 @@ class Album extends Component {
     const categories = album.categories || [];
     const artist = album.artist || {};
     return (
-      <Container style={styles.container}>
+      <Form style={styles.container} onChange={handleChange} onSubmit={handleSubmit}>
         <Item.Group>
           <Item>
             <Item.Image shape="rounded" bordered size="medium" src={album.image} />
             <Item.Content verticalAlign="middle">
               <Header style={styles.title} size="huge">
-                {album.name}
-                { isAdmin && <Button as={Link} to={`/albums/${album.id}/edit`} style={styles.actionButton} primary>Edit Album</Button> }
+                <Form.Field>
+                  <label>Name:</label>
+                  <input name="name" value={album.name} />
+                </Form.Field>
               </Header>
-              <div>
-                <Header disabled size="huge">
-                  {album.year}
-                </Header>
-              </div>
-              <Button
-                animated="vertical"
-                onClick={() => {
-                  this.props.handleAddToCart(album.id, isLoggedIn);
-                }}>
-                <Button.Content hidden>Buy</Button.Content>
-                <Button.Content visible>
-                  <Icon name="add to cart" />
-                </Button.Content>
-              </Button>
+              <Form.Group widths="equal">
+                <Form.Field>
+                  <label>Image Url:</label>
+                  <input name="image" value={album.image} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Year:</label>
+                  <input name="year" value={album.year} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Price:</label>
+                  <input disabled name="price" value={album.displayPrice} />
+                </Form.Field>
+              </Form.Group>
+              <Form.Field>
+                <label>Description:</label>
+                <textarea name="description" value={album.description} />
+              </Form.Field>
+              <Form.Button primary>Update</Form.Button>
               <Divider /> by
               <Header as={Link} to={`/artists/${artist.id}`} style={styles.subtitle} sub>
                 {artist.name}
@@ -105,36 +117,31 @@ class Album extends Component {
             </Item.Content>
           </Item>
         </Item.Group>
-      </Container>
+      </Form>
     );
   }
 }
 
-const mapState = (state) => {
+const mapEdit = (state) => {
   return {
+    name: 'edit',
+    displayName: 'Edit Album',
     album: state.albums.currentAlbum,
-    isLoggedIn: !!state.user.id,
-    isAdmin: state.user.isAdmin || false,
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    handleAddToCart(albumId, isLoggedIn) {
-      if (isLoggedIn){
-        dispatch(addAlbumToUserCart({ id: albumId }));
-      }
-      else {
-        dispatch(addAlbumToGuestCart({ id: albumId }));
-      }
+const mapDispatch = (dispatch) => ({
+  getAlbum: (id) => {
+    dispatch(fetchAlbum(id));
+  },
 
-    },
-    getAlbum: (id) => {
-      dispatch(fetchAlbum(id));
-    },
-  };
-};
+  handleChange(evt) {
+    dispatch(changeAlbumDetails(evt.target.name, evt.target.value));
+  },
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default connect(mapState, mapDispatch)(Album);
+  submitEdits (album) {
+    dispatch(submitAlbumUpdate(album));
+  }
+});
+
+export const EditAlbum = connect(mapEdit, mapDispatch)(AlbumForm);
