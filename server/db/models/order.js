@@ -10,6 +10,15 @@ const Order = db.define(
     date: {
       type: Sequelize.DATE,
     },
+    email: {
+      type: Sequelize.STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
+    name: {
+      type: Sequelize.STRING,
+    },
     session: {
       type: Sequelize.STRING,
     },
