@@ -14,11 +14,21 @@ router.get('/', (req, res, next) => {
 });
 
 router.put('/username/:id', (req, res, next) => {
-  console.log(req.body.email);
   User.findById(req.params.id)
     .then(user => {
       return user.update({
         email: req.body.email
+      });
+    })
+    .then(user => res.json(user))
+    .catch(next);
+});
+
+router.put('/password/:id', (req, res, next) => {
+  User.findById(req.params.id)
+    .then(user => {
+      return user.update({
+        password: req.body.password
       });
     })
     .then(user => res.json(user))

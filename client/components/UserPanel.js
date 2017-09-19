@@ -7,6 +7,7 @@ import { withRouter, Link } from 'react-router-dom';
 import {
   UserOrderHistory,
   UserEditUsername,
+  UserEditPassword,
 } from '../components';
 
 /**
@@ -52,7 +53,7 @@ class UserPanel extends Component {
         <Grid.Column stretched width={12}>
           {(activeItem === 'orders' || activeItem === 'home') && <UserOrderHistory />}
           {activeItem === 'username' && <UserEditUsername />}
-          {activeItem === 'password' && <h3>change PASSWORD PLACEHOLDER ***</h3>}
+          {activeItem === 'password' && <UserEditPassword />}
         </Grid.Column>
       </Grid>
     );
