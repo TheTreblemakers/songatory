@@ -27,10 +27,9 @@ router.use('/', (req, res, next) => {
       } else if (sessionOrder === null && currentOrder.id) {
         return currentOrder;
       } else if (sessionOrder.id && currentOrder === null) {
-        if (sessionOrder.userId === null) return sessionOrder.update({ userId: req.user.id });
-        else return sessionOrder;
+        return sessionOrder.update({ userId: req.user.id });
       } else if (sessionOrder.id && currentOrder.id) {
-        return mergeOrders(sessionOrder, currentOrder);
+        return currentOrder.mergeOrder(sessionOrder);
       }
     })
     .then((order) => {
@@ -90,11 +89,3 @@ router.delete('/songs/:id', (req, res, next) => {
     .then((order) => res.json(order.songs))
     .catch(next);
 });
-
-// merge session order to current order
-function mergeOrders(sOrder, curOrder) {
-  const albumsPromise = Promise.map(sOrder.albums, (album) => curOrder.addAlbum(album));
-  const songsPromise = Promise.map(sOrder.songs, (song) => curOrder.addSong(song));
-
-  return Promise.all([ albumsPromise, songsPromise ]).then(() => curOrder.reload());
-}
