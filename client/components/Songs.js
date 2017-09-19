@@ -18,9 +18,9 @@ class Songs extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchSongsData();
-  }
+  // componentDidMount() {
+  //   this.props.fetchSongsData();
+  // }
 
   render() {
     const { songs, isLoggedIn } = this.props;
@@ -109,9 +109,6 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchSongsData: () => {
-      dispatch(fetchSongs());
-    },
     handleAddToCart(songId, isLoggedIn) {
       if (isLoggedIn) {
         dispatch(addSongToUserCart({ id: songId }));
