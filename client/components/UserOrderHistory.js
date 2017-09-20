@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Table, Breadcrumb, Grid } from 'semantic-ui-react';
-import history from '../history';
+import { Container, Table } from 'semantic-ui-react';
 import { withRouter, Link } from 'react-router-dom';
 import { fetchUserOrders } from '../store/orders';
+
+/**
+ * HELPER FUNCTION
+ */
+const prettyPrice = (num) => {
+  let total = num || 0;
+  let price;
+  if (total < 10) {
+    price = '$ 00' + total;
+  } else if (total < 100) {
+    price = '$ 0' + total;
+  } else {
+    price = '$ ' + total;
+  }
+  return price.slice(0, -2) + '.' + price.slice(-2);
+};
 
 /**
  * COMPONENT
@@ -66,7 +81,7 @@ class UserOrderHistory extends Component {
                               <Link to={'/albums/page/1'}>Album</Link>
                             </Table.Cell>
                             <Table.Cell>{album.status ? 'Available' : 'Unavailable'}</Table.Cell>
-                            <Table.Cell>{album.order_album_item.price}</Table.Cell>
+                            <Table.Cell>{prettyPrice(album.order_album_item.price)}</Table.Cell>
                           </Table.Row>
                         ))}
                       {order.songs &&
@@ -79,19 +94,19 @@ class UserOrderHistory extends Component {
                               <Link to={'/songs/page/1'}>Song</Link>
                             </Table.Cell>
                             <Table.Cell>{song.status ? 'Available' : 'Unavailable'}</Table.Cell>
-                            <Table.Cell>{song.order_song_item.price}</Table.Cell>
+                            <Table.Cell>{prettyPrice(song.order_song_item.price)}</Table.Cell>
                           </Table.Row>
                         ))}
                     </Table.Body>
                   </Table>
                 </Table.Cell>
                 <Table.Cell>
-                  {order.albums.reduce((sum, cur) => {
+                  {prettyPrice(order.albums.reduce((sum, cur) => {
                     return sum + cur.order_album_item.price;
                   }, 0) +
                     order.songs.reduce((sum, cur) => {
                       return sum + cur.order_song_item.price;
-                    }, 0)}
+                    }, 0))}
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -107,7 +122,6 @@ class UserOrderHistory extends Component {
  */
 const mapState = (state) => {
   return {
-    email: state.user.email,
     userId: state.user.id,
     orders: state.orders,
   };
@@ -127,6 +141,5 @@ export default withRouter(connect(mapState, mapDispatch)(UserOrderHistory));
  * PROP TYPES
  */
 UserOrderHistory.propTypes = {
-  email: PropTypes.string,
   orders: PropTypes.array,
 };

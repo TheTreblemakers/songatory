@@ -44,6 +44,15 @@ const Order = db.define(
           }
         });
       },
+      afterUpdate: (order) => {
+        if (order.changed().indexOf('fulfilled') !== -1) {
+          return order.reload()
+            .then(fetchedOrder => Promise.all([
+              fetchedOrder.albums.map(album => album.order_album_item.update({ price: album.price })),
+              fetchedOrder.songs.map(song => song.order_song_item.update({ price: song.price }))
+            ]));
+        }
+      },
     },
   }
 );
