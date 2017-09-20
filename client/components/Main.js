@@ -19,9 +19,10 @@ import {
   Cart,
   Checkout,
   UserHome,
+  ErrorComponent
 } from '../components';
 import { Button, Icon, Container, Grid } from 'semantic-ui-react';
-import { fetchUserCart, fetchGuestCart } from '../store';
+import { clearError } from '../store';
 
 
 /**
@@ -31,8 +32,7 @@ import { fetchUserCart, fetchGuestCart } from '../store';
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const { isAdmin } = props;
-
+  const { isAdmin, error, handleErrorClear } = props;
   const styles = {
     body: {
       display: 'flex',
@@ -56,22 +56,27 @@ const Main = (props) => {
   return (
     <div style={styles.body}>
       <Navbar />
-      <Container style={styles.containerFull} fluid>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/albums/page/:pageNumber" component={Albums} />
-        <Route exact path="/albums/:id" component={Album} />
-        {isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} />}
-        <Route exact path="/artists/page/:pageNumber" component={Artists} />
-        <Route exact path="/artists/:id" component={Artist} />
-        <Route exact path="/songs/page/:pageNumber" component={Songs} />
-        <Route exact path="/categories/:id" component={Category} />
-        <Route path="/search/results" component={SearchResults} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route exact path="/cart" component={Cart} />
-        <Route path="/cart/checkout" component={Checkout} />
-        <Route path="/home" component={UserHome} />
-      </Container>
+         <Container style={styles.containerFull} fluid>
+          {
+            error ? <ErrorComponent error = {error} handleErrorClear= {handleErrorClear} />
+                  :<div>
+                    <Route exact path="/" component={Landing} />
+                    <Route exact path="/albums/page/:pageNumber" component={Albums} />
+                    <Route exact path="/albums/:id" component={Album} />
+                    {isAdmin && <Route exact path="/albums/:id/edit" component={EditAlbum} />}
+                    <Route exact path="/artists/page/:pageNumber" component={Artists} />
+                    <Route exact path="/artists/:id" component={Artist} />
+                    <Route exact path="/songs/page/:pageNumber" component={Songs} />
+                    <Route exact path="/categories/:id" component={Category} />
+                    <Route path="/search/results" component={SearchResults} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/signup" component={Signup} />
+                    <Route exact path="/cart" component={Cart} />
+                    <Route path="/cart/checkout" component={Checkout} />
+                    <Route path="/home" component={UserHome} />
+                  </div>
+          }
+        </Container>
       <Footer />
     </div>
   );
@@ -82,6 +87,7 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
+    error: state.error,
     isLoggedIn: !!state.user.id,
     isAdmin: state.user.isAdmin || false,
     user: state.user,
@@ -90,10 +96,14 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => {
-  return {};
+  return {
+    handleErrorClear(error) {
+      if (error.message) dispatch(clearError());
+    }
+  };
 };
 
-export default withRouter(connect(mapState)(Main));
+export default withRouter(connect(mapState, mapDispatch)(Main));
 
 /**
  * PROP TYPES

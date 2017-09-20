@@ -33,3 +33,4 @@ export { default as CheckoutSteps } from './CheckoutSteps';
 export { default as CartAlbumItem } from './CartAlbumItem';
 export { default as CartSongItem } from './CartSongItem';
 export { Login, Signup } from './AuthForm';
+export { default as  ErrorComponent } from './ErrorComponent';

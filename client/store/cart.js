@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import { setError } from './error';
 
 /**
  * ACTION TYPES
@@ -37,31 +38,31 @@ export const fetchUserCart = () => (dispatch) =>
       dispatch(getCartAlbums(res.data.albums || cart.albums));
       dispatch(getCartSongs(res.data.songs || cart.songs));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const addAlbumToUserCart = (album) => (dispatch) =>
   axios
     .post(`/api/orders/cart/albums`, album)
     .then((res) => dispatch(getCartAlbums(res.data || cart.albums)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const addSongToUserCart = (song) => (dispatch) =>
   axios
     .post(`/api/orders/cart/songs`, song)
     .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const removeAlbumFromUserCart = (albumId) => (dispatch) =>
   axios
     .delete(`/api/orders/cart/albums/${albumId}`)
     .then((res) => dispatch(getCartAlbums(res.data || cart.albums)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const removeSongFromUserCart = (songId) => (dispatch) =>
   axios
     .delete(`/api/orders/cart/songs/${songId}`)
     .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 //Thunk creators for guests(unauthenticated users)
 export const fetchGuestCart = () => (dispatch) =>
@@ -71,34 +72,34 @@ export const fetchGuestCart = () => (dispatch) =>
       dispatch(getCartAlbums(res.data.albums || cart.albums));
       dispatch(getCartSongs(res.data.songs || cart.songs));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const addAlbumToGuestCart = (album) => (dispatch) =>
   axios
     .post(`/api/guest/cart/albums`, album)
     .then((res) => dispatch(getCartAlbums(res.data || cart.albums)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const addSongToGuestCart = (song) => (dispatch) =>
   axios
     .post(`/api/guest/cart/songs`, song)
     .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const removeAlbumFromGuestCart = (albumId) => (dispatch) =>
   axios
     .delete(`/api/guest/cart/albums/${albumId}`)
     .then((res) => dispatch(getCartAlbums(res.data || cart.albums)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const removeSongFromGuestCart = (songId) => (dispatch) =>
   axios
     .delete(`/api/guest/cart/songs/${songId}`)
     .then((res) => dispatch(getCartSongs(res.data || cart.songs)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setError(err)));
 
 export const updateUserCart = (props) => (dispatch) =>
-  axios.put(`/api/orders/cart/`, props).then(() => dispatch(clearCart())).catch((err) => console.log(err));
+  axios.put(`/api/orders/cart/`, props).then(() => dispatch(clearCart())).catch((err) => dispatch(setError(err)));
 
 export const updateGuestCart = (props) => (dispatch) =>
   axios.put(`/api/guest/cart/`, props).then(() => dispatch(clearCart())).catch((err) => console.log(err));
