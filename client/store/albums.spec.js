@@ -66,7 +66,7 @@ describe('Albums Reducer Test', () => {
                 .then(() => {
                 const actions = store.getActions();
                 //expect(actions[0]).toEqual(getAlbums());
-                //console.log(actions);
+                console.log(actions);
                 expect(actions[0].type).to.be.equal('GET_ALBUMS');
                 //expect(actions[0].albums).to.be.deep.equal(fakeAlbums);
                 });
